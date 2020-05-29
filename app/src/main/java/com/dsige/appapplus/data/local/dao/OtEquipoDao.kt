@@ -40,4 +40,10 @@ interface OtEquipoDao {
 
     @Query("SELECT * FROM OtEquipo WHERE formatoId =:id")
     fun getFormById(id: Int): LiveData<OtEquipo>
+
+    @Query("SELECT * FROM OtEquipo WHERE tipoEquipo =:tipo AND formatoId =:id")
+    fun getEquipoByTipo(tipo: Int, id: Int): LiveData<List<OtEquipo>>
+
+    @Query("SELECT * FROM OtEquipo WHERE equipoId =:id")
+    fun getEquipoById(id: Int): LiveData<OtEquipo>
 }

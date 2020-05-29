@@ -173,4 +173,22 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             }
         }
     }
+
+    override fun insertOrUpdteOtEquipo(e: OtEquipo): Completable {
+        return Completable.fromAction {
+            if (e.equipoId == 0) {
+                dataBase.otEquipoDao().insertRegistroDetalleTask(e)
+            } else {
+                dataBase.otEquipoDao().updateRegistroDetalleTask(e)
+            }
+        }
+    }
+
+    override fun getEquipoByTipo(tipo: Int, formatoId: Int): LiveData<List<OtEquipo>> {
+        return dataBase.otEquipoDao().getEquipoByTipo(tipo, formatoId)
+    }
+
+    override fun getEquipoById(id: Int): LiveData<OtEquipo> {
+        return dataBase.otEquipoDao().getEquipoById(id)
+    }
 }

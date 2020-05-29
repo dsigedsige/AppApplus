@@ -7,17 +7,22 @@ import androidx.room.PrimaryKey
 open class OtEquipo {
 
     @PrimaryKey(autoGenerate = true)
-    var otEquipoId: Int = 0
+    var equipoId: Int = 0
     var formatoId: Int = 0
-    var campo1: String = ""
-    var campo2: String = ""
-    var campo3: String = ""
-    var campo4: String = ""
-    var campo5: String = ""
-    var campo6: String = ""
-    var campo7: String = ""
-    var campo8: String = ""
-    var campo9: String = ""
-    var campo10: String = ""
-    var estado: Int = 0
+    var tipoEquipo: Int = 0
+    var nroKardex: String = ""
+    var nroFabrica: String = ""
+    var sedUbicacion: String = ""
+    var celdaUbicacion: String = ""
+    var potenciaKVA: String = ""
+    var anio: String = ""
+    var marca: String = ""
+    var tipo: String = ""
+    var destino: String = ""
+    var observacion: String = ""
+    var funcionCelda: String = ""
+    var enlace: String = ""
+    var equipo: String = ""
+    var nroPrc: String = ""
+    var soporte: String = ""
 }

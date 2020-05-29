@@ -57,4 +57,10 @@ interface AppRepository {
 
     fun generateCabecera(title: String, tipo: Int, codigo: String, id: Int,otId:Int) : Completable
 
+    fun insertOrUpdteOtEquipo(e: OtEquipo):Completable
+
+    fun getEquipoByTipo(tipo: Int, formatoId: Int): LiveData<List<OtEquipo>>
+
+    fun getEquipoById(id: Int): LiveData<OtEquipo>
+
 }

@@ -12,10 +12,10 @@ abstract class TabLayoutAdapter {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> EquipoFragment.newInstance("", "")
-                1 -> EquipoFragment.newInstance("", "")
-                2 -> EquipoFragment.newInstance("", "")
-                3 -> EquipoFragment.newInstance("", "")
+                0 -> EquipoFragment.newInstance(position+1, id,"Transformadores")
+                1 -> EquipoFragment.newInstance(position+1, id,"Maniobra")
+                2 -> EquipoFragment.newInstance(position+1, id,"Protección")
+                3 -> EquipoFragment.newInstance(position+1, id,"Redes Areas")
                 else -> Fragment()
             }
         }

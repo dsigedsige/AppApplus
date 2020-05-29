@@ -107,7 +107,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,11 +189,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
-                    android:text="@string/next"
+                    android:text="@string/save"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     app:backgroundTint="@color/colorAccent"
-                    app:icon="@drawable/ic_next"
+                    app:icon="@drawable/ic_save"
                     app:iconGravity="end"
                     app:iconTint="@color/colorWhite" />
             </FrameLayout>

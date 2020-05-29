@@ -22,5 +22,10 @@ abstract class ViewModelModule {
     internal abstract fun bindRegistroViewModel(registroViewModel: RegistroViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(EquipoViewModel::class)
+    internal abstract fun bindEquipoViewModel(equipoViewModel: EquipoViewModel): ViewModel
+
+    @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

@@ -17,6 +17,10 @@ interface OnItemClickListener {
         fun onItemClick(r: OtCabecera, view: View, position: Int)
     }
 
+    interface OTEquipoListener {
+        fun onItemClick(r: OtEquipo, view: View, position: Int)
+    }
+
     interface OTListener {
         fun onItemClick(o: Ot, view: View, position: Int)
     }
