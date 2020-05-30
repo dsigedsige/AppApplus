@@ -12,10 +12,10 @@ abstract class TabLayoutAdapter {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> EquipoFragment.newInstance(position+1, id,"Transformadores")
-                1 -> EquipoFragment.newInstance(position+1, id,"Maniobra")
-                2 -> EquipoFragment.newInstance(position+1, id,"Protección")
-                3 -> EquipoFragment.newInstance(position+1, id,"Redes Areas")
+                0 -> EquipoFragment.newInstance(position + 1, id, "Transformadores")
+                1 -> EquipoFragment.newInstance(position + 1, id, "Maniobra")
+                2 -> EquipoFragment.newInstance(position + 1, id, "Protección")
+                3 -> EquipoFragment.newInstance(position + 1, id, "Redes Areas")
                 else -> Fragment()
             }
         }
@@ -25,5 +25,23 @@ abstract class TabLayoutAdapter {
         }
     }
 
+    class TabLayoutProtocolo(
+        fm: FragmentManager, private val numberOfTabs: Int, private val id: Int
+    ) :
+        FragmentStatePagerAdapter(fm, numberOfTabs) {
 
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> P1Fragment.newInstance(id, 1)
+                1 -> P2Fragment.newInstance(id, 2)
+                2 -> P3Fragment.newInstance(id, 3)
+                3 -> P4Fragment.newInstance(id, 4)
+                else -> Fragment()
+            }
+        }
+
+        override fun getCount(): Int {
+            return numberOfTabs
+        }
+    }
 }

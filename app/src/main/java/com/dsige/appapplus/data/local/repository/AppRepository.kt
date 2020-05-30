@@ -63,4 +63,7 @@ interface AppRepository {
 
     fun getEquipoById(id: Int): LiveData<OtEquipo>
 
+    fun insertOrUpdteOtOtProtocolo(e: OtProtocolo): Completable
+
+    fun getProtocoloByTipo(formatoId: Int, tipo: Int): LiveData<OtProtocolo>
 }

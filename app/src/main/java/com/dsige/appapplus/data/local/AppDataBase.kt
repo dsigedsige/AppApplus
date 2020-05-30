@@ -15,9 +15,10 @@ import com.dsige.appapplus.data.local.model.*
         OtCabecera::class,
         OtDetalle::class,
         OtEquipo::class,
+        OtProtocolo::class,
         Ot::class
     ],
-    version = 7,
+    version = 8,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -28,6 +29,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun otCabeceraDao(): OtCabeceraDao
     abstract fun otDetalleDao(): OtDetalleDao
     abstract fun otEquipoDao(): OtEquipoDao
+    abstract fun otProtocoloDao(): OtProtocoloDao
     abstract fun otDao(): OtDao
 
     companion object {

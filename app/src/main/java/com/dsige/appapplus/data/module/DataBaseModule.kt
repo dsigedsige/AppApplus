@@ -60,6 +60,11 @@ class DataBaseModule {
     }
 
     @Provides
+    internal fun provideOtProtocoloDao(appDataBase: AppDataBase): OtProtocoloDao {
+        return appDataBase.otProtocoloDao()
+    }
+
+    @Provides
     internal fun provideOtDao(appDataBase: AppDataBase): OtDao {
         return appDataBase.otDao()
     }

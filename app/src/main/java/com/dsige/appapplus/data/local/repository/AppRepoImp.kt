@@ -191,4 +191,18 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     override fun getEquipoById(id: Int): LiveData<OtEquipo> {
         return dataBase.otEquipoDao().getEquipoById(id)
     }
+
+    override fun insertOrUpdteOtOtProtocolo(e: OtProtocolo): Completable {
+        return Completable.fromAction {
+            if (e.protocoloId == 0){
+                dataBase.otProtocoloDao().insertProtocoloTask(e)
+            }else{
+                dataBase.otProtocoloDao().updateProtocoloTask(e)
+            }
+        }
+    }
+
+    override fun getProtocoloByTipo(formatoId: Int, tipo: Int): LiveData<OtProtocolo> {
+        return dataBase.otProtocoloDao().getProtocoloByTipo(formatoId,tipo)
+    }
 }

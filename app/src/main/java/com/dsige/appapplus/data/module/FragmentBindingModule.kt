@@ -29,6 +29,21 @@ abstract class FragmentBindingModule {
     }
 
     @Module
+    abstract class Protocolo {
+        @ContributesAndroidInjector
+        internal abstract fun providP1Fragment(): P1Fragment
+
+        @ContributesAndroidInjector
+        internal abstract fun providP2Fragment(): P2Fragment
+
+        @ContributesAndroidInjector
+        internal abstract fun providP3Fragment(): P3Fragment
+
+        @ContributesAndroidInjector
+        internal abstract fun providP4Fragment(): P4Fragment
+    }
+
+    @Module
     abstract class Equipo {
         @ContributesAndroidInjector
         internal abstract fun providEquipoFragment(): EquipoFragment

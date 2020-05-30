@@ -27,6 +27,11 @@
     <string name="tab3">Proteccion</string>
     <string name="tab4">Redes Areas</string>
 
+    <string name="tab5">Dat. Terreno</string>
+    <string name="tab6">Puesto Tierra Existente</string>
+    <string name="tab7">Puesto Tierra Proyectado</string>
+    <string name="tab8">Medición y Ubicación</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="operario">Operario</string>

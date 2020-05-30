@@ -106,6 +106,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                             .putExtra("codigo", textView1.text)
                             .putExtra("estado", 1)
                     )
+                    6-> startActivity(
+                        Intent(this@FormatoActivity, ProtocoloActivity::class.java)
+                            .putExtra("id", r.formatoId)
+                            .putExtra("otId", r.otId)
+                            .putExtra("title", r.nombreTipoFormato)
+                            .putExtra("tipo", r.tipoFormatoId)
+                            .putExtra("codigo", textView1.text)
+                            .putExtra("estado", 1)
+                    )
                 }
             }
         })
@@ -186,6 +195,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             )
             5 -> startActivity(
                 Intent(this, EquipoMainActivity::class.java)
+                    .putExtra("tipo", i)
+                    .putExtra("id", formatoId)
+                    .putExtra("otId", otId)
+                    .putExtra("title", title)
+                    .putExtra("codigo", textView1.text.toString())
+                    .putExtra("estado", 0)
+            )
+            6->startActivity(
+                Intent(this, ProtocoloActivity::class.java)
                     .putExtra("tipo", i)
                     .putExtra("id", formatoId)
                     .putExtra("otId", otId)

@@ -17,16 +17,19 @@ abstract class ActivityBindingModule {
     internal abstract fun bindCameraActivity(): CameraActivity
 
     @ContributesAndroidInjector
+    internal abstract fun bindFormatoActivity(): FormatoActivity
+
+    @ContributesAndroidInjector
     internal abstract fun bindFormFormMainActivity(): FormMainActivity
 
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Form::class])
     internal abstract fun bindFormRevelamientoActivity(): FormSecondActivity
 
-    @ContributesAndroidInjector
-    internal abstract fun bindFormatoActivity(): FormatoActivity
-
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Equipo::class])
     internal abstract fun bindEquipoMainActivity(): EquipoMainActivity
+
+    @ContributesAndroidInjector(modules = [FragmentBindingModule.Protocolo::class])
+    internal abstract fun bindProtocoloActivity(): ProtocoloActivity
 
     @ContributesAndroidInjector
     internal abstract fun bindEquipoSecondActivity(): EquipoSecondActivity
