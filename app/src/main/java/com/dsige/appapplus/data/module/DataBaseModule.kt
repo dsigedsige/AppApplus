@@ -68,4 +68,19 @@ class DataBaseModule {
     internal fun provideOtDao(appDataBase: AppDataBase): OtDao {
         return appDataBase.otDao()
     }
+
+    @Provides
+    internal fun provideOtHoja123Dao(appDataBase: AppDataBase): OtHoja123Dao {
+        return appDataBase.otHoja123Dao()
+    }
+
+    @Provides
+    internal fun provideOtHoja4Dao(appDataBase: AppDataBase): OtHoja4Dao {
+        return appDataBase.otHoja4Dao()
+    }
+
+    @Provides
+    internal fun provideOtHoja56Dao(appDataBase: AppDataBase): OtHoja56Dao {
+        return appDataBase.otHoja56Dao()
+    }
 }

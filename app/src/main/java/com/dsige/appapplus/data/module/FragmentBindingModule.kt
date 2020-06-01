@@ -7,6 +7,12 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBindingModule {
 
     @Module
+    abstract class Hoja {
+        @ContributesAndroidInjector
+        internal abstract fun providHojaFragment(): HojaFragment
+    }
+
+    @Module
     abstract class Main {
         @ContributesAndroidInjector
         internal abstract fun providMainFragment(): MainFragment

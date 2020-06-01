@@ -66,4 +66,15 @@ interface AppRepository {
     fun insertOrUpdteOtOtProtocolo(e: OtProtocolo): Completable
 
     fun getProtocoloByTipo(formatoId: Int, tipo: Int): LiveData<OtProtocolo>
+
+    fun getHojaByTipo(tipo: Int, formatoId: Int): LiveData<List<Class<*>>>
+
+    fun getHoja123ById(id: Int): LiveData<OtHoja123>
+
+    fun insertOrUpdteOtHoja123(o: OtHoja123): Completable
+
+    fun getHoja4ById(id: Int): LiveData<OtHoja4>
+
+    fun insertOrUpdteOtHoja4(e: OtHoja4): Completable
+
 }

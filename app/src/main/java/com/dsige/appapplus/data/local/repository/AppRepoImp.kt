@@ -194,15 +194,49 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun insertOrUpdteOtOtProtocolo(e: OtProtocolo): Completable {
         return Completable.fromAction {
-            if (e.protocoloId == 0){
+            if (e.protocoloId == 0) {
                 dataBase.otProtocoloDao().insertProtocoloTask(e)
-            }else{
+            } else {
                 dataBase.otProtocoloDao().updateProtocoloTask(e)
             }
         }
     }
 
     override fun getProtocoloByTipo(formatoId: Int, tipo: Int): LiveData<OtProtocolo> {
-        return dataBase.otProtocoloDao().getProtocoloByTipo(formatoId,tipo)
+        return dataBase.otProtocoloDao().getProtocoloByTipo(formatoId, tipo)
+    }
+
+    override fun getHojaByTipo(tipo: Int, formatoId: Int): LiveData<List<Class<*>>> {
+        return when (tipo) {
+            1, 2, 3 -> dataBase.otHoja123Dao().getHoja123ByTipo(formatoId, tipo)
+            4 -> dataBase.otHoja4Dao().getHoja4ByTipo(formatoId, tipo)
+            else -> dataBase.otHoja56Dao().getHoja56ByTipo(formatoId, tipo)
+        } as LiveData<List<Class<*>>>
+    }
+
+    override fun getHoja123ById(id: Int): LiveData<OtHoja123> {
+        return dataBase.otHoja123Dao().getHoja123ById(id)
+    }
+
+    override fun insertOrUpdteOtHoja123(o: OtHoja123): Completable {
+        return Completable.fromAction {
+            if (o.hoja123Id == 0)
+                dataBase.otHoja123Dao().insertHoja123Task(o)
+            else
+                dataBase.otHoja123Dao().updateHoja123Task(o)
+        }
+    }
+
+    override fun getHoja4ById(id: Int): LiveData<OtHoja4> {
+        return dataBase.otHoja4Dao().getHoja4ById(id)
+    }
+
+    override fun insertOrUpdteOtHoja4(e: OtHoja4): Completable {
+        return Completable.fromAction {
+            if (e.hoja4Id == 0)
+                dataBase.otHoja4Dao().insertHoja4Task(e)
+            else
+                dataBase.otHoja4Dao().updateHoja4Task(e)
+        }
     }
 }

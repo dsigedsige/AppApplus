@@ -28,4 +28,9 @@ interface OnItemClickListener {
     interface OTDetalleListener {
         fun onItemClick(d: OtDetalle, view: View, position: Int)
     }
+
+    interface OTHojaListener {
+        fun onItemClick(d: Class<*>, view: View, position: Int)
+    }
+
 }

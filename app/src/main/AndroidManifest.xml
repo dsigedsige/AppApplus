@@ -29,7 +29,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".ui.activities.ProtocoloActivity"></activity>
+        <activity android:name=".ui.activities.Hoja56Activity"></activity>
+        <activity android:name=".ui.activities.Hoja4Activity" />
+        <activity android:name=".ui.activities.Hoja123Activity" />
+        <activity android:name=".ui.activities.HojaActivity" />
+        <activity android:name=".ui.activities.ProtocoloActivity" />
         <activity android:name=".ui.activities.EquipoSecondActivity" />
         <activity android:name=".ui.activities.EquipoMainActivity" />
         <activity android:name=".ui.activities.FormMainActivity" />
