@@ -2,7 +2,7 @@ package com.dsige.appapplus.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,13 +22,15 @@ import com.dsige.appapplus.ui.activities.Hoja4Activity
 import com.dsige.appapplus.ui.activities.Hoja56Activity
 import com.dsige.appapplus.ui.adapters.OtHojaAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_hoja.*
+import java.util.stream.Collectors.toList
 import javax.inject.Inject
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class HojaFragment : Fragment() {
+class HojaFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -59,47 +61,45 @@ class HojaFragment : Fragment() {
         hojaViewModel =
             ViewModelProvider(this, viewModelFactory).get(HojaViewModel::class.java)
 
-        val hojaAdapter = OtHojaAdapter(object : OnItemClickListener.OTHojaListener {
-            override fun onItemClick(d: Class<*>, view: View, position: Int) {
-                when (d) {
-                    is OtHoja123 -> {
-                        startActivity(
-                            Intent(context, Hoja123Activity::class.java)
-                                .putExtra("tipo", d.item)
-                                .putExtra("formatoId", d.formatoId)
-                                .putExtra("id", d.hoja123Id)
-                                .putExtra(
-                                    "title", when (d.item) {
-                                        1 -> "Celda 10KV"
-                                        2 -> "Equipo 10KV"
-                                        else -> "Protección"
-                                    }
-                                )
+        val hojaAdapter = OtHojaAdapter(item, object : OnItemClickListener.OTHojaListener {
+            override fun onItemClick123(d: OtHoja123, view: View, position: Int) {
+                startActivity(
+                    Intent(context, Hoja123Activity::class.java)
+                        .putExtra("tipo", d.item)
+                        .putExtra("formatoId", d.formatoId)
+                        .putExtra("id", d.hoja123Id)
+                        .putExtra(
+                            "title", when (d.item) {
+                                1 -> "Celda 10KV"
+                                2 -> "Equipo 10KV"
+                                else -> "Protección"
+                            }
                         )
-                    }
-                    is OtHoja4 -> {
-                        startActivity(
-                            Intent(context, Hoja4Activity::class.java)
-                                .putExtra("formatoId", d.formatoId)
-                                .putExtra("id", d.hoja4Id)
-                                .putExtra("title", "Transformadores")
+                )
+            }
+
+            override fun onItemClick4(d: OtHoja4, view: View, position: Int) {
+                startActivity(
+                    Intent(context, Hoja4Activity::class.java)
+                        .putExtra("formatoId", d.formatoId)
+                        .putExtra("id", d.hoja4Id)
+                        .putExtra("title", "Transformadores")
+                )
+            }
+
+            override fun onItemClick56(d: OtHoja56, view: View, position: Int) {
+                startActivity(
+                    Intent(context, Hoja56Activity::class.java)
+                        .putExtra("tipo", d.item)
+                        .putExtra("formatoId", d.formatoId)
+                        .putExtra("id", d.hoja56Id)
+                        .putExtra(
+                            "title", when (d.item) {
+                                5 -> "Servicio Particular"
+                                else -> "Alumbrado Publico"
+                            }
                         )
-                    }
-                    is OtHoja56 -> {
-                        startActivity(
-                            Intent(context, Hoja56Activity::class.java)
-                                .putExtra("tipo", d.item)
-                                .putExtra("formatoId", d.formatoId)
-                                .putExtra("id", d.hoja56Id)
-                                .putExtra(
-                                    "title", when (d.item) {
-                                        5 -> "Servicio Particular"
-                                        else -> "Alumbrado Publico"
-                                    }
-                                )
-                        )
-                    }
-                }
+                )
             }
         })
 
@@ -114,6 +114,7 @@ class HojaFragment : Fragment() {
             }
         })
     }
+
 
     companion object {
         @JvmStatic

@@ -30,7 +30,9 @@ interface OnItemClickListener {
     }
 
     interface OTHojaListener {
-        fun onItemClick(d: Class<*>, view: View, position: Int)
+        fun onItemClick123(d: OtHoja123, view: View, position: Int)
+        fun onItemClick4(d: OtHoja4, view: View, position: Int)
+        fun onItemClick56(d: OtHoja56, view: View, position: Int)
     }
 
 }

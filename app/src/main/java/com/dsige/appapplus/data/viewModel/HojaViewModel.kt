@@ -94,4 +94,31 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     fun getHoja4ById(id: Int): LiveData<OtHoja4> {
         return roomRepository.getHoja4ById(id)
     }
+
+    fun getHoja56ById(id: Int): LiveData<OtHoja56> {
+        return roomRepository.getHoja56ById(id)
+    }
+
+    fun validateHoja56(o: OtHoja56) {
+        insertOrUpdteOtHoja56(o)
+    }
+
+    private fun insertOrUpdteOtHoja56(e: OtHoja56) {
+        roomRepository.insertOrUpdteOtHoja56(e)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = if (e.hoja56Id == 0) "Guardado" else "Actualizado"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+
+            })
+    }
 }

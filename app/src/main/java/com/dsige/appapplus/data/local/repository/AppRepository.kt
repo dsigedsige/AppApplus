@@ -77,4 +77,8 @@ interface AppRepository {
 
     fun insertOrUpdteOtHoja4(e: OtHoja4): Completable
 
+    fun getHoja56ById(id: Int): LiveData<OtHoja56>
+
+    fun insertOrUpdteOtHoja56(e: OtHoja56): Completable
+
 }

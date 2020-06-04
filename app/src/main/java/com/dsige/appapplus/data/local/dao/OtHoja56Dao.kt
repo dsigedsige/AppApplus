@@ -23,7 +23,7 @@ interface OtHoja56Dao {
     @Query("SELECT * FROM OtHoja56")
     fun getHoja56(): LiveData<OtHoja56>
 
-    @Query("SELECT * FROM OtHoja56 WHERE formatoId =:id")
+    @Query("SELECT * FROM OtHoja56 WHERE hoja56Id =:id")
     fun getHoja56ById(id: Int): LiveData<OtHoja56>
 
     @Query("DELETE FROM OtHoja56")

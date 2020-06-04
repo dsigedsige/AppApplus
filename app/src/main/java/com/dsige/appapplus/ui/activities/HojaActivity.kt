@@ -35,7 +35,7 @@ class HojaActivity : DaggerAppCompatActivity(), View.OnClickListener {
                         .putExtra("tipo", position)
                 )
             }
-            5, 6 -> {
+            5, 6, 7 -> {
                 startActivity(
                     Intent(this, Hoja56Activity::class.java)
                         .putExtra("tipo", position)
@@ -83,6 +83,7 @@ class HojaActivity : DaggerAppCompatActivity(), View.OnClickListener {
         if (estado == 0) {
             registroViewModel.generateCabecera(title, tipo, codigo, id, otId)
         }
+
         fabAdd.setOnClickListener(this)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab9))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab10))

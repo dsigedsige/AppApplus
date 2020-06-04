@@ -11,11 +11,13 @@ open class OtHoja56 {
     var formatoId: Int = 0
     var item: Int = 0
     var tipoTablero: Int = 0
-    var Aereo: Int = 0
-    var Anivel: Int = 0
     var idtipo: Int = 0
     var base: String = ""
     var fusible: String = ""
     var seccion: String = ""
     var observacion: String = ""
+    var nroMedidor: String = ""
+    var fotocelula: String = ""
+    var contactor: String = ""
+    var intHorario: String = ""
 }

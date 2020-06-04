@@ -88,6 +88,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         val oTAdapter = OtCabeceraAdapter(object : OnItemClickListener.OTCabeceraListener {
             override fun onItemClick(r: OtCabecera, view: View, position: Int) {
                 when (r.tipoFormatoId) {
+                    2 -> startActivity(
+                        Intent(this@FormatoActivity, HojaActivity::class.java)
+                            .putExtra("tipo", r.formatoId)
+                            .putExtra("id", formatoId)
+                            .putExtra("otId", otId)
+                            .putExtra("title", title)
+                            .putExtra("codigo", textView1.text.toString())
+                            .putExtra("estado", 1)
+                    )
                     3, 4 -> startActivity(
                         Intent(this@FormatoActivity, FormMainActivity::class.java)
                             .putExtra("id", r.formatoId)
@@ -106,7 +115,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                             .putExtra("codigo", textView1.text)
                             .putExtra("estado", 1)
                     )
-                    6-> startActivity(
+                    6 -> startActivity(
                         Intent(this@FormatoActivity, ProtocoloActivity::class.java)
                             .putExtra("id", r.formatoId)
                             .putExtra("otId", r.otId)
@@ -184,6 +193,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     private fun goActivity(i: Int, title: String) {
         when (i) {
+            2 -> startActivity(
+                Intent(this, HojaActivity::class.java)
+                    .putExtra("tipo", i)
+                    .putExtra("id", formatoId)
+                    .putExtra("otId", otId)
+                    .putExtra("title", title)
+                    .putExtra("codigo", textView1.text.toString())
+                    .putExtra("estado", 0)
+            )
             3, 4 -> startActivity(
                 Intent(this, FormMainActivity::class.java)
                     .putExtra("tipo", i)
@@ -202,7 +220,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     .putExtra("codigo", textView1.text.toString())
                     .putExtra("estado", 0)
             )
-            6->startActivity(
+            6 -> startActivity(
                 Intent(this, ProtocoloActivity::class.java)
                     .putExtra("tipo", i)
                     .putExtra("id", formatoId)

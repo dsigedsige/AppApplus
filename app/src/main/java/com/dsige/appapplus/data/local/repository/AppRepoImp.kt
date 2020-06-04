@@ -239,4 +239,17 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 dataBase.otHoja4Dao().updateHoja4Task(e)
         }
     }
+
+    override fun getHoja56ById(id: Int): LiveData<OtHoja56> {
+        return dataBase.otHoja56Dao().getHoja56ById(id)
+    }
+
+    override fun insertOrUpdteOtHoja56(e: OtHoja56): Completable {
+        return Completable.fromAction {
+            if (e.hoja56Id == 0)
+                dataBase.otHoja56Dao().insertHoja56Task(e)
+            else
+                dataBase.otHoja56Dao().updateHoja56Task(e)
+        }
+    }
 }

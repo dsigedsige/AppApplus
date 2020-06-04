@@ -25,11 +25,11 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Form::class])
     internal abstract fun bindFormRevelamientoActivity(): FormSecondActivity
 
-    @ContributesAndroidInjector(modules = [FragmentBindingModule.Equipo::class])
-    internal abstract fun bindEquipoMainActivity(): EquipoMainActivity
-
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Protocolo::class])
     internal abstract fun bindProtocoloActivity(): ProtocoloActivity
+
+    @ContributesAndroidInjector(modules = [FragmentBindingModule.Equipo::class])
+    internal abstract fun bindEquipoMainActivity(): EquipoMainActivity
 
     @ContributesAndroidInjector
     internal abstract fun bindEquipoSecondActivity(): EquipoSecondActivity
