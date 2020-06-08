@@ -46,4 +46,7 @@ interface OtDetalleDao {
 
     @Query("SELECT * FROM OtDetalle WHERE formatoDetalleId =:id ")
     fun getOtDetalleVerificate(id: Int): OtDetalle
+
+    @Query("SELECT * FROM OtDetalle WHERE formatoId =:id ")
+    fun getDetalleFkId(id: Int): List<OtDetalle>
 }

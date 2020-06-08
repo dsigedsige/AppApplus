@@ -19,7 +19,7 @@ open class OtDetalle {
     var redSDS: String = ""
     var redAP: String = ""
     var redAmbas: String = ""
-    var cNumeroId: String = ""
+    var cNumeroId: Int = 0
     var seccCod: String = ""
     var seccCap: String = ""
     var seccFus: String = ""

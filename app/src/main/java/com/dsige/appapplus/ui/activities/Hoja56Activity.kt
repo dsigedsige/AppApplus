@@ -78,7 +78,7 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
                             }
                             editText1.setText(q.nroMedidor)
                             editTextTipo.setText(q.idtipo.toString())
-                            editText2.setText(q.base)
+                            editText2.setText(q.baseMovil)
                             editText3.setText(q.fusible)
                             editText4.setText(q.seccion)
                             editText5.setText(q.observacion)
@@ -123,7 +123,7 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
                     else -> 0
                 }
                 o.nroMedidor = editText1.text.toString()
-                o.base = editText2.text.toString()
+                o.baseMovil = editText2.text.toString()
                 o.fusible = editText3.text.toString()
                 o.seccion = editText4.text.toString()
                 o.observacion = editText5.text.toString()

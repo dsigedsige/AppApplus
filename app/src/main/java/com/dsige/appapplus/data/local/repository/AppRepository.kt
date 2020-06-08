@@ -3,18 +3,17 @@ package com.dsige.appapplus.data.local.repository
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.dsige.appapplus.data.local.model.*
+import com.dsige.appapplus.helper.Mensaje
 import io.reactivex.Completable
 import io.reactivex.Observable
+import okhttp3.RequestBody
 
 interface AppRepository {
 
     fun getUsuario(): LiveData<Usuario>
 
     fun getUsuarioService(
-        usuario: String,
-        password: String,
-        imei: String,
-        version: String
+        usuario: String, password: String, imei: String, version: String
     ): Observable<Usuario>
 
     fun insertUsuario(u: Usuario): Completable
@@ -51,13 +50,13 @@ interface AppRepository {
 
     fun insertOrUpdateOtDetalle(d: OtDetalle): Completable
 
-    fun getMaxIdOtDetalle() : LiveData<Int>
+    fun getMaxIdOtDetalle(): LiveData<Int>
 
     fun getMaxIdOt(): LiveData<Int>
 
-    fun generateCabecera(title: String, tipo: Int, codigo: String, id: Int,otId:Int) : Completable
+    fun generateCabecera(title: String, tipo: Int, codigo: String, id: Int, otId: Int): Completable
 
-    fun insertOrUpdteOtEquipo(e: OtEquipo):Completable
+    fun insertOrUpdteOtEquipo(e: OtEquipo): Completable
 
     fun getEquipoByTipo(tipo: Int, formatoId: Int): LiveData<List<OtEquipo>>
 
@@ -80,5 +79,11 @@ interface AppRepository {
     fun getHoja56ById(id: Int): LiveData<OtHoja56>
 
     fun insertOrUpdteOtHoja56(e: OtHoja56): Completable
+
+    fun getOtCabeceraBySend(i: Int): Observable<List<OtCabecera>>
+
+    fun updateRegistro(messages: Mensaje): Completable
+
+    fun saveTrabajo(body: RequestBody): Observable<Mensaje>
 
 }

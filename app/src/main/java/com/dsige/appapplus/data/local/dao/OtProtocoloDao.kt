@@ -44,6 +44,9 @@ interface OtProtocoloDao {
     @Query("SELECT * FROM OtProtocolo WHERE formatoId =:id AND tipoProtocoloId =:t ")
     fun getProtocoloByTipo(id: Int, t: Int): LiveData<OtProtocolo>
 
+    @Query("SELECT * FROM OtProtocolo WHERE formatoId =:id ")
+    fun getProtocoloFkId(id: Int): List<OtProtocolo>
+
 //    @Query("SELECT * FROM OtProtocolo WHERE tipoEquipo =:tipo AND formatoId =:id")
 //    fun getEquipoByTipo(tipo: Int, id: Int): LiveData<List<OtProtocolo>>
 //

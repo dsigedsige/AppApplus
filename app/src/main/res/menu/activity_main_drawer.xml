@@ -5,9 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/vehiculos"
+            android:id="@+id/orden"
             android:icon="@drawable/ic_sync"
-            android:title="Lista de Ordenes" />
+            android:title="Ordenes de Trabajo" />
+        <item
+            android:id="@+id/envio"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/envio_de_pendientes" />
     </group>
 
     <item android:title="">

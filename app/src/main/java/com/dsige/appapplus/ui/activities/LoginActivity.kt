@@ -116,7 +116,7 @@ class LoginActivity : DaggerAppCompatActivity(), View.OnClickListener {
     }
 
     private fun message() {
-        usuarioViewModel.error.observe(this, Observer<String> { s ->
+        usuarioViewModel.error.observe(this, Observer { s ->
             if (s != null) {
                 if (dialog != null) {
                     if (dialog!!.isShowing) {
@@ -126,7 +126,7 @@ class LoginActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 Util.toastMensaje(this, s)
             }
         })
-        usuarioViewModel.success.observe(this, Observer<String> { s ->
+        usuarioViewModel.success.observe(this, Observer { s ->
             if (s != null) {
                 if (dialog != null) {
                     if (dialog!!.isShowing) {

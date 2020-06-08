@@ -51,8 +51,8 @@ class HojaActivity : DaggerAppCompatActivity(), View.OnClickListener {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var registroViewModel: RegistroViewModel
     private var formatoId: Int = 0
-    private var position: Int = 0
-    private var name: String = ""
+    private var position: Int = 1
+    private var name: String = "Celda 10KV"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -90,11 +90,11 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 when (r.tipoFormatoId) {
                     2 -> startActivity(
                         Intent(this@FormatoActivity, HojaActivity::class.java)
-                            .putExtra("tipo", r.formatoId)
-                            .putExtra("id", formatoId)
-                            .putExtra("otId", otId)
-                            .putExtra("title", title)
-                            .putExtra("codigo", textView1.text.toString())
+                            .putExtra("id", r.formatoId)
+                            .putExtra("otId", r.otId)
+                            .putExtra("title", r.nombreTipoFormato)
+                            .putExtra("tipo", r.tipoFormatoId)
+                            .putExtra("codigo", textView1.text)
                             .putExtra("estado", 1)
                     )
                     3, 4 -> startActivity(

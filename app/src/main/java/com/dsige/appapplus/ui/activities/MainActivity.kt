@@ -78,20 +78,12 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.vehiculos -> changeFragment(VehicleFragment.newInstance("", ""), "Vehiculos")
-//            R.id.reparacion -> changeFragment(
-//                MainFragment.newInstance(1, usuarioId),
-//                "Reparación de Veredas"
-//            )
-//            R.id.trabajo -> changeFragment(
-//                MainFragment.newInstance(2, usuarioId),
-//                "Trabajos SS"
-//            )
+            R.id.orden -> changeFragment(
+                MainFragment.newInstance(1, usuarioId),
+                "Ordenes de Trabajo"
+            )
             R.id.logout -> dialogLogout()
-//            R.id.envio -> changeFragment(
-//                SendFragment.newInstance("", ""),
-//                "Enviar Pendientes"
-//            )
+            R.id.envio -> sendTrabajos()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -101,13 +93,13 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         startActivity(i)
     }
 
-    private fun load() {
+    private fun load(title: String) {
         builder = AlertDialog.Builder(ContextThemeWrapper(this@MainActivity, R.style.AppTheme))
         @SuppressLint("InflateParams") val view =
             LayoutInflater.from(this@MainActivity).inflate(R.layout.dialog_login, null)
         builder.setView(view)
         val textViewTitle: TextView = view.findViewById(R.id.textView)
-        textViewTitle.text = String.format("%s", "Cerrando Session")
+        textViewTitle.text = title
         dialog = builder.create()
         dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.setCancelable(false)
@@ -143,6 +135,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         val header = navigationView.getHeaderView(0)
         header.textViewName.text = u.nombres
         header.textViewEmail.text = String.format("Cod : %s", u.email)
+        header.textViewVersion.text = String.format("Version : %s", Util.getVersion(this))
         usuarioId = u.usuarioId.toString()
     }
 
@@ -156,7 +149,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     private fun message() {
-        usuarioViewModel.success.observe(this, Observer<String> { s ->
+        usuarioViewModel.success.observe(this, Observer { s ->
             if (s != null) {
                 closeLoad()
                 if (s == "Close") {
@@ -168,7 +161,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 }
             }
         })
-        usuarioViewModel.error.observe(this@MainActivity, Observer<String> { s ->
+        usuarioViewModel.error.observe(this@MainActivity, Observer { s ->
             if (s != null) {
                 closeLoad()
                 Util.snackBarMensaje(window.decorView, s)
@@ -182,8 +175,23 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             .setMessage("Deseas Salir ?")
             .setPositiveButton("SI") { dialog, _ ->
                 logout = "on"
-                load()
+                load("Cerrando Session")
                 usuarioViewModel.logout()
+                dialog.dismiss()
+            }
+            .setNegativeButton("NO") { dialog, _ ->
+                dialog.cancel()
+            }
+        dialog.show()
+    }
+
+    private fun sendTrabajos() {
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("Mensaje")
+            .setMessage("Deseas Enviar los Trabajos Pendientes ?")
+            .setPositiveButton("SI") { dialog, _ ->
+                load("Enviando Trabajos")
+                usuarioViewModel.sendTrabajo()
                 dialog.dismiss()
             }
             .setNegativeButton("NO") { dialog, _ ->

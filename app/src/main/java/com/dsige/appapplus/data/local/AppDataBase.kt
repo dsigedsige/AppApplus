@@ -21,7 +21,7 @@ import com.dsige.appapplus.data.local.model.*
         OtHoja4::class,
         OtHoja56::class
     ],
-    version = 9,
+    version = 12,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {

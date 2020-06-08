@@ -43,4 +43,10 @@ interface OtCabeceraDao {
 
     @Query("SELECT * FROM OtCabecera WHERE otId =:id ")
     fun getOtCabeceraByIdTask(id: Int): OtCabecera
+
+    @Query("SELECT * FROM OtCabecera WHERE active =:i ")
+    fun getOtCabeceraActive(i: Int): List<OtCabecera>
+
+    @Query("UPDATE OtCabecera SET identity =:codigoRetorno , active = 0 WHERE formatoId =:codigoBase ")
+    fun updateCabecera(codigoBase: Int, codigoRetorno: Int)
 }

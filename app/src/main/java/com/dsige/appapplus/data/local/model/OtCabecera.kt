@@ -12,6 +12,7 @@ open class OtCabecera {
     var tipoFormatoId: Int = 0
     var nombreTipoFormato: String = ""
     var seccion: String = ""
+    var seccionId: Int = 1
     var otId: Int = 0
     var nroOt: String = ""
     var nombrecliente: String = ""
@@ -27,6 +28,19 @@ open class OtCabecera {
     var estadoId: Int = 0
     var nombreEstado: String = ""
 
+    var active : Int = 0 // 1-> por enviar 0 -> enviado
+    var identity : Int = 0
+
     @Ignore
     var details: List<OtDetalle> = ArrayList()
+    @Ignore
+    var equipos: List<OtEquipo> = ArrayList()
+    @Ignore
+    var hojas123: List<OtHoja123> = ArrayList()
+    @Ignore
+    var hojas4: List<OtHoja4> = ArrayList()
+    @Ignore
+    var hojas567: List<OtHoja56> = ArrayList()
+    @Ignore
+    var protocolos: List<OtProtocolo> = ArrayList()
 }

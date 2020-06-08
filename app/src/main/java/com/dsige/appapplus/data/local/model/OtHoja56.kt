@@ -12,7 +12,7 @@ open class OtHoja56 {
     var item: Int = 0
     var tipoTablero: Int = 0
     var idtipo: Int = 0
-    var base: String = ""
+    var baseMovil: String = ""
     var fusible: String = ""
     var seccion: String = ""
     var observacion: String = ""

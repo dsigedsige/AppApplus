@@ -82,7 +82,7 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
                 checkAP.isChecked = de.redAP == "SI"
                 checkAmbas.isChecked = de.redAmbas == "SI"
 
-                editTextNro.setText(de.cNumeroId)
+                editTextNro.setText(de.cNumeroId.toString())
                 editTextCod.setText(de.seccCod)
                 editTextCap.setText(de.seccCap)
                 editTextFus.setText(de.seccFus)
@@ -122,7 +122,10 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
         d.redSDS = if (checkSDS.isChecked) "SI" else "NO"
         d.redAP = if (checkAP.isChecked) "SI" else "NO"
         d.redAmbas = if (checkAmbas.isChecked) "SI" else "NO"
-        d.cNumeroId = editTextNro.text.toString()
+        when {
+            editTextNro.text.toString().isEmpty() -> d.cNumeroId = 0
+            else -> d.cNumeroId = editTextNro.text.toString().toInt()
+        }
         d.seccCod = editTextCod.text.toString()
         d.seccCap = editTextCap.text.toString()
         d.seccFus = editTextFus.text.toString()

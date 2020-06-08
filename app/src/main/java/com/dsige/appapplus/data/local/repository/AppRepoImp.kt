@@ -9,6 +9,7 @@ import androidx.paging.toLiveData
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.data.local.AppDataBase
 import com.dsige.appapplus.data.local.model.*
+import com.dsige.appapplus.helper.Mensaje
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -169,6 +170,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 ot.nombreTipoFormato = title
                 ot.nroOt = codigo
                 ot.otId = otId
+                ot.active = 1
                 dataBase.otCabeceraDao().insertRegistroTask(ot)
             }
         }
@@ -251,5 +253,42 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             else
                 dataBase.otHoja56Dao().updateHoja56Task(e)
         }
+    }
+
+    override fun getOtCabeceraBySend(i: Int): Observable<List<OtCabecera>> {
+        return Observable.create { e ->
+
+            val ots: ArrayList<OtCabecera> = ArrayList()
+            val ot: List<OtCabecera> = dataBase.otCabeceraDao().getOtCabeceraActive(i)
+
+            if (ot.isEmpty()){
+                e.onError(Throwable("Usted no tiene pendientes por enviar"))
+                e.onComplete()
+                return@create
+            }
+
+            for (o in ot) {
+                o.details = dataBase.otDetalleDao().getDetalleFkId(o.formatoId)
+                o.equipos = dataBase.otEquipoDao().getEquipoFkId(o.formatoId)
+                o.hojas123 = dataBase.otHoja123Dao().getHoja123FkId(o.formatoId)
+                o.hojas4 = dataBase.otHoja4Dao().getHoja4FkId(o.formatoId)
+                o.hojas567 = dataBase.otHoja56Dao().getHoja56FkId(o.formatoId)
+                o.protocolos = dataBase.otProtocoloDao().getProtocoloFkId(o.formatoId)
+                ots.add(o)
+            }
+
+            e.onNext(ots)
+            e.onComplete()
+        }
+    }
+
+    override fun updateRegistro(messages: Mensaje): Completable {
+        return Completable.fromAction {
+            dataBase.otCabeceraDao().updateCabecera(messages.codigoBase, messages.codigoRetorno)
+        }
+    }
+
+    override fun saveTrabajo(body: RequestBody): Observable<Mensaje> {
+        return apiService.saveTrabajo(body)
     }
 }
