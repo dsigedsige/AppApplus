@@ -86,4 +86,10 @@ interface AppRepository {
 
     fun saveTrabajo(body: RequestBody): Observable<Mensaje>
 
+    fun getGrupoById(id: Int): LiveData<List<Grupo>>
+
+    fun insertOrUpdateHoja(o: OtCabecera): Completable
+
+    fun getHojaById(id: Int): LiveData<OtCabecera>
+
 }

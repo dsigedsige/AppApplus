@@ -49,4 +49,5 @@ interface OtCabeceraDao {
 
     @Query("UPDATE OtCabecera SET identity =:codigoRetorno , active = 0 WHERE formatoId =:codigoBase ")
     fun updateCabecera(codigoBase: Int, codigoRetorno: Int)
+
 }

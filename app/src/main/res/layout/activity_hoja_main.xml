@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.HojaMainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/side_nav_bar"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewCodigo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:text="@string/hello_blank_fragment"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nro Sed">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextNroSed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alimentador">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextAlimentador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:text="Tipo de Sed"
+                android:textColor="@color/colorPrimary"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkConvencional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Convencional" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkCompacta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Compacta" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkAerea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aérea" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkPMI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PMI" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkAnivel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A nivel" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkPedestal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pedestal" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkMonoPoste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monoposte" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkRecloser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ReCloser" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkSubTerranea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SubTerranea" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkBoveda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Boveda" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkBiposte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Biposte" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/chkSBC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:text="SBC" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:textStyle="bold"
+        app:backgroundTint="@color/colorAccent"
+        app:srcCompat="@drawable/ic_save"
+        app:tint="@color/colorWhite" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

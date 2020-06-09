@@ -32,8 +32,8 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.fab1 -> goActivity(1, "Levantamiento de Campo")
             R.id.fab2 -> goActivity(2, "Hoja Equipamiento")
-            R.id.fab3 -> goActivity(3, "Soporte BT")
-            R.id.fab4 -> goActivity(4, "Soporte MT")
+            R.id.fab3 -> goActivity(3, "Soporte MT")
+            R.id.fab4 -> goActivity(4, "Soporte BT")
             R.id.fab5 -> goActivity(5, "Equipo Existente")
             R.id.fab6 -> goActivity(6, "Protocolo NSPT")
             R.id.editTextCombo -> spinnerCombo()
@@ -194,7 +194,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun goActivity(i: Int, title: String) {
         when (i) {
             2 -> startActivity(
-                Intent(this, HojaActivity::class.java)
+                Intent(this, HojaMainActivity::class.java)
                     .putExtra("tipo", i)
                     .putExtra("id", formatoId)
                     .putExtra("otId", otId)

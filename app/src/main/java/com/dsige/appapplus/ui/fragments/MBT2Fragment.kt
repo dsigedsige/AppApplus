@@ -25,14 +25,14 @@ import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.ComboAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_bt_2.*
+import kotlinx.android.synthetic.main.fragment_mbt_2.*
 import javax.inject.Inject
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val ARG_PARAM3 = "param3"
 
-class BT2Fragment : DaggerFragment(), View.OnClickListener {
+class MBT2Fragment : DaggerFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -65,7 +65,7 @@ class BT2Fragment : DaggerFragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_bt_2, container, false)
+        return inflater.inflate(R.layout.fragment_mbt_2, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -127,7 +127,7 @@ class BT2Fragment : DaggerFragment(), View.OnClickListener {
     companion object {
         @JvmStatic
         fun newInstance(param1: Int, param2: String, param3: Int) =
-            BT2Fragment().apply {
+            MBT2Fragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

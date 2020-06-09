@@ -37,6 +37,9 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     internal abstract fun bindPreviewCameraActivity(): PreviewCameraActivity
 
+    @ContributesAndroidInjector
+    internal abstract fun bindMainHojaActivity(): HojaMainActivity
+
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Hoja::class])
     internal abstract fun bindHojaActivity(): HojaActivity
 
@@ -48,5 +51,4 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     internal abstract fun bindHoja56Activity(): Hoja56Activity
-
 }

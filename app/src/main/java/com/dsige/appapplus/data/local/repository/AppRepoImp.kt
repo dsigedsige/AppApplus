@@ -291,4 +291,22 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     override fun saveTrabajo(body: RequestBody): Observable<Mensaje> {
         return apiService.saveTrabajo(body)
     }
+
+    override fun getGrupoById(id: Int): LiveData<List<Grupo>> {
+        return dataBase.grupoDao().getGrupoById(id)
+    }
+
+    override fun insertOrUpdateHoja(o: OtCabecera): Completable {
+        return Completable.fromAction{
+            val c: OtCabecera? = dataBase.otCabeceraDao().getOtCabeceraByIdTask(o.formatoId)
+            if (c == null) {
+                dataBase.otCabeceraDao().insertRegistroTask(o)
+            }else
+                dataBase.otCabeceraDao().updateRegistroTask(o)
+        }
+    }
+
+    override fun getHojaById(id: Int): LiveData<OtCabecera> {
+        return dataBase.otCabeceraDao().getRegistroById(id)
+    }
 }

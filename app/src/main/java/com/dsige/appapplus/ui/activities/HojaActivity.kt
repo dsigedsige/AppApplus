@@ -3,11 +3,15 @@ package com.dsige.appapplus.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.ui.adapters.TabLayoutAdapter
+import com.dsige.appapplus.ui.fragments.HojaMainFragment
 import com.google.android.material.tabs.TabLayout
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_hoja.*
@@ -80,11 +84,12 @@ class HojaActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         formatoId = id
 
-        if (estado == 0) {
-            registroViewModel.generateCabecera(title, tipo, codigo, id, otId)
-        }
-
         fabAdd.setOnClickListener(this)
+
+//        if (estado == 0) {
+//            registroViewModel.generateCabecera(title, tipo, codigo, id, otId)
+//        }
+
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab9))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab10))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab11))

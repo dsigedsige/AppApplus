@@ -29,7 +29,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".ui.activities.Hoja56Activity"></activity>
+        <activity android:name=".ui.activities.HojaMainActivity"></activity>
+        <activity android:name=".ui.activities.Hoja56Activity" />
         <activity android:name=".ui.activities.Hoja4Activity" />
         <activity android:name=".ui.activities.Hoja123Activity" />
         <activity android:name=".ui.activities.HojaActivity" />

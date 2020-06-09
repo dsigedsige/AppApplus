@@ -1,31 +1,45 @@
 package com.dsige.appapplus.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
 import com.dsige.appapplus.R
+import com.dsige.appapplus.data.local.model.Grupo
 import com.dsige.appapplus.data.local.model.OtDetalle
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
+import com.dsige.appapplus.ui.adapters.GrupoAdapter
+import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_bt_1.*
+import kotlinx.android.synthetic.main.fragment_mbt_1.*
 import javax.inject.Inject
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val ARG_PARAM3 = "param3"
 
-class BT1Fragment : DaggerFragment(), View.OnClickListener {
+class MBT1Fragment : DaggerFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fabNext -> formOne()
+            R.id.editTextMaterial -> dialogGroup(2, "Tipo de Material Formato")
+            R.id.editTextFuncion -> dialogGroup(3, "Funcion Formato")
+            R.id.editTextTipo -> dialogGroup(1, "Seccion de Formato")
         }
     }
 
@@ -53,7 +67,7 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_bt_1, container, false)
+        return inflater.inflate(R.layout.fragment_mbt_1, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +85,9 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
         registroViewModel.getFormById(detalleId).observe(viewLifecycleOwner, Observer { de ->
             if (de != null) {
                 d = de
+
+//                editTextSed.setText(de.sed)
+
                 editTextCodigoSoporte.setText(de.codigoSoporte)
                 editTextAlim.setText(de.alim)
                 editTextArmado.setText(de.armado)
@@ -95,6 +112,9 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
 
         fabNext.setOnClickListener(this)
         editTextTamaño.setOnClickListener(this)
+        editTextMaterial.setOnClickListener(this)
+        editTextFuncion.setOnClickListener(this)
+        editTextTipo.setOnClickListener(this)
 
         registroViewModel.success.observe(viewLifecycleOwner, Observer { s ->
             if (s != null) {
@@ -118,7 +138,7 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
         d.armado = editTextArmado.text.toString()
         d.nombreTipoMaterialId = editTextMaterial.text.toString()
         d.tamanio = editTextTamaño.text.toString()
-        d.funcionId = editTextFuncion.text.toString()
+        d.nombreFuncionId = editTextFuncion.text.toString()
         d.redSDS = if (checkSDS.isChecked) "SI" else "NO"
         d.redAP = if (checkAP.isChecked) "SI" else "NO"
         d.redAmbas = if (checkAmbas.isChecked) "SI" else "NO"
@@ -129,7 +149,7 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
         d.seccCod = editTextCod.text.toString()
         d.seccCap = editTextCap.text.toString()
         d.seccFus = editTextFus.text.toString()
-        d.tipoConductorId = editTextTipo.text.toString()
+        d.nombreTipoConductorId = editTextTipo.text.toString()
         d.lvano = editTextLVano.text.toString()
         d.conduSecc = editTextSeccion.text.toString()
         d.conduFases = editTextFase.text.toString()
@@ -139,12 +159,59 @@ class BT1Fragment : DaggerFragment(), View.OnClickListener {
     companion object {
         @JvmStatic
         fun newInstance(param1: Int, param2: String, param3: Int) =
-            BT1Fragment().apply {
+            MBT1Fragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                     putInt(ARG_PARAM3, param3)
                 }
             }
+    }
+
+    private fun dialogGroup(id: Int, title: String) {
+        val builder = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AppTheme))
+        @SuppressLint("InflateParams") val v =
+            LayoutInflater.from(context).inflate(R.layout.dialog_combo, null)
+        val textViewTitulo: TextView = v.findViewById(R.id.textViewTitulo)
+        val recyclerView: RecyclerView = v.findViewById(R.id.recyclerView)
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = layoutManager
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context, DividerItemDecoration.VERTICAL
+            )
+        )
+        builder.setView(v)
+        val dialog = builder.create()
+        dialog.show()
+
+        textViewTitulo.text = title
+
+        val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
+            override fun onItemClick(g: Grupo, view: View, position: Int) {
+                when (g.grupoId) {
+                    2 -> {
+                        d.tipoMaterialId = g.grupoId.toString()
+                        editTextMaterial.setText(g.descripcion)
+                    }
+                    3 -> {
+                        d.funcionId =  g.grupoId.toString()
+                        editTextFuncion.setText(g.descripcion)
+                    }
+                    1 -> {
+                        d.tipoConductorId = g.grupoId.toString()
+                        editTextTipo.setText(g.descripcion)
+                    }
+                }
+                dialog.dismiss()
+            }
+        })
+        recyclerView.adapter = grupoAdapter
+        registroViewModel.getGrupoById(id).observe(this, Observer { g ->
+            if (g != null) {
+                grupoAdapter.addItems(g)
+            }
+        })
     }
 }

@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dsige.appapplus.R
-import com.dsige.appapplus.ui.fragments.BT1Fragment
-import com.dsige.appapplus.ui.fragments.BT2Fragment
-import com.dsige.appapplus.ui.fragments.MT1Fragment
-import com.dsige.appapplus.ui.fragments.MT2Fragment
+import com.dsige.appapplus.ui.fragments.*
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_form_second.*
 
@@ -48,12 +45,12 @@ class FormSecondActivity : DaggerAppCompatActivity() {
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> when (tipo) {
-                    4 -> MT1Fragment.newInstance(id, codigo, detalleId)
-                    else -> BT1Fragment.newInstance(id, codigo, detalleId)
+                    4 -> BMT1Fragment.newInstance(id, codigo, detalleId)
+                    else -> MBT1Fragment.newInstance(id, codigo, detalleId)
                 }
                 1 -> when (tipo) {
-                    4 -> MT2Fragment.newInstance(id, codigo, detalleId)
-                    else -> BT2Fragment.newInstance(id, codigo, detalleId)
+                    4 -> BMT2Fragment.newInstance(id, codigo, detalleId)
+                    else -> MBT2Fragment.newInstance(id, codigo, detalleId)
                 }
                 else -> Fragment()
             }

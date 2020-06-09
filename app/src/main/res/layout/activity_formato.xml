@@ -162,7 +162,7 @@
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
             fab:fab_icon="@drawable/ic_check_black"
-            fab:fab_title="Soporte BT" />
+            fab:fab_title="Soporte MT" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab4"
@@ -171,7 +171,7 @@
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
             fab:fab_icon="@drawable/ic_check_black"
-            fab:fab_title="Soporte MT" />
+            fab:fab_title="Soporte BT" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab5"

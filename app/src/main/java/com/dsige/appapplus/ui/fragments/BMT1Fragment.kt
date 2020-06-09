@@ -14,19 +14,18 @@ import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_mt_2.*
+import kotlinx.android.synthetic.main.fragment_bmt_1.*
 import javax.inject.Inject
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val ARG_PARAM3 = "param3"
 
-class MT2Fragment : DaggerFragment(), View.OnClickListener {
+class BMT1Fragment : DaggerFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.fabBefore -> pager.currentItem = 0
-            R.id.fabSave -> formTwo()
+            R.id.fabNext -> formOne()
         }
     }
 
@@ -36,7 +35,9 @@ class MT2Fragment : DaggerFragment(), View.OnClickListener {
     private var formatoId: Int = 0
     private var codigo: String = ""
     private var detalleId: Int = 0
+
     private lateinit var pager: ViewPager2
+
     lateinit var d: OtDetalle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +55,7 @@ class MT2Fragment : DaggerFragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_mt_2, container, false)
+        return inflater.inflate(R.layout.fragment_bmt_1, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,46 +73,64 @@ class MT2Fragment : DaggerFragment(), View.OnClickListener {
         registroViewModel.getFormById(detalleId).observe(viewLifecycleOwner, Observer { de ->
             if (de != null) {
                 d = de
-                editTextPastoralC.setText(de.pastotalC)
-                editTextPastoralFG.setText(de.pastotalGF)
-                editTextEquipoTipo.setText(de.equipoTipo)
-                editTextEquipoModelo.setText(de.equipoModelo)
-                editTextLamparaTipo.setText(de.lampara)
-                editTextDireccion.setText(de.direccion)
+                editTextAlimentador.setText(de.alim)
+                editTextAPC.setText(de.codigoSoporte)
+                editTextVIA.setText(de.codigoVia)
+                editTextLlave.setText(de.llave)
+                editTextBT.setText(de.sistemas)
+                editTextSoporte.setText(de.nombreTipoMaterialId)
+                editTextTamaño.setText(de.tamanio)
+                editTextSP.setText(de.redSDS)
+                editTextAP.setText(de.redAP)
+                editTextMT.setText(de.redAmbas)
+                editTextCaja.setText(de.cajaDeriva)
+                editTextV.setText(de.retenidaV)
+                editTextS.setText(de.retenidaS)
             }
         })
 
-        fabBefore.setOnClickListener(this)
-        fabSave.setOnClickListener(this)
+        fabNext.setOnClickListener(this)
+        editTextSoporte.setOnClickListener(this)
+        editTextTamaño.setOnClickListener(this)
+
+        registroViewModel.success.observe(viewLifecycleOwner, Observer { s ->
+            if (s != null) {
+                Util.toastMensaje(context!!, s)
+                pager.currentItem = 1
+            }
+        })
 
         registroViewModel.error.observe(viewLifecycleOwner, Observer { s ->
             if (s != null) {
                 Util.toastMensaje(context!!, s)
             }
         })
-
-        registroViewModel.success.observe(viewLifecycleOwner, Observer { s ->
-            if (s != null) {
-                activity!!.finish()
-            }
-        })
     }
 
-    private fun formTwo() {
+    private fun formOne() {
         d.formatoDetalleId = detalleId
-        d.pastotalC = editTextPastoralC.text.toString()
-        d.pastotalGF = editTextPastoralFG.text.toString()
-        d.equipoTipo = editTextEquipoTipo.text.toString()
-        d.equipoModelo = editTextEquipoModelo.text.toString()
-        d.lampara = editTextLamparaTipo.text.toString()
-        d.direccion = editTextDireccion.text.toString()
-        registroViewModel.validateFormTwo(d)
+        d.formatoId = formatoId
+        d.alim = editTextAlimentador.text.toString()
+        d.codigoSoporte = editTextAPC.text.toString()
+        d.codigoVia = editTextVIA.text.toString()
+        d.llave = editTextLlave.text.toString()
+        d.sistemas = editTextBT.text.toString()
+        d.nombreTipoMaterialId = editTextSoporte.text.toString()
+        d.tamanio = editTextTamaño.text.toString()
+        d.redSDS = editTextSP.text.toString()
+        d.redAP = editTextAP.text.toString()
+        d.redAmbas = editTextMT.text.toString()
+        d.cajaDeriva = editTextCaja.text.toString()
+        d.retenidaV = editTextV.text.toString()
+        d.retenidaS = editTextS.text.toString()
+
+        registroViewModel.validateFormOne(d)
     }
 
     companion object {
         @JvmStatic
         fun newInstance(param1: Int, param2: String, param3: Int) =
-            MT2Fragment().apply {
+            BMT1Fragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

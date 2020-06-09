@@ -150,4 +150,35 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
             })
     }
+
+    fun getGrupoById(id: Int): LiveData<List<Grupo>> {
+        return roomRepository.getGrupoById(id)
+    }
+
+    fun validateHoja(o: OtCabecera) {
+        insertOrUpdateHoja(o)
+    }
+
+    private fun insertOrUpdateHoja(o: OtCabecera) {
+        roomRepository.insertOrUpdateHoja(o)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = "Generado"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
+    }
+
+    fun getHojaById(id: Int): LiveData<OtCabecera> {
+        return roomRepository.getHojaById(id)
+    }
 }

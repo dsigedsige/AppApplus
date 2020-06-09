@@ -35,4 +35,8 @@ interface OnItemClickListener {
         fun onItemClick56(d: OtHoja56, view: View, position: Int)
     }
 
+    interface GrupoListener{
+        fun onItemClick(g: Grupo, view: View, position: Int)
+    }
+
 }
