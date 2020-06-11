@@ -35,7 +35,7 @@ class GrupoAdapter(var listener: OnItemClickListener.GrupoListener) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(m: Grupo, listener: OnItemClickListener.GrupoListener) = with(itemView) {
-            textViewNombre.text = m.nombre
+            textViewNombre.text = m.descripcion
             itemView.setOnClickListener { v -> listener.onItemClick(m, v, adapterPosition) }
         }
     }

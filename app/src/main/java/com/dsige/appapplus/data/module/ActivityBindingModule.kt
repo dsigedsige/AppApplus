@@ -25,6 +25,9 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Form::class])
     internal abstract fun bindFormRevelamientoActivity(): FormSecondActivity
 
+    @ContributesAndroidInjector
+    internal abstract fun bindProtocoloMainActivity(): ProtocoloMainActivity
+
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Protocolo::class])
     internal abstract fun bindProtocoloActivity(): ProtocoloActivity
 

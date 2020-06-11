@@ -38,6 +38,129 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateEquipo(e: OtEquipo) {
+
+        when (e.tipoEquipo) {
+            1 -> {
+                if (e.nroKardex.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Kardex"
+                    return
+                }
+                if (e.nroFabrica.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Fabrica"
+                    return
+                }
+                if (e.sedUbicacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Sed"
+                    return
+                }
+                if (e.celdaUbicacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Celda"
+                    return
+                }
+                if (e.potenciaKVA.isEmpty()) {
+                    mensajeError.value = "Ingrese Potencia KVA"
+                    return
+                }
+                if (e.anio.isEmpty()) {
+                    mensajeError.value = "Ingrese Año"
+                    return
+                }
+                if (e.marca.isEmpty()) {
+                    mensajeError.value = "Ingrese Marca"
+                    return
+                }
+                if (e.tipo.isEmpty()) {
+                    mensajeError.value = "Ingrese Tipo"
+                    return
+                }
+                if (e.destino.isEmpty()) {
+                    mensajeError.value = "Ingrese Destino"
+                    return
+                }
+                if (e.observacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Observación"
+                    return
+                }
+            }
+            2 -> {
+                if (e.nroKardex.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Kardex"
+                    return
+                }
+                if (e.nroFabrica.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Fabrica"
+                    return
+                }
+                if (e.sedUbicacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Sed"
+                    return
+                }
+                if (e.celdaUbicacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Celda"
+                    return
+                }
+                if (e.funcionCelda.isEmpty()) {
+                    mensajeError.value = "Ingrese Función de Celda"
+                    return
+                }
+                if (e.enlace.isEmpty()) {
+                    mensajeError.value = "Ingrese Enlace"
+                    return
+                }
+                if (e.destino.isEmpty()) {
+                    mensajeError.value = "Ingrese Destino"
+                    return
+                }
+                if (e.observacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Observación"
+                    return
+                }
+            }
+            3 -> {
+                if (e.equipo.isEmpty()) {
+                    mensajeError.value = "Ingrese Equipo"
+                    return
+                }
+                if (e.nroKardex.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Kardex"
+                    return
+                }
+                if (e.marca.isEmpty()) {
+                    mensajeError.value = "Ingrese Marca"
+                    return
+                }
+                if (e.tipo.isEmpty()) {
+                    mensajeError.value = "Ingrese Tipo"
+                    return
+                }
+            }
+            4 -> {
+                if (e.nroKardex.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Kardex"
+                    return
+                }
+                if (e.nroFabrica.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro Fabrica"
+                    return
+                }
+                if (e.nroPrc.isEmpty()) {
+                    mensajeError.value = "Ingrese Nro PRC"
+                    return
+                }
+                if (e.soporte.isEmpty()) {
+                    mensajeError.value = "Ingrese Soporte"
+                    return
+                }
+                if (e.destino.isEmpty()) {
+                    mensajeError.value = "Ingrese Destino"
+                    return
+                }
+                if (e.observacion.isEmpty()) {
+                    mensajeError.value = "Ingrese Observaciones"
+                    return
+                }
+            }
+        }
         insertOrUpdteOtEquipo(e)
     }
 

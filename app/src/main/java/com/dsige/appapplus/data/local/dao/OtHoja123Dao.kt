@@ -37,4 +37,7 @@ interface OtHoja123Dao {
 
     @Query("SELECT * FROM OtHoja123 WHERE formatoId =:id")
     fun getHoja123FkId(id: Int): List<OtHoja123>
+
+    @Query("SELECT * FROM OtHoja123 WHERE formatoId =:id AND item =:t ")
+    fun getHoja123ByItem(id: Int, t: Int): LiveData<OtHoja123>
 }

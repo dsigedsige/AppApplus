@@ -80,12 +80,6 @@ class Hoja123Activity : DaggerAppCompatActivity(), View.OnClickListener {
                             editText9.setText(q.rele)
                             editText10.setText(q.irele)
                         }
-                        3 -> {
-                            editText1.setText(q.equipo)
-                            editText2.setText(q.kardex)
-                            editText3.setText(q.marca)
-                            editText4.setText(q.tipo)
-                        }
                     }
                 }
             })
@@ -135,20 +129,6 @@ class Hoja123Activity : DaggerAppCompatActivity(), View.OnClickListener {
                 layout9.hint = "Rele"
                 layout10.hint = "Irele"
             }
-            3 -> {
-                layout1.hint = "Equipo"
-                layout2.hint = "Nro Kardex"
-                layout3.hint = "Marca"
-                layout4.hint = "Tipo"
-                checkTFijo.visibility = View.GONE
-                checkTExtraib.visibility = View.GONE
-                layout5.visibility = View.GONE
-                layout6.visibility = View.GONE
-                layout7.visibility = View.GONE
-                layout8.visibility = View.GONE
-                layout9.visibility = View.GONE
-                layout10.visibility = View.GONE
-            }
         }
     }
 
@@ -176,13 +156,7 @@ class Hoja123Activity : DaggerAppCompatActivity(), View.OnClickListener {
                 o.rele = editText9.text.toString()
                 o.irele = editText10.text.toString()
             }
-            3 -> {
-                o.equipo = editText1.text.toString()
-                o.kardex = editText2.text.toString()
-                o.marca = editText3.text.toString()
-                o.tipo = editText4.text.toString()
-            }
         }
-        hojaViewModel.validateHoja123(o)
+        hojaViewModel.validateHoja12(o)
     }
 }

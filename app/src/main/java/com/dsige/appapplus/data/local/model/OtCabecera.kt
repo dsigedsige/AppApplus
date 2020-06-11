@@ -40,6 +40,11 @@ open class OtCabecera {
     var boveda: String = ""
     var biposte: String = ""
     var sbc: String = ""
+    var soporte:String = ""
+    var setProtocolo : String = ""
+    var cuadrilla : String = ""
+    var lamina : String = ""
+    var letra : String = ""
 
 
     var active: Int = 0 // 1-> por enviar 0 -> enviado

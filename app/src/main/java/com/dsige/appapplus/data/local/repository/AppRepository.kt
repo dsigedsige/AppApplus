@@ -88,8 +88,14 @@ interface AppRepository {
 
     fun getGrupoById(id: Int): LiveData<List<Grupo>>
 
-    fun insertOrUpdateHoja(o: OtCabecera): Completable
+    fun insertOrUpdateCabecera(o: OtCabecera): Completable
 
     fun getHojaById(id: Int): LiveData<OtCabecera>
+
+    fun getHoja123ByItem(item: Int, formatoId: Int): LiveData<OtHoja123>
+
+    fun getHoja567ByItem(item: Int, formatoId: Int): LiveData<OtHoja56>
+
+    fun getHojaByItem(item: Int, formatoId: Int): LiveData<Class<*>>
 
 }

@@ -296,7 +296,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         return dataBase.grupoDao().getGrupoById(id)
     }
 
-    override fun insertOrUpdateHoja(o: OtCabecera): Completable {
+    override fun insertOrUpdateCabecera(o: OtCabecera): Completable {
         return Completable.fromAction{
             val c: OtCabecera? = dataBase.otCabeceraDao().getOtCabeceraByIdTask(o.formatoId)
             if (c == null) {
@@ -308,5 +308,20 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun getHojaById(id: Int): LiveData<OtCabecera> {
         return dataBase.otCabeceraDao().getRegistroById(id)
+    }
+
+    override fun getHoja123ByItem(item: Int, formatoId: Int): LiveData<OtHoja123> {
+       return dataBase.otHoja123Dao().getHoja123ByItem(formatoId, item)
+    }
+
+    override fun getHoja567ByItem(item: Int, formatoId: Int): LiveData<OtHoja56> {
+      return dataBase.otHoja56Dao().getHoja56ByItem(formatoId, item)
+    }
+
+    override fun getHojaByItem(item: Int, formatoId: Int): LiveData<Class<*>> {
+        return when (item) {
+            3 -> dataBase.otHoja123Dao().getHoja123ByItem(formatoId, item)
+            else -> dataBase.otHoja56Dao().getHoja56ByItem(formatoId, item)
+        } as LiveData<Class<*>>
     }
 }

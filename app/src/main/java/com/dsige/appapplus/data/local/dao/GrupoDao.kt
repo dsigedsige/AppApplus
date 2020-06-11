@@ -22,7 +22,7 @@ interface GrupoDao {
     @Query("SELECT * FROM Grupo")
     fun getGrupo(): LiveData<Grupo>
 
-    @Query("SELECT * FROM Grupo WHERE grupoId =:id")
+    @Query("SELECT * FROM Grupo WHERE detalleId =:id")
     fun getGrupoById(id: Int): LiveData<List<Grupo>>
 
     @Query("DELETE FROM Grupo")

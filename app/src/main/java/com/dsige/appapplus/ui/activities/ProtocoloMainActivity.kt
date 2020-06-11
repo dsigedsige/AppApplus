@@ -10,10 +10,10 @@ import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_hoja_main.*
+import kotlinx.android.synthetic.main.activity_protocolo_main.*
 import javax.inject.Inject
 
-class HojaMainActivity : DaggerAppCompatActivity() {
+class ProtocoloMainActivity : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -23,7 +23,7 @@ class HojaMainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hoja_main)
+        setContentView(R.layout.activity_protocolo_main)
 
         o = OtCabecera()
 
@@ -50,22 +50,15 @@ class HojaMainActivity : DaggerAppCompatActivity() {
         textViewCodigo.text = codigo
 
         registroViewModel.getHojaById(id).observe(this, Observer { ot ->
-            if (ot != null){
+            if (ot != null) {
                 o = ot
                 editTextNroSed.setText(ot.sed)
+                editTextSoporte.setText(ot.soporte)
+                editTextSet.setText(ot.setProtocolo)
                 editTextAlimentador.setText(ot.alimentador)
-                if (ot.convencional == "1") chkConvencional.isChecked else !chkConvencional.isChecked
-                if (ot.compacta == "1") chkCompacta.isChecked else !chkCompacta.isChecked
-                if (ot.aerea == "1") chkAerea.isChecked else !chkAerea.isChecked
-                if (ot.pmi == "1") chkPMI.isChecked else !chkPMI.isChecked
-                if (ot.aNivel == "1") chkAnivel.isChecked else !chkAnivel.isChecked
-                if (ot.pedestal == "1") chkPedestal.isChecked else !chkPedestal.isChecked
-                if (ot.monoposte == "1") chkMonoPoste.isChecked else !chkMonoPoste.isChecked
-                if (ot.reCloser == "1") chkRecloser.isChecked else !chkRecloser.isChecked
-                if (ot.subTerranea == "1") chkSubTerranea.isChecked else !chkSubTerranea.isChecked
-                if (ot.convencional == "1") chkBoveda.isChecked else !chkBoveda.isChecked
-                if (ot.biposte == "1") chkBiposte.isChecked else !chkBiposte.isChecked
-                if (ot.sbc == "1") chkSBC.isChecked else !chkSBC.isChecked
+                editTextCuadricula.setText(ot.cuadrilla)
+                editTextLamina.setText(ot.lamina)
+                editTextLetra.setText(ot.letra)
             }
         })
 
@@ -77,29 +70,20 @@ class HojaMainActivity : DaggerAppCompatActivity() {
             o.otId = otId
             o.active = 1
             o.sed = editTextNroSed.text.toString()
+            o.soporte = editTextSoporte.text.toString()
+            o.setProtocolo = editTextSet.text.toString()
             o.alimentador = editTextAlimentador.text.toString()
-
-            o.convencional = if (chkConvencional.isChecked) "1" else "0"
-            o.compacta = if (chkCompacta.isChecked) "1" else "0"
-            o.aerea = if (chkAerea.isChecked) "1" else "0"
-            o.pmi = if (chkPMI.isChecked) "1" else "0"
-            o.aNivel = if (chkAnivel.isChecked) "1" else "0"
-            o.pedestal = if (chkPedestal.isChecked) "1" else "0"
-            o.monoposte = if (chkMonoPoste.isChecked) "1" else "0"
-            o.reCloser = if (chkRecloser.isChecked) "1" else "0"
-            o.subTerranea = if (chkSubTerranea.isChecked) "1" else "0"
-            o.boveda = if (chkBoveda.isChecked) "1" else "0"
-            o.biposte = if (chkBiposte.isChecked) "1" else "0"
-            o.sbc = if (chkSBC.isChecked) "1" else "0"
-
-            registroViewModel.validateHoja(o)
-            Util.toastMensaje(this,"Generando...")
+            o.cuadrilla = editTextCuadricula.text.toString()
+            o.lamina = editTextLamina.text.toString()
+            o.letra = editTextLetra.text.toString()
+            registroViewModel.validateProtocolo(o)
+            Util.toastMensaje(this, "Generando...")
         }
 
         registroViewModel.success.observe(this, Observer { s ->
             if (s != null) {
                 startActivity(
-                    Intent(this@HojaMainActivity, HojaActivity::class.java)
+                    Intent(this@ProtocoloMainActivity, ProtocoloActivity::class.java)
                         .putExtra("id", id)
                         .putExtra("otId", otId)
                         .putExtra("title", title)

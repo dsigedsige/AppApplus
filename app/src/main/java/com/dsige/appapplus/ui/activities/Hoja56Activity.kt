@@ -1,14 +1,26 @@
 package com.dsige.appapplus.ui.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
+import com.dsige.appapplus.data.local.model.Grupo
 import com.dsige.appapplus.data.local.model.OtHoja56
 import com.dsige.appapplus.data.viewModel.HojaViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
+import com.dsige.appapplus.ui.adapters.GrupoAdapter
+import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_hoja56.*
 import javax.inject.Inject
@@ -16,7 +28,10 @@ import javax.inject.Inject
 class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
-        formHoja()
+        when (v.id) {
+            R.id.fab -> formHoja()
+            R.id.editTextTipo -> dialogGroup()
+        }
     }
 
     @Inject
@@ -55,47 +70,28 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
         when (t) {
             5 -> textViewTitle.text = String.format("Tablero SP")
             6 -> textViewTitle.text = String.format("Tablero AP")
-            else -> {
-                textViewTitle.visibility = View.GONE
-                layoutCheck.visibility = View.GONE
-                layoutCombo.visibility = View.GONE
-                layout1.hint = "Nro Medidor"
-                layout2.hint = "Foto Célula"
-                layout3.hint = "Contactor"
-                layout4.hint = "Int. Horario"
-            }
         }
 
         if (id != 0) {
             hojaViewModel.getHoja56ById(id).observe(this, Observer { q ->
                 if (q != null) {
                     o.hoja56Id = q.hoja56Id
-                    when (t) {
-                        5, 6 -> {
-                            when (q.tipoTablero) {
-                                1 -> chkAereo.isChecked = true
-                                2 -> chkNivel.isChecked = true
-                            }
-                            editText1.setText(q.nroMedidor)
-                            editTextTipo.setText(q.idtipo.toString())
-                            editText2.setText(q.baseMovil)
-                            editText3.setText(q.fusible)
-                            editText4.setText(q.seccion)
-                            editText5.setText(q.observacion)
-                        }
-                        7 -> {
-                            editText1.setText(q.nroMedidor)
-                            editText2.setText(q.fotocelula)
-                            editText3.setText(q.fusible)
-                            editText4.setText(q.seccion)
-                            editText5.setText(q.observacion)
-                        }
+                    when (q.tipoTablero) {
+                        1 -> chkAereo.isChecked = true
+                        2 -> chkNivel.isChecked = true
                     }
+                    editText1.setText(q.nroMedidor)
+                    editTextTipo.setText(q.nombreTipoId)
+                    editText2.setText(q.baseMovil)
+                    editText3.setText(q.fusible)
+                    editText4.setText(q.seccion)
+                    editText5.setText(q.observacion)
                 }
             })
         }
 
         fab.setOnClickListener(this)
+        editTextTipo.setOnClickListener(this)
 
         hojaViewModel.success.observe(this, Observer { s ->
             if (s != null) {
@@ -114,28 +110,51 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun formHoja() {
         o.formatoId = formatoId
         o.item = tipo
-
-        when (tipo) {
-            5, 6 -> {
-                o.tipoTablero = when {
-                    chkAereo.isChecked -> 1
-                    chkNivel.isChecked -> 2
-                    else -> 0
-                }
-                o.nroMedidor = editText1.text.toString()
-                o.baseMovil = editText2.text.toString()
-                o.fusible = editText3.text.toString()
-                o.seccion = editText4.text.toString()
-                o.observacion = editText5.text.toString()
-            }
-            7 -> {
-                o.nroMedidor = editText1.text.toString()
-                o.fotocelula = editText2.text.toString()
-                o.fusible = editText3.text.toString()
-                o.seccion = editText4.text.toString()
-                o.observacion = editText5.text.toString()
-            }
+        o.tipoTablero = when {
+            chkAereo.isChecked -> 1
+            chkNivel.isChecked -> 2
+            else -> 0
         }
+        o.nroMedidor = editText1.text.toString()
+        o.baseMovil = editText2.text.toString()
+        o.fusible = editText3.text.toString()
+        o.seccion = editText4.text.toString()
+        o.observacion = editText5.text.toString()
         hojaViewModel.validateHoja56(o)
+    }
+
+    private fun dialogGroup() {
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
+        @SuppressLint("InflateParams") val v =
+            LayoutInflater.from(this).inflate(R.layout.dialog_combo, null)
+        val textViewTitulo: TextView = v.findViewById(R.id.textViewTitulo)
+        val recyclerView: RecyclerView = v.findViewById(R.id.recyclerView)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = layoutManager
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context, DividerItemDecoration.VERTICAL
+            )
+        )
+        builder.setView(v)
+        val dialog = builder.create()
+        dialog.show()
+
+        textViewTitulo.text = String.format("Tipo")
+
+        val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
+            override fun onItemClick(g: Grupo, view: View, position: Int) {
+                o.idtipo = g.grupoId
+                editTextTipo.setText(g.descripcion)
+                dialog.dismiss()
+            }
+        })
+        recyclerView.adapter = grupoAdapter
+        hojaViewModel.getGrupoById(8).observe(this, Observer { g ->
+            if (g != null) {
+                grupoAdapter.addItems(g)
+            }
+        })
     }
 }

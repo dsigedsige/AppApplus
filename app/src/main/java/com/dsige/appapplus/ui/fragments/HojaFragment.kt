@@ -115,7 +115,6 @@ class HojaFragment : DaggerFragment() {
         })
     }
 
-
     companion object {
         @JvmStatic
         fun newInstance(param1: Int, param2: Int) =

@@ -106,6 +106,11 @@ class HojaActivity : DaggerAppCompatActivity(), View.OnClickListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 position = tab.position + 1
                 viewPager.currentItem = tab.position
+                when(position){
+                    3,7 -> fabAdd.visibility =  View.GONE
+                    else -> fabAdd.visibility =  View.VISIBLE
+                }
+
                 name = when (position) {
                     1 -> "Celda 10KV"
                     2 -> "Equipo 10KV"

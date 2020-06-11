@@ -10,6 +10,9 @@ abstract class FragmentBindingModule {
     abstract class Hoja {
         @ContributesAndroidInjector
         internal abstract fun providHojaFragment(): HojaFragment
+
+        @ContributesAndroidInjector
+        internal abstract fun providHojaDetalleFragment(): HojaDetalleFragment
     }
 
     @Module
@@ -22,16 +25,16 @@ abstract class FragmentBindingModule {
     @Module
     abstract class Form {
         @ContributesAndroidInjector
-        internal abstract fun providOneMTFragment(): MT1Fragment
+        internal abstract fun providBMT1Fragment(): BMT1Fragment
 
         @ContributesAndroidInjector
-        internal abstract fun providTwoMTFragment(): MT2Fragment
+        internal abstract fun providBMT2Fragment(): BMT2Fragment
 
         @ContributesAndroidInjector
-        internal abstract fun providBT1Fragment(): BT1Fragment
+        internal abstract fun providMBT1Fragment(): MBT1Fragment
 
         @ContributesAndroidInjector
-        internal abstract fun providBT2Fragment(): BT2Fragment
+        internal abstract fun providMBT2Fragment(): MBT2Fragment
     }
 
     @Module

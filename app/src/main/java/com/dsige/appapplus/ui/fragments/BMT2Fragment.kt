@@ -105,7 +105,7 @@ class BMT2Fragment : DaggerFragment(), View.OnClickListener {
         d.equipoModelo = editTextEquipoModelo.text.toString()
         d.lampara = editTextLamparaTipo.text.toString()
         d.direccion = editTextDireccion.text.toString()
-        registroViewModel.validateFormTwo(d)
+        registroViewModel.validateFormBTTwo(d)
     }
 
     companion object {

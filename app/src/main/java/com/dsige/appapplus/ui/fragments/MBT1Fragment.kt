@@ -153,7 +153,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
         d.lvano = editTextLVano.text.toString()
         d.conduSecc = editTextSeccion.text.toString()
         d.conduFases = editTextFase.text.toString()
-        registroViewModel.validateFormOne(d)
+        registroViewModel.validateFormMTOne(d)
     }
 
     companion object {
@@ -190,7 +190,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
 
         val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
             override fun onItemClick(g: Grupo, view: View, position: Int) {
-                when (g.grupoId) {
+                when (id) {
                     2 -> {
                         d.tipoMaterialId = g.grupoId.toString()
                         editTextMaterial.setText(g.descripcion)

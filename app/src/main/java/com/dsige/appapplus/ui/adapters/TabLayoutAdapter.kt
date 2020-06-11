@@ -33,12 +33,11 @@ abstract class TabLayoutAdapter {
             return when (position) {
                 0 -> HojaFragment.newInstance(id, position + 1)
                 1 -> HojaFragment.newInstance(id, position + 1)
-                2 -> HojaFragment.newInstance(id, position + 1)
+                2 -> HojaDetalleFragment.newInstance(id, position + 1)
                 3 -> HojaFragment.newInstance(id, position + 1)
                 4 -> HojaFragment.newInstance(id, position + 1)
                 5 -> HojaFragment.newInstance(id, position + 1)
-                6 -> HojaFragment.newInstance(id, position + 1)
-                7 -> HojaFragment.newInstance(id, position + 1)
+                6 -> HojaDetalleFragment.newInstance(id, position + 1)
                 else -> Fragment()
             }
         }

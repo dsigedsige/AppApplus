@@ -124,7 +124,7 @@ class BMT1Fragment : DaggerFragment(), View.OnClickListener {
         d.retenidaV = editTextV.text.toString()
         d.retenidaS = editTextS.text.toString()
 
-        registroViewModel.validateFormOne(d)
+        registroViewModel.validateFormBTOne(d)
     }
 
     companion object {

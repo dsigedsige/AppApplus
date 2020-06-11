@@ -82,7 +82,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Sistema BT">
+                android:hint="Sistema MT">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextBT"
@@ -179,7 +179,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <TextView
                 android:layout_width="wrap_content"
