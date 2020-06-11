@@ -98,4 +98,6 @@ interface AppRepository {
 
     fun getHojaByItem(item: Int, formatoId: Int): LiveData<Class<*>>
 
+    fun getEquipoDetalle(tipo: Int, formatoId: Int): LiveData<OtEquipo>
+
 }

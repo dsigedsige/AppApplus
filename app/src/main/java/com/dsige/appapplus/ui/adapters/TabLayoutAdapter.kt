@@ -14,7 +14,7 @@ abstract class TabLayoutAdapter {
             return when (position) {
                 0 -> EquipoFragment.newInstance(position + 1, id, "Transformadores")
                 1 -> EquipoFragment.newInstance(position + 1, id, "Maniobra")
-                2 -> EquipoFragment.newInstance(position + 1, id, "Protección")
+                2 -> EquipoDetalleFragment.newInstance(position + 1, id)
                 3 -> EquipoFragment.newInstance(position + 1, id, "Redes Areas")
                 else -> Fragment()
             }

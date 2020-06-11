@@ -191,4 +191,8 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     fun getEquipoById(id: Int): LiveData<OtEquipo> {
         return roomRepository.getEquipoById(id)
     }
+
+    fun getEquipoDetalle(tipo: Int, formatoId: Int): LiveData<OtEquipo> {
+        return roomRepository.getEquipoDetalle(tipo, formatoId)
+    }
 }

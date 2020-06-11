@@ -49,4 +49,7 @@ interface OtEquipoDao {
 
     @Query("SELECT * FROM OtEquipo WHERE  formatoId =:id")
     fun getEquipoFkId(id: Int): List<OtEquipo>
+
+    @Query("SELECT * FROM OtEquipo WHERE  formatoId =:id AND tipoEquipo =:t")
+    fun getEquipoDetalle(t: Int, id: Int): LiveData<OtEquipo>
 }

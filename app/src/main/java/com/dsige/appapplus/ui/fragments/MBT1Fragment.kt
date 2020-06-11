@@ -39,7 +39,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
             R.id.fabNext -> formOne()
             R.id.editTextMaterial -> dialogGroup(2, "Tipo de Material Formato")
             R.id.editTextFuncion -> dialogGroup(3, "Funcion Formato")
-            R.id.editTextTipo -> dialogGroup(1, "Seccion de Formato")
+            R.id.editTextTipo -> dialogGroup(4, "Seccion de Formato")
         }
     }
 

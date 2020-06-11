@@ -324,4 +324,8 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             else -> dataBase.otHoja56Dao().getHoja56ByItem(formatoId, item)
         } as LiveData<Class<*>>
     }
+
+    override fun getEquipoDetalle(tipo: Int, formatoId: Int): LiveData<OtEquipo> {
+        return dataBase.otEquipoDao().getEquipoDetalle(tipo,formatoId)
+    }
 }

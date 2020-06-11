@@ -56,6 +56,9 @@ abstract class FragmentBindingModule {
     abstract class Equipo {
         @ContributesAndroidInjector
         internal abstract fun providEquipoFragment(): EquipoFragment
+
+        @ContributesAndroidInjector
+        internal abstract fun providEquipoDetalleFragment(): EquipoDetalleFragment
     }
 
     @Module
