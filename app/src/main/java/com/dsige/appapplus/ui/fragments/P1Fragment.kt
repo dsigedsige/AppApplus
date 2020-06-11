@@ -112,7 +112,7 @@ class P1Fragment : DaggerFragment(), View.OnClickListener {
         o.aHumeda1 = editTextHumedaA1.text.toString()
         o.aHumeda2 = editTextHumedaA2.text.toString()
         o.aHumeda3 = editTextHumedaA3.text.toString()
-        protocoloViewModel.validateProtocolo(o)
+        protocoloViewModel.validateProtocoloP1(o)
     }
 
     companion object {

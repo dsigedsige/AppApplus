@@ -119,7 +119,7 @@ class P3Fragment : DaggerFragment(), View.OnClickListener {
         o.mtCompuesto = editTextMTCompuesto.text.toString()
 
         o.observaciones = editTextObservacion.text.toString()
-        protocoloViewModel.validateProtocolo(o)
+        protocoloViewModel.validateProtocoloP3(o)
     }
 
 
