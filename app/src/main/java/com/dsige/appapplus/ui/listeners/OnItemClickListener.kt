@@ -39,4 +39,8 @@ interface OnItemClickListener {
         fun onItemClick(g: Grupo, view: View, position: Int)
     }
 
+    interface EstadoListener{
+        fun onItemClick(e: Estado, view: View, position: Int)
+    }
+
 }

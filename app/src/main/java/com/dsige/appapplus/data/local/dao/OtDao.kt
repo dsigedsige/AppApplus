@@ -32,6 +32,6 @@ interface OtDao {
     @Query("SELECT * FROM Ot")
     fun getOtByTipoPaging(): DataSource.Factory<Int, Ot>
 
-    @Query("SELECT * FROM Ot WHERE estado =:e")
-    fun getOtByTipoPaging(e: String): DataSource.Factory<Int, Ot>
+    @Query("SELECT * FROM Ot WHERE estadoId =:id")
+    fun getOtByTipoPaging(id: Int): DataSource.Factory<Int, Ot>
 }

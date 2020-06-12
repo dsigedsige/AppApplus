@@ -27,6 +27,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_formato.*
+import java.util.*
 import javax.inject.Inject
 
 class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
@@ -49,6 +50,8 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     private var otId: Int = 0
     private var formatoId: Int = 0
+    lateinit var builder: AlertDialog.Builder
+    var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +103,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                             .putExtra("codigo", textView1.text)
                             .putExtra("estado", 1)
                     )
-                    3, 4 -> generateCabecera(
+                    3, 4, 5 -> generateCabecera(
                         r.nombreTipoFormato,
                         r.tipoFormatoId,
                         r.formatoId,
@@ -108,15 +111,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                         r.otId,
                         1
                     )
-                    5 -> startActivity(
-                        Intent(this@FormatoActivity, EquipoMainActivity::class.java)
-                            .putExtra("id", r.formatoId)
-                            .putExtra("otId", r.otId)
-                            .putExtra("title", r.nombreTipoFormato)
-                            .putExtra("tipo", r.tipoFormatoId)
-                            .putExtra("codigo", textView1.text)
-                            .putExtra("estado", 1)
-                    )
+//                    5 -> startActivity(
+//                        Intent(this@FormatoActivity, EquipoMainActivity::class.java)
+//                            .putExtra("id", r.formatoId)
+//                            .putExtra("otId", r.otId)
+//                            .putExtra("title", r.nombreTipoFormato)
+//                            .putExtra("tipo", r.tipoFormatoId)
+//                            .putExtra("codigo", textView1.text)
+//                            .putExtra("estado", 1)
+//                    )
                     6 -> startActivity(
                         Intent(this@FormatoActivity, ProtocoloMainActivity::class.java)
                             .putExtra("id", r.formatoId)
@@ -150,23 +153,24 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 1
         })
 
-//        val b = FloatingActionButton(this)
-//        b.title = "Camara"
-//        b.colorNormal = ContextCompat.getColor(this, R.color.colorWhite)
-//        b.colorPressed = ContextCompat.getColor(this, R.color.white_pressed)
-//        b.setIconDrawable(resources.getDrawable(R.drawable.ic_camera,resources.newTheme()))
-//        fab.addButton(b)
-
-        registroViewModel.success.observe(this, Observer { s ->
+        registroViewModel.mensaje.observe(this, Observer { s ->
             if (s != null) {
+                closeDialog()
                 startActivity(
-                    Intent(this, FormMainActivity::class.java)
-                        .putExtra("tipo", s.toInt())
-                        .putExtra("id", formatoId)
+                    Intent(
+                        this,
+                        if (s.mensaje.toInt() == 5) EquipoMainActivity::class.java else FormMainActivity::class.java
+                    )
+                        .putExtra("tipo", s.mensaje.toInt())
+                        .putExtra("id", s.codigo)
                         .putExtra("otId", otId)
                         .putExtra(
                             "title",
-                            if (s == "3") "Soporte MT" else "Soporte BT"
+                            when (s.mensaje) {
+                                "3" -> "Soporte MT"
+                                "4" -> "Soporte BT"
+                                else -> "Equipo Existente"
+                            }
                         )
                         .putExtra("codigo", textView1.text.toString())
                         .putExtra("estado", 1)
@@ -179,6 +183,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 Util.toastMensaje(this, s)
             }
         })
+
+//        val b = FloatingActionButton(this)
+//        b.title = "Camara"
+//        b.colorNormal = ContextCompat.getColor(this, R.color.colorWhite)
+//        b.colorPressed = ContextCompat.getColor(this, R.color.white_pressed)
+//        b.setIconDrawable(resources.getDrawable(R.drawable.ic_camera,resources.newTheme()))
+//        fab.addButton(b)
+
+
     }
 
     private fun spinnerCombo() {
@@ -228,16 +241,16 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     .putExtra("estado", 0)
             )
 
-            3, 4 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
-            5 -> startActivity(
-                Intent(this, EquipoMainActivity::class.java)
-                    .putExtra("tipo", i)
-                    .putExtra("id", formatoId)
-                    .putExtra("otId", otId)
-                    .putExtra("title", title)
-                    .putExtra("codigo", textView1.text.toString())
-                    .putExtra("estado", 0)
-            )
+            3, 4, 5 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
+//            5 -> startActivity(
+//                Intent(this, EquipoMainActivity::class.java)
+//                    .putExtra("tipo", i)
+//                    .putExtra("id", formatoId)
+//                    .putExtra("otId", otId)
+//                    .putExtra("title", title)
+//                    .putExtra("codigo", textView1.text.toString())
+//                    .putExtra("estado", 0)
+//            )
             6 -> startActivity(
                 Intent(this, ProtocoloMainActivity::class.java)
                     .putExtra("tipo", i)
@@ -253,7 +266,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun generateCabecera(
         title: String, tipo: Int, id: Int, codigo: String, otId: Int, estado: Int
     ) {
-        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
+        builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
         @SuppressLint("InflateParams") val v =
             LayoutInflater.from(this).inflate(R.layout.dialog_cabecera, null)
 
@@ -263,8 +276,8 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         val buttonSave: MaterialButton = v.findViewById(R.id.buttonSave)
 
         builder.setView(v)
-        val dialog = builder.create()
-        dialog.show()
+        dialog = builder.create()
+        dialog!!.show()
 
         var o = OtCabecera()
 
@@ -286,11 +299,19 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             o.otId = otId
             o.active = 1
             o.alimentador = editTextSetAlim.text.toString()
-            o.sed = editTextSed.text.toString()
-            registroViewModel.validateCabeceraMTBT(o)
+            o.sed = editTextSed.text.toString().toUpperCase(Locale.getDefault())
+            o.fechaRegistro = Util.getFecha()
+            registroViewModel.validateCabeceraMTBTEquipo(o)
 
-            Util.toastMensaje(this, "Generando...")
-            dialog.dismiss()
+            Util.toastMensaje(this, "Verificando Sed...")
+        }
+    }
+
+    private fun closeDialog(){
+        if (dialog != null) {
+            if (dialog!!.isShowing) {
+                dialog!!.dismiss()
+            }
         }
     }
 }

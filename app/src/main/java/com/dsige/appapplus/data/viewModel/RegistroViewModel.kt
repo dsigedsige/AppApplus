@@ -1,15 +1,14 @@
 package com.dsige.appapplus.data.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.dsige.appapplus.data.local.model.Usuario
 import com.dsige.appapplus.data.local.model.*
 import com.dsige.appapplus.data.local.repository.ApiError
 import com.dsige.appapplus.data.local.repository.AppRepository
+import com.dsige.appapplus.helper.Mensaje
 import io.reactivex.CompletableObserver
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -24,9 +23,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
     private val mensajeError = MutableLiveData<String>()
     private val mensajeSuccess: MutableLiveData<String> = MutableLiveData()
-    val search: MutableLiveData<String> = MutableLiveData()
+    val search: MutableLiveData<Int> = MutableLiveData()
     val cabecera: MutableLiveData<Int> = MutableLiveData()
     val detalle: MutableLiveData<Int> = MutableLiveData()
+    val mensaje: MutableLiveData<Mensaje> = MutableLiveData()
 
     val success: LiveData<String>
         get() = mensajeSuccess
@@ -43,7 +43,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
     fun getOtByTipoPaging(): LiveData<PagedList<Ot>> {
         return Transformations.switchMap(search) { input ->
-            if (input == null || input.isEmpty()) {
+            if (input == 0) {
                 roomRepository.getOtByTipoPaging()
             } else {
                 roomRepository.getOtByTipoPaging(
@@ -152,7 +152,6 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             mensajeError.value = "Ingrese Retenidas S"
             return
         }
-
 
         insertOrUpdateOtDetalle(d)
     }
@@ -338,17 +337,21 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateHoja(o: OtCabecera) {
-        insertOrUpdateCabecera(o)
+        insertOrUpdateCabecera(0, o)
     }
 
-    private fun insertOrUpdateCabecera(o: OtCabecera) {
+    private fun insertOrUpdateCabecera(tipo: Int, o: OtCabecera) {
         roomRepository.insertOrUpdateCabecera(o)
             .delay(1000, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    mensajeSuccess.value = o.tipoFormatoId.toString()
+                    if (tipo == 1) {
+                        mensaje.value = Mensaje(o.formatoId, o.tipoFormatoId.toString())
+                    } else {
+                        mensajeSuccess.value = o.tipoFormatoId.toString()
+                    }
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -365,11 +368,53 @@ internal constructor(private val roomRepository: AppRepository, private val retr
         return roomRepository.getHojaById(id)
     }
 
-    fun validateCabeceraMTBT(o: OtCabecera) {
-        insertOrUpdateCabecera(o)
+    fun validateCabeceraMTBTEquipo(o: OtCabecera) {
+        roomRepository.findSed(o.sed)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<String> {
+                override fun onComplete() {
+
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onNext(t: String) {
+                    insertOrUpdateCabecera(1, o)
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
     }
 
     fun validateProtocolo(o: OtCabecera) {
-        insertOrUpdateCabecera(o)
+        roomRepository.findSed(o.sed)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<String> {
+                override fun onComplete() {
+
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onNext(t: String) {
+                    insertOrUpdateCabecera(0, o)
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
+    }
+
+    fun getEstados(): LiveData<List<Estado>> {
+        return roomRepository.getEstados()
     }
 }

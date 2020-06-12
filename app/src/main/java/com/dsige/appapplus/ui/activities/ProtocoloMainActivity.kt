@@ -11,6 +11,7 @@ import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_protocolo_main.*
+import java.util.*
 import javax.inject.Inject
 
 class ProtocoloMainActivity : DaggerAppCompatActivity() {
@@ -69,7 +70,7 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
             o.nroOt = codigo
             o.otId = otId
             o.active = 1
-            o.sed = editTextNroSed.text.toString()
+            o.sed = editTextNroSed.text.toString().toUpperCase(Locale.getDefault())
             o.soporte = editTextSoporte.text.toString()
             o.setProtocolo = editTextSet.text.toString()
             o.alimentador = editTextAlimentador.text.toString()
@@ -77,7 +78,7 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
             o.lamina = editTextLamina.text.toString()
             o.letra = editTextLetra.text.toString()
             registroViewModel.validateProtocolo(o)
-            Util.toastMensaje(this, "Generando...")
+            Util.toastMensaje(this, "Verificando Sed...")
         }
 
         registroViewModel.success.observe(this, Observer { s ->

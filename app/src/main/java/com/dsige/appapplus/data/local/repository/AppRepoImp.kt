@@ -80,6 +80,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                         dataBase.otCabeceraDao().insertRegistroListTask(otCabecera)
                 }
             }
+
+            val l: List<Sed>? = s.seds
+            if (l != null) {
+                dataBase.sedDao().insertSedListTask(l)
+            }
         }
     }
 
@@ -89,8 +94,8 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         )
     }
 
-    override fun getOtByTipoPaging(e: String): LiveData<PagedList<Ot>> {
-        return dataBase.otDao().getOtByTipoPaging(e).toLiveData(
+    override fun getOtByTipoPaging(id: Int): LiveData<PagedList<Ot>> {
+        return dataBase.otDao().getOtByTipoPaging(id).toLiveData(
             Config(pageSize = 20, enablePlaceholders = true)
         )
     }
@@ -261,7 +266,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             val ots: ArrayList<OtCabecera> = ArrayList()
             val ot: List<OtCabecera> = dataBase.otCabeceraDao().getOtCabeceraActive(i)
 
-            if (ot.isEmpty()){
+            if (ot.isEmpty()) {
                 e.onError(Throwable("Usted no tiene pendientes por enviar"))
                 e.onComplete()
                 return@create
@@ -297,11 +302,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     }
 
     override fun insertOrUpdateCabecera(o: OtCabecera): Completable {
-        return Completable.fromAction{
+        return Completable.fromAction {
             val c: OtCabecera? = dataBase.otCabeceraDao().getOtCabeceraByIdTask(o.formatoId)
             if (c == null) {
                 dataBase.otCabeceraDao().insertRegistroTask(o)
-            }else
+            } else
                 dataBase.otCabeceraDao().updateRegistroTask(o)
         }
     }
@@ -311,11 +316,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     }
 
     override fun getHoja123ByItem(item: Int, formatoId: Int): LiveData<OtHoja123> {
-       return dataBase.otHoja123Dao().getHoja123ByItem(formatoId, item)
+        return dataBase.otHoja123Dao().getHoja123ByItem(formatoId, item)
     }
 
     override fun getHoja567ByItem(item: Int, formatoId: Int): LiveData<OtHoja56> {
-      return dataBase.otHoja56Dao().getHoja56ByItem(formatoId, item)
+        return dataBase.otHoja56Dao().getHoja56ByItem(formatoId, item)
     }
 
     override fun getHojaByItem(item: Int, formatoId: Int): LiveData<Class<*>> {
@@ -326,6 +331,23 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     }
 
     override fun getEquipoDetalle(tipo: Int, formatoId: Int): LiveData<OtEquipo> {
-        return dataBase.otEquipoDao().getEquipoDetalle(tipo,formatoId)
+        return dataBase.otEquipoDao().getEquipoDetalle(tipo, formatoId)
+    }
+
+    override fun findSed(sed: String): Observable<String> {
+        return Observable.create { e ->
+            val s: Sed? = dataBase.sedDao().getFindSed(sed)
+            if (s == null) {
+                e.onError(Throwable("Sed no encontrado"))
+                e.onComplete()
+                return@create
+            }
+            e.onNext("Ok")
+            e.onComplete()
+        }
+    }
+
+    override fun getEstados(): LiveData<List<Estado>> {
+        return dataBase.estadoDao().getEstados()
     }
 }

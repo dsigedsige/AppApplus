@@ -61,6 +61,7 @@ class EquipoMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         if (estado == 0) {
             registroViewModel.generateCabecera(title, tipo, codigo, id, otId)
         }
+
         fabAdd.setOnClickListener(this)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab1))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab2))
@@ -76,13 +77,17 @@ class EquipoMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 position = tab.position + 1
                 viewPager.currentItem = tab.position
 
+                if (position == 3)
+                    fabAdd.visibility = View.GONE
+                else
+                    fabAdd.visibility = View.VISIBLE
+
                 name = when (position) {
                     1 -> "Transformadores"
                     2 -> "Maniobra"
                     3 -> "Proteccion"
                     else -> "Redes Areas"
                 }
-
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {

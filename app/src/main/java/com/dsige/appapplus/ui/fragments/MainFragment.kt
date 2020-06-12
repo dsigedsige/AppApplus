@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.dsige.appapplus.R
+import com.dsige.appapplus.data.local.model.Estado
 import com.dsige.appapplus.data.local.model.Ot
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.ui.activities.FormatoActivity
+import com.dsige.appapplus.ui.adapters.EstadoAdapter
 import com.dsige.appapplus.ui.adapters.OTAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerFragment
@@ -34,13 +36,6 @@ class MainFragment : DaggerFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-//            R.id.fab -> startActivity(
-//                Intent(context, RegistroActivity::class.java)
-//                    .putExtra("tipo", tipo)
-//                    .putExtra("usuarioId", usuarioId)
-//                    .putExtra("id", 0)
-//                    .putExtra("tipoDetalle", 0)
-//            )
             R.id.editTextEstado -> spinnerEstado()
         }
     }
@@ -94,7 +89,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener {
                     oTAdapter.addItems(s)
                 }
             })
-        registroViewModel.search.value = ""
+        registroViewModel.search.value = 0
     }
 
     companion object {
@@ -128,18 +123,19 @@ class MainFragment : DaggerFragment(), View.OnClickListener {
 
         textViewTitulo.text = String.format("Tipo de Estado")
 
-//        val estadoAdapter = EstadoAdapter(object : OnItemClickListener.EstadoListener {
-//            override fun onItemClick(c: Estado, view: View, position: Int) {
-//                editTextEstado.setText(c.nombre)
-//                registroViewModel.search.value = c.codigo
-//                dialog.dismiss()
-//            }
-//        })
-//        recyclerView.adapter = estadoAdapter
-//        registroViewModel.getEstados().observe(this, Observer { p ->
-//            if (p != null) {
-//                estadoAdapter.addItems(p)
-//            }
-//        })
+        val estadoAdapter = EstadoAdapter(object : OnItemClickListener.EstadoListener {
+            override fun onItemClick(e: Estado, view: View, position: Int) {
+                editTextEstado.setText(e.descripcion)
+                registroViewModel.search.value = e.estadoId
+                dialog.dismiss()
+            }
+        })
+        recyclerView.adapter = estadoAdapter
+
+        registroViewModel.getEstados().observe(this, Observer { p ->
+            if (p != null) {
+                estadoAdapter.addItems(p)
+            }
+        })
     }
 }

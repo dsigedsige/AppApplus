@@ -28,7 +28,7 @@ interface AppRepository {
 
     fun getOtByTipoPaging(): LiveData<PagedList<Ot>>
 
-    fun getOtByTipoPaging(e: String): LiveData<PagedList<Ot>>
+    fun getOtByTipoPaging(id: Int): LiveData<PagedList<Ot>>
 
     fun getOtById(id: Int): LiveData<Ot>
 
@@ -99,5 +99,9 @@ interface AppRepository {
     fun getHojaByItem(item: Int, formatoId: Int): LiveData<Class<*>>
 
     fun getEquipoDetalle(tipo: Int, formatoId: Int): LiveData<OtEquipo>
+
+    fun findSed(sed: String) : Observable<String>
+
+    fun getEstados(): LiveData<List<Estado>>
 
 }

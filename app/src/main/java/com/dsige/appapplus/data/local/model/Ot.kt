@@ -20,6 +20,7 @@ open class Ot {
     var fechaRecepcion: String = ""
     var estado: String = ""
     var diasVencimiento: Int = 0
+    var estadoId : Int = 0
 
     @Ignore
     var otCabecera : List<OtCabecera> = ArrayList()

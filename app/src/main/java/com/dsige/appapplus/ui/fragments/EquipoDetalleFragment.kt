@@ -11,6 +11,7 @@ import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.OtEquipo
 import com.dsige.appapplus.data.viewModel.EquipoViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
+import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_equipo_detalle.*
 import javax.inject.Inject
@@ -57,7 +58,7 @@ class EquipoDetalleFragment : DaggerFragment(), View.OnClickListener {
         equipoViewModel =
             ViewModelProvider(this, viewModelFactory).get(EquipoViewModel::class.java)
 
-        equipoViewModel.getEquipoDetalle(formatoId, tipo)
+        equipoViewModel.getEquipoDetalle(tipo,formatoId)
             .observe(viewLifecycleOwner, Observer { q ->
                 if (q != null) {
                     e = q
@@ -69,6 +70,18 @@ class EquipoDetalleFragment : DaggerFragment(), View.OnClickListener {
             })
 
         fab.setOnClickListener(this)
+
+        equipoViewModel.success.observe(viewLifecycleOwner, Observer { s ->
+            if (s != null) {
+                Util.toastMensaje(context!!, s)
+            }
+        })
+
+        equipoViewModel.error.observe(viewLifecycleOwner, Observer { s ->
+            if (s != null) {
+                Util.toastMensaje(context!!, s)
+            }
+        })
     }
 
     companion object {
