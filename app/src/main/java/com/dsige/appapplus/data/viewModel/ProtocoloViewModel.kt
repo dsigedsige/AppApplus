@@ -38,10 +38,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateProtocoloP1(o: OtProtocolo) {
-        if(o.tipoTerreno.isEmpty()){
-            mensajeError.value = "Ingrese Tipo Terreno"
-            return
-        }
+//        if(o.tipoTerreno.isEmpty()){
+//            mensajeError.value = "Ingrese Tipo Terreno"
+//            return
+//        }
 //        if(o.estadoTerreno.isEmpty()){
 //            mensajeError.value = "Ingrese Estado Terreno"
 //            return
@@ -178,10 +178,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateProtocoloP3(o: OtProtocolo) {
-        if(o.proyecto.isEmpty()){
-            mensajeError.value = "Ingrese Proyecto/Orden Trabajo"
-            return
-        }
+//        if(o.proyecto.isEmpty()){
+//            mensajeError.value = "Ingrese Proyecto/Orden Trabajo"
+//            return
+//        }
 //        if(o.tipoSistema.isEmpty()){
 //            mensajeError.value = "Ingrese Tipo de Sistema"
 //            return

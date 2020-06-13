@@ -99,10 +99,6 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateFormBTOne(d: OtDetalle) {
-        if (d.alim.isEmpty()) {
-            mensajeError.value = "Ingrese Alimentador"
-            return
-        }
 //        if (d.codigoSoporte.isEmpty()) {
 //            mensajeError.value = "Ingrese Codigo AP/Correlativo"
 //            return
@@ -155,10 +151,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateFormBTTwo(d: OtDetalle) {
-        if (d.pastotalC.isEmpty()) {
-            mensajeError.value = "Ingrese Pastotal C"
-            return
-        }
+//        if (d.pastotalC.isEmpty()) {
+//            mensajeError.value = "Ingrese Pastotal C"
+//            return
+//        }
 //        if (d.pastotalGF.isEmpty()) {
 //            mensajeError.value = "Ingrese Pastotal GF"
 //            return
@@ -183,10 +179,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateFormMTOne(d: OtDetalle) {
-        if (d.codigoSoporte.isEmpty()) {
-            mensajeError.value = "Ingrese Codigo de Soporte"
-            return
-        }
+//        if (d.codigoSoporte.isEmpty()) {
+//            mensajeError.value = "Ingrese Codigo de Soporte"
+//            return
+//        }
 //        if (d.alim.isEmpty()) {
 //            mensajeError.value = "Ingrese Alim"
 //            return
@@ -244,10 +240,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateFormMTTwo(d: OtDetalle) {
-        if (d.tipoAisladorId.isEmpty()) {
-            mensajeError.value = "Ingrese Tipo Aislador"
-            return
-        }
+//        if (d.tipoAisladorId.isEmpty()) {
+//            mensajeError.value = "Ingrese Tipo Aislador"
+//            return
+//        }
 //        if (d.aislaMaterial.isEmpty()) {
 //            mensajeError.value = "Ingrese Material Aislador"
 //            return

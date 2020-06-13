@@ -38,6 +38,7 @@ class BMT1Fragment : DaggerFragment(), View.OnClickListener {
         when (v.id) {
             R.id.fabNext -> formOne()
             R.id.editTextSoporte -> dialogGroup(2,"Tipo Material de Formato")
+            R.id.editTextTamaño -> dialogGroup(9,"Tamaño")
         }
     }
 
@@ -85,13 +86,12 @@ class BMT1Fragment : DaggerFragment(), View.OnClickListener {
         registroViewModel.getFormById(detalleId).observe(viewLifecycleOwner, Observer { de ->
             if (de != null) {
                 d = de
-                editTextAlimentador.setText(de.alim)
                 editTextAPC.setText(de.codigoSoporte)
                 editTextVIA.setText(de.codigoVia)
                 editTextLlave.setText(de.llave)
                 editTextBT.setText(de.sistemas)
                 editTextSoporte.setText(de.nombreTipoMaterialId)
-                editTextTamaño.setText(de.tamanio)
+                editTextTamaño.setText(de.nombreTamanio)
                 editTextSP.setText(de.redSDS)
                 editTextAP.setText(de.redAP)
                 editTextMT.setText(de.redAmbas)
@@ -122,13 +122,12 @@ class BMT1Fragment : DaggerFragment(), View.OnClickListener {
     private fun formOne() {
         d.formatoDetalleId = detalleId
         d.formatoId = formatoId
-        d.alim = editTextAlimentador.text.toString()
         d.codigoSoporte = editTextAPC.text.toString()
         d.codigoVia = editTextVIA.text.toString()
         d.llave = editTextLlave.text.toString()
         d.sistemas = editTextBT.text.toString()
         d.nombreTipoMaterialId = editTextSoporte.text.toString()
-        d.tamanio = editTextTamaño.text.toString()
+        d.nombreTamanio = editTextTamaño.text.toString()
         d.redSDS = editTextSP.text.toString()
         d.redAP = editTextAP.text.toString()
         d.redAmbas = editTextMT.text.toString()
@@ -177,6 +176,10 @@ class BMT1Fragment : DaggerFragment(), View.OnClickListener {
                     2 -> {
                         d.tipoMaterialId = g.grupoId.toString()
                         editTextSoporte.setText(g.descripcion)
+                    }
+                    9 -> {
+                        d.tamanio = g.grupoId.toString()
+                        editTextTamaño.setText(g.descripcion)
                     }
                 }
                 dialog.dismiss()

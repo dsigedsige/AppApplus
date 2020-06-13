@@ -41,10 +41,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
         when (e.tipoEquipo) {
             1 -> {
-                if (e.nroKardex.isEmpty()) {
-                    mensajeError.value = "Ingrese Nro Kardex"
-                    return
-                }
+//                if (e.nroKardex.isEmpty()) {
+//                    mensajeError.value = "Ingrese Nro Kardex"
+//                    return
+//                }
 //                if (e.nroFabrica.isEmpty()) {
 //                    mensajeError.value = "Ingrese Nro Fabrica"
 //                    return
@@ -83,10 +83,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 //                }
             }
             2 -> {
-                if (e.nroKardex.isEmpty()) {
-                    mensajeError.value = "Ingrese Nro Kardex"
-                    return
-                }
+//                if (e.nroKardex.isEmpty()) {
+//                    mensajeError.value = "Ingrese Nro Kardex"
+//                    return
+//                }
 //                if (e.nroFabrica.isEmpty()) {
 //                    mensajeError.value = "Ingrese Nro Fabrica"
 //                    return
@@ -117,10 +117,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 //                }
             }
             3 -> {
-                if (e.equipo.isEmpty()) {
-                    mensajeError.value = "Ingrese Equipo"
-                    return
-                }
+//                if (e.equipo.isEmpty()) {
+//                    mensajeError.value = "Ingrese Equipo"
+//                    return
+//                }
 //                if (e.nroKardex.isEmpty()) {
 //                    mensajeError.value = "Ingrese Nro Kardex"
 //                    return
@@ -135,10 +135,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 //                }
             }
             4 -> {
-                if (e.nroKardex.isEmpty()) {
-                    mensajeError.value = "Ingrese Nro Kardex"
-                    return
-                }
+//                if (e.nroKardex.isEmpty()) {
+//                    mensajeError.value = "Ingrese Nro Kardex"
+//                    return
+//                }
 //                if (e.nroFabrica.isEmpty()) {
 //                    mensajeError.value = "Ingrese Nro Fabrica"
 //                    return

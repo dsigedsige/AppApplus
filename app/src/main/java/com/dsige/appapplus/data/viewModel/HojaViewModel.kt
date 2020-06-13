@@ -45,10 +45,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
         when (o.item) {
             1 -> {
-                if (o.nroCelda.isEmpty()) {
-                    mensajeError.value = "Ingrese Nro Celda"
-                    return
-                }
+//                if (o.nroCelda.isEmpty()) {
+//                    mensajeError.value = "Ingrese Nro Celda"
+//                    return
+//                }
 //                if (o.funcion.isEmpty()) {
 //                    mensajeError.value = "Ingrese Función"
 //                    return
@@ -63,10 +63,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 //                }
             }
             2 -> {
-                if (o.equipo.isEmpty()) {
-                    mensajeError.value = "Ingrese Equipo"
-                    return
-                }
+//                if (o.equipo.isEmpty()) {
+//                    mensajeError.value = "Ingrese Equipo"
+//                    return
+//                }
 //                if (o.subtipo.isEmpty()) {
 //                    mensajeError.value = "Ingrese Sub Tipo"
 //                    return
@@ -109,10 +109,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateHoja3(o: OtHoja123) {
-        if (o.equipo.isEmpty()) {
-            mensajeError.value = "Ingrese Equipo"
-            return
-        }
+//        if (o.equipo.isEmpty()) {
+//            mensajeError.value = "Ingrese Equipo"
+//            return
+//        }
 //        if (o.kardex.isEmpty()) {
 //            mensajeError.value = "Ingrese Nro Kardex"
 //            return
@@ -156,10 +156,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateHoja4(o: OtHoja4) {
-        if (o.ubicacion.isEmpty()) {
-            mensajeError.value = "Ingrese Ubicación"
-            return
-        }
+//        if (o.ubicacion.isEmpty()) {
+//            mensajeError.value = "Ingrese Ubicación"
+//            return
+//        }
 //        if (o.nroFabrica.isEmpty()) {
 //            mensajeError.value = "Ingrese Nro Fabrica"
 //            return
@@ -263,10 +263,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateHoja56(o: OtHoja56) {
-        if (o.tipoTablero == 0) {
-            mensajeError.value = "Seleccion algún tipo de tablero"
-            return
-        }
+//        if (o.tipoTablero == 0) {
+//            mensajeError.value = "Seleccion algún tipo de tablero"
+//            return
+//        }
 //        if (o.nroMedidor.isEmpty()) {
 //            mensajeError.value = "Ingrese Nro"
 //            return
@@ -291,10 +291,10 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateHoja7(o: OtHoja56) {
-        if (o.nroMedidor.isEmpty()) {
-            mensajeError.value = "Ingrese Nro Medidor"
-            return
-        }
+//        if (o.nroMedidor.isEmpty()) {
+//            mensajeError.value = "Ingrese Nro Medidor"
+//            return
+//        }
 //        if (o.fotocelula.isEmpty()) {
 //            mensajeError.value = "Ingrese Foto Celular"
 //            return
