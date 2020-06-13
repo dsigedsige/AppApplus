@@ -66,14 +66,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/chkAereo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="Aereo" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/chkNivel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,11 +83,11 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:id="@+id/layout1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:hint="Nro"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="Nro">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText1"
@@ -112,11 +112,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:id="@+id/layout2"
-                android:hint="Base (A)"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="Base (A)">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText2"
@@ -126,11 +126,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout3"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:hint="Fusible (A)"
-                android:id="@+id/layout3"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="Fusible (A)">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText3"
@@ -140,11 +140,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout4"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:id="@+id/layout4"
-                android:hint="Sección (mm2)"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="Sección (mm2)">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText4"
@@ -154,11 +154,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout5"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:id="@+id/layout5"
-                android:hint="Observaciones"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="Observaciones">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText5"

@@ -23,6 +23,7 @@ import com.dsige.appapplus.ui.adapters.GrupoAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_hoja56.*
+import kotlinx.android.synthetic.main.fragment_hoja_main.*
 import javax.inject.Inject
 
 class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
@@ -120,6 +121,7 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
         o.fusible = editText3.text.toString()
         o.seccion = editText4.text.toString()
         o.observacion = editText5.text.toString()
+        o.nombreTipoId = editTextTipo.text.toString()
         o.fecha = Util.getFecha()
         hojaViewModel.validateHoja56(o)
     }

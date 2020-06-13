@@ -39,7 +39,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
             R.id.fabNext -> formOne()
             R.id.editTextMaterial -> dialogGroup(2, "Tipo de Material Formato")
             R.id.editTextFuncion -> dialogGroup(3, "Funcion Formato")
-            R.id.editTextTipo -> dialogGroup(4, "Seccion de Formato")
+            R.id.editTextTipo -> dialogGroup(4, "Tipo de Conductor de Formato")
         }
     }
 
@@ -92,7 +92,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
                 editTextArmado.setText(de.armado)
                 editTextMaterial.setText(de.nombreTipoMaterialId)
                 editTextTamaño.setText(de.tamanio)
-                editTextFuncion.setText(de.funcionId)
+                editTextFuncion.setText(de.nombreFuncionId)
 
                 checkSDS.isChecked = de.redSDS == "SI"
                 checkAP.isChecked = de.redAP == "SI"
@@ -102,7 +102,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
                 editTextCod.setText(de.seccCod)
                 editTextCap.setText(de.seccCap)
                 editTextFus.setText(de.seccFus)
-                editTextTipo.setText(de.tipoConductorId)
+                editTextTipo.setText(de.nombreTipoConductorId)
                 editTextLVano.setText(de.lvano)
                 editTextSeccion.setText(de.conduSecc)
                 editTextFase.setText(de.conduFases)
@@ -197,7 +197,7 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
                         d.funcionId =  g.grupoId.toString()
                         editTextFuncion.setText(g.descripcion)
                     }
-                    1 -> {
+                    4 -> {
                         d.tipoConductorId = g.grupoId.toString()
                         editTextTipo.setText(g.descripcion)
                     }

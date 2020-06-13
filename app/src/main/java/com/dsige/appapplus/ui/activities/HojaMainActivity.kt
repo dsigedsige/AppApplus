@@ -12,6 +12,7 @@ import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_hoja_main.*
+import java.util.*
 import javax.inject.Inject
 
 class HojaMainActivity : DaggerAppCompatActivity() {
@@ -85,7 +86,7 @@ class HojaMainActivity : DaggerAppCompatActivity() {
                     o.nroOt = codigo
                     o.otId = otId
                     o.active = 1
-                    o.sed = editTextNroSed.text.toString()
+                    o.sed = editTextNroSed.text.toString().toUpperCase(Locale.getDefault())
                     o.alimentador = editTextAlimentador.text.toString()
 
                     o.convencional = if (chkConvencional.isChecked) "1" else "0"
@@ -103,7 +104,7 @@ class HojaMainActivity : DaggerAppCompatActivity() {
                     o.usuario = usuarioId
                     o.fechaRegistro = Util.getFecha()
                     registroViewModel.validateHoja(o)
-                    Util.toastMensaje(this, "Generando...")
+                    Util.toastMensaje(this, "Verificando...")
                 }
             } else {
                 gps.showSettingsAlert(this)

@@ -326,7 +326,26 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateHoja(o: OtCabecera) {
-        insertOrUpdateCabecera(0, o)
+        roomRepository.findSed(o.sed)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<String> {
+                override fun onComplete() {
+
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onNext(t: String) {
+                    insertOrUpdateCabecera(0, o)
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
     }
 
     private fun insertOrUpdateCabecera(tipo: Int, o: OtCabecera) {
