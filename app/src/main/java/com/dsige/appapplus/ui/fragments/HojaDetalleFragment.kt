@@ -12,6 +12,7 @@ import com.dsige.appapplus.data.local.model.OtHoja123
 import com.dsige.appapplus.data.local.model.OtHoja56
 import com.dsige.appapplus.data.viewModel.HojaViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
+import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_hoja_detalle.*
 import javax.inject.Inject
@@ -125,6 +126,7 @@ class HojaDetalleFragment : DaggerFragment(), View.OnClickListener {
                 oHoja123.kardex = editText2.text.toString()
                 oHoja123.marca = editText3.text.toString()
                 oHoja123.tipo = editText4.text.toString()
+                oHoja123.fecha = Util.getFecha()
                 hojaViewModel.validateHoja3(oHoja123)
             }
             7 -> {
@@ -135,6 +137,7 @@ class HojaDetalleFragment : DaggerFragment(), View.OnClickListener {
                 oHoja567.contactor = editText3.text.toString()
                 oHoja567.intHorario = editText4.text.toString()
                 oHoja567.observacion = editText5.text.toString()
+                oHoja567.fecha = Util.getFecha()
                 hojaViewModel.validateHoja7(oHoja567)
             }
         }

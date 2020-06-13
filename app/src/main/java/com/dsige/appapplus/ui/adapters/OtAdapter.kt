@@ -10,8 +10,8 @@ import com.dsige.appapplus.data.local.model.Ot
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import kotlinx.android.synthetic.main.cardview_ot.view.*
 
-class OTAdapter(private var listener: OnItemClickListener.OTListener) :
-    RecyclerView.Adapter<OTAdapter.ViewHolder>() {
+class OtAdapter(private var listener: OnItemClickListener.OTListener) :
+    RecyclerView.Adapter<OtAdapter.ViewHolder>() {
 
     private var ots = emptyList<Ot>()
 

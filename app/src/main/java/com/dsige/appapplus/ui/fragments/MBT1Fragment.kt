@@ -89,7 +89,6 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
 //                editTextSed.setText(de.sed)
 
                 editTextCodigoSoporte.setText(de.codigoSoporte)
-                editTextAlim.setText(de.alim)
                 editTextArmado.setText(de.armado)
                 editTextMaterial.setText(de.nombreTipoMaterialId)
                 editTextTamaño.setText(de.tamanio)
@@ -134,7 +133,6 @@ class MBT1Fragment : DaggerFragment(), View.OnClickListener {
         d.formatoDetalleId = detalleId
         d.formatoId = formatoId
         d.codigoSoporte = editTextCodigoSoporte.text.toString()
-        d.alim = editTextAlim.text.toString()
         d.armado = editTextArmado.text.toString()
         d.nombreTipoMaterialId = editTextMaterial.text.toString()
         d.tamanio = editTextTamaño.text.toString()

@@ -121,6 +121,7 @@ class MBT2Fragment : DaggerFragment(), View.OnClickListener {
         d.vientoCantidad = editTextCantidad2.text.toString()
         d.pastoral = editTextPastoral.text.toString()
         d.observaciones = editTextObservacion.text.toString()
+        d.fecha = Util.getFecha()
         registroViewModel.validateFormMTTwo(d)
     }
 

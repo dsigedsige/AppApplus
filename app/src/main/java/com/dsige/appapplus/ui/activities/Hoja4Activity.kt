@@ -117,6 +117,7 @@ class Hoja4Activity : DaggerAppCompatActivity(), View.OnClickListener {
         o.disKardex = editText17.text.toString()
         o.disSerie = editText18.text.toString()
         o.disIA = editText19.text.toString()
+        o.fecha = Util.getFecha()
         hojaViewModel.validateHoja4(o)
     }
 }

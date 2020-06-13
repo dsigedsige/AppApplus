@@ -41,7 +41,7 @@ interface OtCabeceraDao {
     @Query("SELECT formatoId FROM OtCabecera ORDER BY formatoId DESC LIMIT 1")
     fun getMaxIdOt(): LiveData<Int>
 
-    @Query("SELECT * FROM OtCabecera WHERE otId =:id ")
+    @Query("SELECT * FROM OtCabecera WHERE formatoId =:id ")
     fun getOtCabeceraByIdTask(id: Int): OtCabecera
 
     @Query("SELECT * FROM OtCabecera WHERE active =:i ")

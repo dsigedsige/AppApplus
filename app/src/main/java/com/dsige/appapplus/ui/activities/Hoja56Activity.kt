@@ -120,6 +120,7 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
         o.fusible = editText3.text.toString()
         o.seccion = editText4.text.toString()
         o.observacion = editText5.text.toString()
+        o.fecha = Util.getFecha()
         hojaViewModel.validateHoja56(o)
     }
 

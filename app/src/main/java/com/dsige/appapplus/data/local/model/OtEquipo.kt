@@ -25,4 +25,6 @@ open class OtEquipo {
     var equipo: String = ""
     var nroPrc: String = ""
     var soporte: String = ""
+
+    var fecha:String = ""
 }

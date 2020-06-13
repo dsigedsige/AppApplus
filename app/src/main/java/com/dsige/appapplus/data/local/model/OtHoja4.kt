@@ -31,4 +31,6 @@ open class OtHoja4 {
     var disKardex: String = ""
     var disSerie: String = ""
     var disIA: String = ""
+
+    var fecha:String = ""
 }

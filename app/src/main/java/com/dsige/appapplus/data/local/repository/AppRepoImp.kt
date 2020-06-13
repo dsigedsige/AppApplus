@@ -85,6 +85,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             if (l != null) {
                 dataBase.sedDao().insertSedListTask(l)
             }
+
+            val es: List<Estado>? = s.estados
+            if (es != null) {
+                dataBase.estadoDao().insertEstadoListTask(es)
+            }
         }
     }
 
@@ -279,6 +284,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 o.hojas4 = dataBase.otHoja4Dao().getHoja4FkId(o.formatoId)
                 o.hojas567 = dataBase.otHoja56Dao().getHoja56FkId(o.formatoId)
                 o.protocolos = dataBase.otProtocoloDao().getProtocoloFkId(o.formatoId)
+                o.photos = dataBase.otPhotoDao().getPhotoFkId(o.formatoId)
                 ots.add(o)
             }
 
@@ -349,5 +355,24 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun getEstados(): LiveData<List<Estado>> {
         return dataBase.estadoDao().getEstados()
+    }
+
+    override fun getPhotoById(id: Int): LiveData<List<OtPhoto>> {
+        return dataBase.otPhotoDao().getPhotoById(id)
+    }
+
+    override fun insertOrUpdatePhoto(o: OtPhoto): Completable {
+        return Completable.fromAction {
+            if (o.formatoFotoId == 0)
+                dataBase.otPhotoDao().insertOtPhotoTask(o)
+            else
+                dataBase.otPhotoDao().updateOtPhotoTask(o)
+        }
+    }
+
+    override fun deletePhoto(o: OtPhoto): Completable {
+        return Completable.fromAction {
+            dataBase.otPhotoDao().deleteOtPhotoTask(o)
+        }
     }
 }

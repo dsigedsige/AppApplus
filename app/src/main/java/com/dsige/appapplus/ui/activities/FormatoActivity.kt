@@ -19,6 +19,7 @@ import com.dsige.appapplus.data.local.model.Formato
 import com.dsige.appapplus.data.local.model.OtCabecera
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
+import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.FormatoAdapter
 import com.dsige.appapplus.ui.adapters.OtCabeceraAdapter
@@ -50,6 +51,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     private var otId: Int = 0
     private var formatoId: Int = 0
+    private var usuarioId: Int = 0
     lateinit var builder: AlertDialog.Builder
     var dialog: AlertDialog? = null
 
@@ -58,15 +60,16 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_formato)
         val b = intent.extras
         if (b != null) {
-            bindUI(b.getInt("id"))
+            bindUI(b.getInt("id"), b.getInt("usuarioId"))
         }
     }
 
-    private fun bindUI(id: Int) {
+    private fun bindUI(id: Int, usu: Int) {
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
 
         otId = id
+        usuarioId = usu
 
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Lista de Formato"
@@ -102,8 +105,9 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                             .putExtra("tipo", r.tipoFormatoId)
                             .putExtra("codigo", textView1.text)
                             .putExtra("estado", 1)
+                            .putExtra("usuarioId", usuarioId)
                     )
-                    3, 4, 5 -> generateCabecera(
+                    1, 3, 4, 5 -> generateCabecera(
                         r.nombreTipoFormato,
                         r.tipoFormatoId,
                         r.formatoId,
@@ -128,6 +132,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                             .putExtra("tipo", r.tipoFormatoId)
                             .putExtra("codigo", textView1.text)
                             .putExtra("estado", 1)
+                            .putExtra("usuarioId", usuarioId)
                     )
                 }
             }
@@ -159,7 +164,11 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 startActivity(
                     Intent(
                         this,
-                        if (s.mensaje.toInt() == 5) EquipoMainActivity::class.java else FormMainActivity::class.java
+                        when (s.mensaje.toInt()) {
+                            1 -> PhotoActivity::class.java
+                            5 -> EquipoMainActivity::class.java
+                            else -> FormMainActivity::class.java
+                        }
                     )
                         .putExtra("tipo", s.mensaje.toInt())
                         .putExtra("id", s.codigo)
@@ -167,6 +176,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                         .putExtra(
                             "title",
                             when (s.mensaje) {
+                                "1" -> "Levantamiento de Campo"
                                 "3" -> "Soporte MT"
                                 "4" -> "Soporte BT"
                                 else -> "Equipo Existente"
@@ -174,6 +184,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                         )
                         .putExtra("codigo", textView1.text.toString())
                         .putExtra("estado", 1)
+                        .putExtra("usuarioId", usuarioId)
                 )
             }
         })
@@ -239,9 +250,9 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     .putExtra("title", title)
                     .putExtra("codigo", textView1.text.toString())
                     .putExtra("estado", 0)
+                    .putExtra("usuarioId", usuarioId)
             )
-
-            3, 4, 5 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
+            1, 3, 4, 5 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
 //            5 -> startActivity(
 //                Intent(this, EquipoMainActivity::class.java)
 //                    .putExtra("tipo", i)
@@ -259,6 +270,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     .putExtra("title", title)
                     .putExtra("codigo", textView1.text.toString())
                     .putExtra("estado", 0)
+                    .putExtra("usuarioId", usuarioId)
             )
         }
     }
@@ -292,22 +304,31 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         textViewTitulo.text = title
 
         buttonSave.setOnClickListener {
-            o.formatoId = id
-            o.tipoFormatoId = tipo
-            o.nombreTipoFormato = title
-            o.nroOt = codigo
-            o.otId = otId
-            o.active = 1
-            o.alimentador = editTextSetAlim.text.toString()
-            o.sed = editTextSed.text.toString().toUpperCase(Locale.getDefault())
-            o.fechaRegistro = Util.getFecha()
-            registroViewModel.validateCabeceraMTBTEquipo(o)
-
-            Util.toastMensaje(this, "Verificando Sed...")
+            val gps = Gps(this)
+            if (gps.isLocationEnabled()) {
+                if (gps.latitude.toString() != "0.0" || gps.longitude.toString() != "0.0") {
+                    o.formatoId = id
+                    o.tipoFormatoId = tipo
+                    o.nombreTipoFormato = title
+                    o.nroOt = codigo
+                    o.otId = otId
+                    o.active = 1
+                    o.coordenadaX = gps.latitude.toString()
+                    o.coordenadaY = gps.longitude.toString()
+                    o.alimentador = editTextSetAlim.text.toString()
+                    o.sed = editTextSed.text.toString().toUpperCase(Locale.getDefault())
+                    o.fechaRegistro = Util.getFecha()
+                    o.usuario = usuarioId
+                    registroViewModel.validateCabeceraMTBTEquipo(o)
+                    Util.toastMensaje(this, "Verificando Sed...")
+                }
+            } else {
+                gps.showSettingsAlert(this)
+            }
         }
     }
 
-    private fun closeDialog(){
+    private fun closeDialog() {
         if (dialog != null) {
             if (dialog!!.isShowing) {
                 dialog!!.dismiss()

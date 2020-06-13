@@ -29,9 +29,6 @@ import kotlin.math.sqrt
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private const val ARG_PARAM3 = "param3"
-private const val ARG_PARAM4 = "param4"
-private const val ARG_PARAM5 = "param5"
 
 class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
 
@@ -321,21 +318,15 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
         }
     }
 
-    private var tipo: Int = 0
-    private var usuarioId: String = ""
+    private var formatoId: Int = 0
+    private var usuarioId: Int = 0
     private var nameImg: String = ""
-    private var registroId: Int = 0
-    private var tipoDetalle: Int = 0
-    private var detalleId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            tipo = it.getInt(ARG_PARAM1)
-            usuarioId = it.getString(ARG_PARAM2)!!
-            registroId = it.getInt(ARG_PARAM3)
-            tipoDetalle = it.getInt(ARG_PARAM4)
-            detalleId = it.getInt(ARG_PARAM5)
+            formatoId = it.getInt(ARG_PARAM1)
+            usuarioId = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -352,8 +343,8 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        nameImg = Util.getFechaActualForPhoto(usuarioId)
-        file = File(Util.getFolder(context!!), nameImg)
+        nameImg = Util.getFechaActualForPhoto(formatoId)
+        file = File(Util.getFolder(), nameImg)
     }
 
     override fun onResume() {
@@ -734,30 +725,13 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
                 ) {
                     unlockFocus()
                     Handler().postDelayed({
-                        if (tipo == 0) {
-                            startActivityForResult(
-                                Intent(context!!, PreviewCameraActivity::class.java)
-                                    .putExtra("nameImg", nameImg)
-                                    .putExtra("tipo", tipo)
-                                    .putExtra("usuarioId", usuarioId)
-                                    .putExtra("id", registroId)
-                                    .putExtra("detalleId", detalleId)
-                                    .putExtra("tipoDetalle", tipoDetalle)
-                                    .putExtra("galery", false), 1
-                            )
-                        } else {
-                            startActivity(
-                                Intent(context!!, PreviewCameraActivity::class.java)
-                                    .putExtra("nameImg", nameImg)
-                                    .putExtra("tipo", tipo)
-                                    .putExtra("usuarioId", usuarioId)
-                                    .putExtra("id", registroId)
-                                    .putExtra("detalleId", detalleId)
-                                    .putExtra("tipoDetalle", tipoDetalle)
-                                    .putExtra("galery", false)
-                            )
-                            activity!!.finish()
-                        }
+                        startActivity(
+                            Intent(context!!, PreviewCameraActivity::class.java)
+                                .putExtra("formatoId", formatoId)
+                                .putExtra("usuarioId", usuarioId)
+                                .putExtra("nameImg", nameImg)
+                        )
+                        activity!!.finish()
                     }, 200)
                 }
             }
@@ -770,7 +744,6 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
         } catch (e: CameraAccessException) {
             Log.e(TAG, e.toString())
         }
-
     }
 
     /**
@@ -940,14 +913,11 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
         }
 
         @JvmStatic
-        fun newInstance(param1: Int, param2: String, param3: Int, param4: Int, param5: Int) =
+        fun newInstance(param1: Int, param2: Int) =
             CameraFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                    putInt(ARG_PARAM3, param3)
-                    putInt(ARG_PARAM4, param4)
-                    putInt(ARG_PARAM5, param5)
+                    putInt(ARG_PARAM2, param2)
                 }
             }
     }
@@ -976,19 +946,6 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
             openCamera(textureView.width, textureView.height)
         } else {
             textureView.surfaceTextureListener = surfaceTextureListener
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                val result = data!!.getStringExtra("img")!!
-                if (result.isNotEmpty()) {
-                    activity!!.setResult(Activity.RESULT_OK, Intent().putExtra("img", result))
-                    activity!!.finish()
-                }
-            }
         }
     }
 }

@@ -102,6 +102,7 @@ class EquipoDetalleFragment : DaggerFragment(), View.OnClickListener {
         e.nroKardex = editText2.text.toString()
         e.marca = editText3.text.toString()
         e.tipo = editText4.text.toString()
+        e.fecha = Util.getFecha()
         equipoViewModel.validateEquipo(e)
     }
 }

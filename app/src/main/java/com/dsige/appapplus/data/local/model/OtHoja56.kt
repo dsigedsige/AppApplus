@@ -21,4 +21,6 @@ open class OtHoja56 {
     var fotocelula: String = ""
     var contactor: String = ""
     var intHorario: String = ""
+
+    var fecha:String = ""
 }

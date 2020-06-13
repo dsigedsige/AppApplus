@@ -49,6 +49,7 @@ open class OtCabecera {
 
     var active: Int = 0 // 1-> por enviar 0 -> enviado
     var identity: Int = 0
+    var usuario :Int = 0
 
     @Ignore
     var details: List<OtDetalle> = ArrayList()
@@ -67,4 +68,8 @@ open class OtCabecera {
 
     @Ignore
     var protocolos: List<OtProtocolo> = ArrayList()
+
+    @Ignore
+    var photos: List<OtPhoto> = ArrayList()
+
 }

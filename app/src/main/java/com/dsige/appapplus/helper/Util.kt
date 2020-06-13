@@ -37,7 +37,7 @@ import java.util.*
 
 object Util {
 
-    val Folder = "Dsige/Trinidad"
+    val Folder = "Dsige/Applus"
     val UrlFoto = "http://www.dsige.com/webApiDemo/image/"
     val UrlMovie = "http://www.dsige.com/webApiDemo/movie/"
 
@@ -118,7 +118,7 @@ object Util {
         return FechaActual
     }
 
-    fun getFechaActualForPhoto(tipo: String): String {
+    fun getFechaActualForPhoto(tipo: Int): String {
         val date = Date()
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("ddMMyyyy_HHmmssSSSS")
         FechaActual = format.format(date)
@@ -167,7 +167,7 @@ object Util {
         return result
     }
 
-    fun getFolder(context: Context): File {
+    fun getFolder(): File {
 //        val folder = File(context.getExternalFilesDir(null)!!.absolutePath)
 //        if (!folder.exists()) {
 //            val success = folder.mkdirs()
@@ -694,7 +694,7 @@ object Util {
         file: String, context: Context, data: Intent
     ): Completable {
         return Completable.fromAction {
-            val imagepath = getFolder(context).toString() + "/" + file
+            val imagepath = getFolder().toString() + "/" + file
             val f = File(imagepath)
             if (!f.exists()) {
                 try {

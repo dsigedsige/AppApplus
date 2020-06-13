@@ -23,7 +23,7 @@ import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.ui.activities.FormatoActivity
 import com.dsige.appapplus.ui.adapters.EstadoAdapter
-import com.dsige.appapplus.ui.adapters.OTAdapter
+import com.dsige.appapplus.ui.adapters.OtAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -45,13 +45,13 @@ class MainFragment : DaggerFragment(), View.OnClickListener {
     lateinit var registroViewModel: RegistroViewModel
 
     private var tipo: Int = 0
-    private var usuarioId: String = ""
+    private var usuarioId: Int =  0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             tipo = it.getInt(ARG_PARAM1)
-            usuarioId = it.getString(ARG_PARAM2)!!
+            usuarioId = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -70,11 +70,12 @@ class MainFragment : DaggerFragment(), View.OnClickListener {
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
         editTextEstado.setOnClickListener(this)
-        val oTAdapter = OTAdapter(object : OnItemClickListener.OTListener {
+        val oTAdapter = OtAdapter(object : OnItemClickListener.OTListener {
             override fun onItemClick(o: Ot, view: View, position: Int) {
                 startActivity(
                     Intent(context, FormatoActivity::class.java)
                         .putExtra("id", o.otId)
+                        .putExtra("usuarioId", usuarioId)
                 )
             }
         })
@@ -94,11 +95,11 @@ class MainFragment : DaggerFragment(), View.OnClickListener {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: Int, param2: String) =
+        fun newInstance(param1: Int, param2: Int) =
             MainFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM2, param2)
                 }
             }
     }

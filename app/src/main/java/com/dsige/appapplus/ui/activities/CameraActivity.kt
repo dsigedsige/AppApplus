@@ -16,24 +16,8 @@ class CameraActivity : DaggerAppCompatActivity() {
                 .replace(
                     R.id.container,
                     CameraFragment.newInstance(
-                        b.getInt("tipo"),
-                        b.getString("usuarioId")!!,
-                        b.getInt("id"),
-                        b.getInt("tipoDetalle"),
-                        b.getInt("detalleId")
-                    )
-                )
-                .commit()
-        } else {
-            savedInstanceState ?: supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.container,
-                    CameraFragment.newInstance(
-                        1,
-                        "1",
-                        1,
-                        1,
-                        2
+                        b.getInt("formatoId"),
+                        b.getInt("usuarioId")
                     )
                 )
                 .commit()

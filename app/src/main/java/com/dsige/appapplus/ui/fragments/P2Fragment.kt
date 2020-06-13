@@ -129,6 +129,7 @@ class P2Fragment : DaggerFragment(), View.OnClickListener {
         o.rMtE = editTextRQHM10.text.toString()
         o.pMtE = editTextEquivalenteMT.text.toString()
         o.observaciones = editTextObservacion.text.toString()
+        o.fecha = Util.getFecha()
         protocoloViewModel.validateProtocoloP24(o)
     }
 

@@ -27,4 +27,6 @@ open class OtHoja123 {
     var rele: String = ""
     var irele: String = ""
     var tipo: String = ""
+
+    var fecha:String = ""
 }

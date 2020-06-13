@@ -1,6 +1,5 @@
 package com.dsige.appapplus.ui.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
@@ -10,6 +9,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dsige.appapplus.R
+import com.dsige.appapplus.data.local.model.OtPhoto
+import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
 import com.squareup.picasso.Callback
@@ -23,57 +24,46 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.fabOk -> if (tipo == 0) {
-                setResult(Activity.RESULT_OK, Intent().putExtra("img", nameImg))
+            R.id.fabClose -> {
+                startActivity(
+                    Intent(this, CameraActivity::class.java)
+                        .putExtra("formatoId", formatoId)
+                        .putExtra("usuarioId", usuarioId)
+                )
                 finish()
-            } else {
-//                registroViewModel.updateFoto(tipoDetalle, nameImg, detalleId, registroId)
             }
-            R.id.fabClose -> if (galery) {
-                finish()
-            } else {
-                if (tipo == 0) {
-                    setResult(Activity.RESULT_CANCELED, Intent())
-                    finish()
-                } else {
-                    startActivity(Intent(this, CameraActivity::class.java))
-                    finish()
-                }
-            }
+            R.id.fabOk -> formOtPhoto()
         }
     }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    lateinit var registroViewModel: RegistroViewModel
 
-    var nameImg: String = ""
-    var registroId: Int = 0
-    var detalleId: Int = 0
-
-    var tipo: Int = 0
-    var usuarioId: String = ""
-    var tipoDetalle: Int = 0
-    var galery: Boolean = false
-    private val Folder = "/Dsige/Trinidad/"
+   private var formatoId: Int = 0
+   private var usuarioId: Int = 0
+   private var nameImg: String = ""
+   private lateinit var o: OtPhoto
+    private val Folder = "/Dsige/Applus/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview_camera)
+
+        o = OtPhoto()
+
         val b = intent.extras
         if (b != null) {
+            formatoId = b.getInt("formatoId")
+            usuarioId = b.getInt("usuarioId")
             nameImg = b.getString("nameImg")!!
-            tipo = b.getInt("tipo")
-            usuarioId = b.getString("usuarioId")!!
-            tipoDetalle = b.getInt("tipoDetalle")
-            detalleId = b.getInt("detalleId")
-            galery = b.getBoolean("galery")
-            bindUI(b.getInt("id"), b.getInt("detalleId"))
+            bindUI(b.getString("nameImg")!!)
         }
     }
 
-    private fun bindUI(id: Int, dId: Int) {
-//        registroViewModel =
-//            ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
+    private fun bindUI(name: String) {
+        registroViewModel =
+            ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
 
         fabClose.setOnClickListener(this)
         fabOk.setOnClickListener(this)
@@ -82,7 +72,7 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
         Handler().postDelayed({
             val f = File(
                 Environment.getExternalStorageDirectory()
-                    .toString() + Folder + "/$nameImg"
+                    .toString() + Folder + "/$name"
             )
             Picasso.get().load(f)
                 .into(imageView, object : Callback {
@@ -95,5 +85,28 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     }
                 })
         }, 200)
+
+
+        registroViewModel.success.observe(this, Observer { s ->
+            if (s != null) {
+                finish()
+            }
+        })
+
+        registroViewModel.error.observe(this, Observer { s ->
+            if (s != null) {
+                Util.toastMensaje(this, s)
+            }
+        })
+    }
+
+    private fun formOtPhoto() {
+        o.formatoId = formatoId
+        o.fotoUrl = nameImg
+        o.observacion = editTextObservacion.text.toString()
+        o.estado = 1
+        o.usuarioId = usuarioId
+        o.fecha = Util.getFecha()
+        registroViewModel.validateOtPhoto(o)
     }
 }

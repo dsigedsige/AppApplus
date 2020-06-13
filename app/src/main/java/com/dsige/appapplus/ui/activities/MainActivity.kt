@@ -34,7 +34,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     lateinit var usuarioViewModel: UsuarioViewModel
     lateinit var builder: AlertDialog.Builder
     var dialog: AlertDialog? = null
-    var usuarioId: String = ""
+    var usuarioId: Int = 0
     var logout: String = "off"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,7 +136,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         header.textViewName.text = u.nombres
         header.textViewEmail.text = String.format("Cod : %s", u.email)
         header.textViewVersion.text = String.format("Version : %s", Util.getVersion(this))
-        usuarioId = u.usuarioId.toString()
+        usuarioId = u.usuarioId
     }
 
     private fun goLogin() {

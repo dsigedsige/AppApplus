@@ -104,4 +104,9 @@ interface AppRepository {
 
     fun getEstados(): LiveData<List<Estado>>
 
+    fun getPhotoById(id: Int): LiveData<List<OtPhoto>>
+
+    fun insertOrUpdatePhoto(o: OtPhoto): Completable
+
+    fun deletePhoto(o: OtPhoto): Completable
 }

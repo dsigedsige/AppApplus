@@ -43,4 +43,8 @@ interface OnItemClickListener {
         fun onItemClick(e: Estado, view: View, position: Int)
     }
 
+    interface OtPhotoListener {
+        fun onItemClick(o: OtPhoto, view: View, position: Int)
+    }
+
 }

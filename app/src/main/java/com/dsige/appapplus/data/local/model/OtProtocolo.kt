@@ -59,4 +59,6 @@ open class OtProtocolo {
     var mtPozoTratado: String = ""
     var mtNdosis: String = ""
     var mtCompuesto: String = ""
+
+    var fecha:String = ""
 }

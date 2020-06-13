@@ -177,10 +177,31 @@ internal constructor(private val roomRepository: AppRepository, private val retr
         val ot: Observable<List<OtCabecera>> = roomRepository.getOtCabeceraBySend(1)
         ot.flatMap { observable ->
             Observable.fromIterable(observable).flatMap { a ->
+                val b = MultipartBody.Builder()
+                val vale: List<OtPhoto>? = a.photos
+                if (vale != null) {
+                    for (v: OtPhoto in vale) {
+                        if (v.fotoUrl.isNotEmpty()) {
+                            val file = File(Util.getFolder(), v.fotoUrl)
+                            if (file.exists()) {
+                                b.addFormDataPart(
+                                    "files", file.name,
+                                    RequestBody.create(
+                                        MediaType.parse("multipart/form-data"),
+                                        file
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+
                 val json = Gson().toJson(a)
                 Log.i("TAG", json)
-                val body =
-                    RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+                b.setType(MultipartBody.FORM)
+                b.addFormDataPart("data", json)
+
+                val body = b.build()
                 Observable.zip(
                     Observable.just(a), roomRepository.saveTrabajo(body),
                     BiFunction<OtCabecera, Mensaje, Mensaje> { _, mensaje ->

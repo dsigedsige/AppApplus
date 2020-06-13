@@ -51,4 +51,6 @@ open class OtDetalle {
     var equipoModelo: String = ""
     var lampara: String = ""
     var direccion: String = ""
+
+    var fecha:String = ""
 }

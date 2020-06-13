@@ -195,7 +195,7 @@ open class CameraDemoActivity : AppCompatActivity() {
                 myDirectory.mkdirs()
             }
 
-            nameImg = Util.getFechaActualForPhoto(usuarioId)
+            nameImg = Util.getFechaActualForPhoto(usuarioId.toInt())
 
             val file = File(
                 Environment.getExternalStorageDirectory()

@@ -8,6 +8,7 @@ import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.OtCabecera
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
+import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_protocolo_main.*
@@ -32,12 +33,12 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
         if (b != null) {
             bindUI(
                 b.getString("title")!!, b.getInt("tipo"), b.getInt("id"), b.getString("codigo")!!,
-                b.getInt("otId"), b.getInt("estado")
+                b.getInt("otId"), b.getInt("estado"),b.getInt("usuarioId")
             )
         }
     }
 
-    private fun bindUI(title: String, tipo: Int, id: Int, codigo: String, otId: Int, estado: Int) {
+    private fun bindUI(title: String, tipo: Int, id: Int, codigo: String, otId: Int, estado: Int,usuarioId:Int) {
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
 
@@ -64,21 +65,33 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
         })
 
         fab.setOnClickListener {
-            o.formatoId = id
-            o.tipoFormatoId = tipo
-            o.nombreTipoFormato = title
-            o.nroOt = codigo
-            o.otId = otId
-            o.active = 1
-            o.sed = editTextNroSed.text.toString().toUpperCase(Locale.getDefault())
-            o.soporte = editTextSoporte.text.toString()
-            o.setProtocolo = editTextSet.text.toString()
-            o.alimentador = editTextAlimentador.text.toString()
-            o.cuadrilla = editTextCuadricula.text.toString()
-            o.lamina = editTextLamina.text.toString()
-            o.letra = editTextLetra.text.toString()
-            registroViewModel.validateProtocolo(o)
-            Util.toastMensaje(this, "Verificando Sed...")
+            val gps = Gps(this)
+            if (gps.isLocationEnabled()) {
+                if (gps.latitude.toString() != "0.0" || gps.longitude.toString() != "0.0") {
+                    o.coordenadaX = gps.latitude.toString()
+                    o.coordenadaY = gps.longitude.toString()
+
+                    o.formatoId = id
+                    o.tipoFormatoId = tipo
+                    o.nombreTipoFormato = title
+                    o.nroOt = codigo
+                    o.otId = otId
+                    o.active = 1
+                    o.sed = editTextNroSed.text.toString().toUpperCase(Locale.getDefault())
+                    o.soporte = editTextSoporte.text.toString()
+                    o.setProtocolo = editTextSet.text.toString()
+                    o.alimentador = editTextAlimentador.text.toString()
+                    o.cuadrilla = editTextCuadricula.text.toString()
+                    o.lamina = editTextLamina.text.toString()
+                    o.letra = editTextLetra.text.toString()
+                    o.fechaRegistro = Util.getFecha()
+                    o.usuario = usuarioId
+                    registroViewModel.validateProtocolo(o)
+                    Util.toastMensaje(this, "Verificando Sed...")
+                }
+            } else {
+                gps.showSettingsAlert(this)
+            }
         }
 
         registroViewModel.success.observe(this, Observer { s ->

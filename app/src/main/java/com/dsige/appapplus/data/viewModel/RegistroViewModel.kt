@@ -99,60 +99,58 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateFormBTOne(d: OtDetalle) {
-
         if (d.alim.isEmpty()) {
             mensajeError.value = "Ingrese Alimentador"
             return
         }
-        if (d.codigoSoporte.isEmpty()) {
-            mensajeError.value = "Ingrese Codigo AP/Correlativo"
-            return
-        }
-        if (d.codigoVia.isEmpty()) {
-            mensajeError.value = "Ingrese Codigo Via"
-            return
-        }
-        if (d.llave.isEmpty()) {
-            mensajeError.value = "Ingrese Llave"
-            return
-        }
-        if (d.sistemas.isEmpty()) {
-            mensajeError.value = "Ingrese Sistema MT"
-            return
-        }
-        if (d.nombreTipoMaterialId.isEmpty()) {
-            mensajeError.value = "Seleccione Material de Soporte "
-            return
-        }
-        if (d.tamanio.isEmpty()) {
-            mensajeError.value = "Seleccione Tamaño "
-            return
-        }
-        if (d.redSDS.isEmpty()) {
-            mensajeError.value = "Ingrese SP"
-            return
-        }
-        if (d.redAP.isEmpty()) {
-            mensajeError.value = "Ingrese AP"
-            return
-        }
-        if (d.redAmbas.isEmpty()) {
-            mensajeError.value = "Ingrese MT"
-            return
-        }
-        if (d.cajaDeriva.isEmpty()) {
-            mensajeError.value = "Ingrese Caja Deriva"
-            return
-        }
-        if (d.retenidaV.isEmpty()) {
-            mensajeError.value = "Ingrese Retenidas V"
-            return
-        }
-        if (d.retenidaS.isEmpty()) {
-            mensajeError.value = "Ingrese Retenidas S"
-            return
-        }
-
+//        if (d.codigoSoporte.isEmpty()) {
+//            mensajeError.value = "Ingrese Codigo AP/Correlativo"
+//            return
+//        }
+//        if (d.codigoVia.isEmpty()) {
+//            mensajeError.value = "Ingrese Codigo Via"
+//            return
+//        }
+//        if (d.llave.isEmpty()) {
+//            mensajeError.value = "Ingrese Llave"
+//            return
+//        }
+//        if (d.sistemas.isEmpty()) {
+//            mensajeError.value = "Ingrese Sistema MT"
+//            return
+//        }
+//        if (d.nombreTipoMaterialId.isEmpty()) {
+//            mensajeError.value = "Seleccione Material de Soporte "
+//            return
+//        }
+//        if (d.tamanio.isEmpty()) {
+//            mensajeError.value = "Seleccione Tamaño "
+//            return
+//        }
+//        if (d.redSDS.isEmpty()) {
+//            mensajeError.value = "Ingrese SP"
+//            return
+//        }
+//        if (d.redAP.isEmpty()) {
+//            mensajeError.value = "Ingrese AP"
+//            return
+//        }
+//        if (d.redAmbas.isEmpty()) {
+//            mensajeError.value = "Ingrese MT"
+//            return
+//        }
+//        if (d.cajaDeriva.isEmpty()) {
+//            mensajeError.value = "Ingrese Caja Deriva"
+//            return
+//        }
+//        if (d.retenidaV.isEmpty()) {
+//            mensajeError.value = "Ingrese Retenidas V"
+//            return
+//        }
+//        if (d.retenidaS.isEmpty()) {
+//            mensajeError.value = "Ingrese Retenidas S"
+//            return
+//        }
         insertOrUpdateOtDetalle(d)
     }
 
@@ -161,128 +159,123 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             mensajeError.value = "Ingrese Pastotal C"
             return
         }
-        if (d.pastotalGF.isEmpty()) {
-            mensajeError.value = "Ingrese Pastotal GF"
-            return
-        }
-        if (d.equipoTipo.isEmpty()) {
-            mensajeError.value = "Ingrese Tipo de Equipo"
-            return
-        }
-        if (d.equipoModelo.isEmpty()) {
-            mensajeError.value = "Ingrese Modelo"
-            return
-        }
-        if (d.lampara.isEmpty()) {
-            mensajeError.value = "Ingrese Tipo de Lampara"
-            return
-        }
-        if (d.direccion.isEmpty()) {
-            mensajeError.value = "Ingrese Dirección"
-            return
-        }
-
+//        if (d.pastotalGF.isEmpty()) {
+//            mensajeError.value = "Ingrese Pastotal GF"
+//            return
+//        }
+//        if (d.equipoTipo.isEmpty()) {
+//            mensajeError.value = "Ingrese Tipo de Equipo"
+//            return
+//        }
+//        if (d.equipoModelo.isEmpty()) {
+//            mensajeError.value = "Ingrese Modelo"
+//            return
+//        }
+//        if (d.lampara.isEmpty()) {
+//            mensajeError.value = "Ingrese Tipo de Lampara"
+//            return
+//        }
+//        if (d.direccion.isEmpty()) {
+//            mensajeError.value = "Ingrese Dirección"
+//            return
+//        }
         insertOrUpdateOtDetalle(d)
     }
-
 
     fun validateFormMTOne(d: OtDetalle) {
         if (d.codigoSoporte.isEmpty()) {
             mensajeError.value = "Ingrese Codigo de Soporte"
             return
         }
-        if (d.alim.isEmpty()) {
-            mensajeError.value = "Ingrese Alim"
-            return
-        }
-        if (d.armado.isEmpty()) {
-            mensajeError.value = "Ingrese Armado"
-            return
-        }
-        if (d.nombreTipoMaterialId.isEmpty()) {
-            mensajeError.value = "Ingrese Material"
-            return
-        }
-        if (d.tamanio.isEmpty()) {
-            mensajeError.value = "Ingrese Tamaño"
-            return
-        }
-        if (d.nombreFuncionId.isEmpty()) {
-            mensajeError.value = "Ingrese Función"
-            return
-        }
-
-        if (d.cNumeroId == 0) {
-            mensajeError.value = "Ingrese Nro de Seccionamiento"
-            return
-        }
-        if (d.seccCod.isEmpty()) {
-            mensajeError.value = "Ingrese Cod"
-            return
-        }
-        if (d.seccCap.isEmpty()) {
-            mensajeError.value = "Ingrese Cap"
-            return
-        }
-        if (d.seccFus.isEmpty()) {
-            mensajeError.value = "Ingrese Fus"
-            return
-        }
-        if (d.nombreTipoConductorId.isEmpty()) {
-            mensajeError.value = "Seleccione Tipo de Conductor "
-            return
-        }
-        if (d.lvano.isEmpty()) {
-            mensajeError.value = "Ingrese L_Vano(m)"
-            return
-        }
-        if (d.conduSecc.isEmpty()) {
-            mensajeError.value = "Ingrese Sección"
-            return
-        }
-        if (d.conduFases.isEmpty()) {
-            mensajeError.value = "Ingrese Fase"
-            return
-        }
-
+//        if (d.alim.isEmpty()) {
+//            mensajeError.value = "Ingrese Alim"
+//            return
+//        }
+//        if (d.armado.isEmpty()) {
+//            mensajeError.value = "Ingrese Armado"
+//            return
+//        }
+//        if (d.nombreTipoMaterialId.isEmpty()) {
+//            mensajeError.value = "Ingrese Material"
+//            return
+//        }
+//        if (d.tamanio.isEmpty()) {
+//            mensajeError.value = "Ingrese Tamaño"
+//            return
+//        }
+//        if (d.nombreFuncionId.isEmpty()) {
+//            mensajeError.value = "Ingrese Función"
+//            return
+//        }
+//
+//        if (d.cNumeroId == 0) {
+//            mensajeError.value = "Ingrese Nro de Seccionamiento"
+//            return
+//        }
+//        if (d.seccCod.isEmpty()) {
+//            mensajeError.value = "Ingrese Cod"
+//            return
+//        }
+//        if (d.seccCap.isEmpty()) {
+//            mensajeError.value = "Ingrese Cap"
+//            return
+//        }
+//        if (d.seccFus.isEmpty()) {
+//            mensajeError.value = "Ingrese Fus"
+//            return
+//        }
+//        if (d.nombreTipoConductorId.isEmpty()) {
+//            mensajeError.value = "Seleccione Tipo de Conductor "
+//            return
+//        }
+//        if (d.lvano.isEmpty()) {
+//            mensajeError.value = "Ingrese L_Vano(m)"
+//            return
+//        }
+//        if (d.conduSecc.isEmpty()) {
+//            mensajeError.value = "Ingrese Sección"
+//            return
+//        }
+//        if (d.conduFases.isEmpty()) {
+//            mensajeError.value = "Ingrese Fase"
+//            return
+//        }
         insertOrUpdateOtDetalle(d)
     }
 
     fun validateFormMTTwo(d: OtDetalle) {
-
         if (d.tipoAisladorId.isEmpty()) {
             mensajeError.value = "Ingrese Tipo Aislador"
             return
         }
-        if (d.aislaMaterial.isEmpty()) {
-            mensajeError.value = "Ingrese Material Aislador"
-            return
-        }
-        if (d.aislaCantidad.isEmpty()) {
-            mensajeError.value = "Ingrese Cantidad Aislador"
-            return
-        }
-        if (d.vientoViolin.isEmpty()) {
-            mensajeError.value = "Ingrese Viento"
-            return
-        }
-        if (d.vientoSimple.isEmpty()) {
-            mensajeError.value = "Ingrese Viento Simple"
-            return
-        }
-        if (d.vientoCantidad.isEmpty()) {
-            mensajeError.value = "Ingrese Cantidad"
-            return
-        }
-        if (d.pastoral.isEmpty()) {
-            mensajeError.value = "Ingrese Pastoral"
-            return
-        }
-        if (d.observaciones.isEmpty()) {
-            mensajeError.value = "Ingrese Observaciones"
-            return
-        }
-
+//        if (d.aislaMaterial.isEmpty()) {
+//            mensajeError.value = "Ingrese Material Aislador"
+//            return
+//        }
+//        if (d.aislaCantidad.isEmpty()) {
+//            mensajeError.value = "Ingrese Cantidad Aislador"
+//            return
+//        }
+//        if (d.vientoViolin.isEmpty()) {
+//            mensajeError.value = "Ingrese Viento"
+//            return
+//        }
+//        if (d.vientoSimple.isEmpty()) {
+//            mensajeError.value = "Ingrese Viento Simple"
+//            return
+//        }
+//        if (d.vientoCantidad.isEmpty()) {
+//            mensajeError.value = "Ingrese Cantidad"
+//            return
+//        }
+//        if (d.pastoral.isEmpty()) {
+//            mensajeError.value = "Ingrese Pastoral"
+//            return
+//        }
+//        if (d.observaciones.isEmpty()) {
+//            mensajeError.value = "Ingrese Observaciones"
+//            return
+//        }
         insertOrUpdateOtDetalle(d)
     }
 
@@ -416,5 +409,55 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
     fun getEstados(): LiveData<List<Estado>> {
         return roomRepository.getEstados()
+    }
+
+    fun getPhotoById(id: Int): LiveData<List<OtPhoto>> {
+        return roomRepository.getPhotoById(id)
+    }
+
+    fun validateOtPhoto(o: OtPhoto) {
+//        if (o.observacion.isEmpty()){
+//            mensajeError.value = "Ingresar una observacion"
+//            return
+//        }
+        insertOrUpdatePhoto(o)
+    }
+
+    private fun insertOrUpdatePhoto(o: OtPhoto) {
+        roomRepository.insertOrUpdatePhoto(o)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = "Ok"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
+    }
+
+    fun deletePhoto(o: OtPhoto) {
+        roomRepository.deletePhoto(o)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = "Eliminado"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
     }
 }

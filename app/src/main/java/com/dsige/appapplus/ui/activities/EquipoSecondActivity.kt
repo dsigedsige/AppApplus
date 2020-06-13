@@ -191,6 +191,7 @@ class EquipoSecondActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun formEquipo() {
         e.formatoId = formatoId
         e.tipoEquipo = tipo
+        e.fecha = Util.getFecha()
         when (tipo) {
             1 -> {
                 e.nroKardex = editText1.text.toString()

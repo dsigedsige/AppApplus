@@ -39,7 +39,6 @@ class Hoja123Activity : DaggerAppCompatActivity(), View.OnClickListener {
     }
 
     private fun bindUI(title: String, t: Int, f: Int, id: Int) {
-
         hojaViewModel =
             ViewModelProvider(this, viewModelFactory).get(HojaViewModel::class.java)
 
@@ -135,6 +134,7 @@ class Hoja123Activity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun formHoja() {
         o.formatoId = formatoId
         o.item = tipo
+        o.fecha = Util.getFecha()
         when (tipo) {
             1 -> {
                 o.nroCelda = editText1.text.toString()

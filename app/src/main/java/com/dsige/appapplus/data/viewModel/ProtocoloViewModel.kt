@@ -42,188 +42,186 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             mensajeError.value = "Ingrese Tipo Terreno"
             return
         }
-        if(o.estadoTerreno.isEmpty()){
-            mensajeError.value = "Ingrese Estado Terreno"
-            return
-        }
-        if(o.resistenciaSeca.isEmpty()){
-            mensajeError.value = "Ingrese Resistencia Promedio(Seca)"
-            return
-        }
-        if(o.resistenciaHumeda.isEmpty()){
-            mensajeError.value = "Ingrese Resistencia Promedio(Humeda)"
-            return
-        }
-        if(o.fechaSeca.isEmpty()){
-            mensajeError.value = "Ingrese Fecha Medición(Seca)"
-            return
-        }
-        if(o.aSeca1.isEmpty()){
-            mensajeError.value = "Ingrese A=1"
-            return
-        }
-        if(o.aSeca2.isEmpty()){
-            mensajeError.value = "Ingrese A=2"
-            return
-        }
-        if(o.aSeca3.isEmpty()){
-            mensajeError.value = "Ingrese A=3"
-            return
-        }
-        if(o.fechaHumeda.isEmpty()){
-            mensajeError.value = "Ingrese Fecha Medición(Humeda)"
-            return
-        }
-        if(o.aHumeda1.isEmpty()){
-            mensajeError.value = "Ingrese A=1"
-            return
-        }
-        if(o.aHumeda2.isEmpty()){
-            mensajeError.value = "Ingrese A=2"
-            return
-        }
-        if(o.aHumeda3.isEmpty()){
-            mensajeError.value = "Ingrese A=3"
-            return
-        }
+//        if(o.estadoTerreno.isEmpty()){
+//            mensajeError.value = "Ingrese Estado Terreno"
+//            return
+//        }
+//        if(o.resistenciaSeca.isEmpty()){
+//            mensajeError.value = "Ingrese Resistencia Promedio(Seca)"
+//            return
+//        }
+//        if(o.resistenciaHumeda.isEmpty()){
+//            mensajeError.value = "Ingrese Resistencia Promedio(Humeda)"
+//            return
+//        }
+//        if(o.fechaSeca.isEmpty()){
+//            mensajeError.value = "Ingrese Fecha Medición(Seca)"
+//            return
+//        }
+//        if(o.aSeca1.isEmpty()){
+//            mensajeError.value = "Ingrese A=1"
+//            return
+//        }
+//        if(o.aSeca2.isEmpty()){
+//            mensajeError.value = "Ingrese A=2"
+//            return
+//        }
+//        if(o.aSeca3.isEmpty()){
+//            mensajeError.value = "Ingrese A=3"
+//            return
+//        }
+//        if(o.fechaHumeda.isEmpty()){
+//            mensajeError.value = "Ingrese Fecha Medición(Humeda)"
+//            return
+//        }
+//        if(o.aHumeda1.isEmpty()){
+//            mensajeError.value = "Ingrese A=1"
+//            return
+//        }
+//        if(o.aHumeda2.isEmpty()){
+//            mensajeError.value = "Ingrese A=2"
+//            return
+//        }
+//        if(o.aHumeda3.isEmpty()){
+//            mensajeError.value = "Ingrese A=3"
+//            return
+//        }
         insertOrUpdteOtOtProtocolo(o)
     }
 
     fun validateProtocoloP24(o:OtProtocolo){
-        if(o.rBt1.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pBt1.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rBt2.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pBt2.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rBt3.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pBt3.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rBt4.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pBt4.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rBtE.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pBtE.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rMt1.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pMt1.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rMt2.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pMt2.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rMt3.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pMt3.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rMt4.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pMt4.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.rMtE.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.pMtE.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
-        if(o.observaciones.isEmpty()){
-            mensajeError.value = "Ingrese todo los campos"
-            return
-        }
+//        if(o.rBt1.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pBt1.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rBt2.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pBt2.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rBt3.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pBt3.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rBt4.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pBt4.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rBtE.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pBtE.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rMt1.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pMt1.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rMt2.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pMt2.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rMt3.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pMt3.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rMt4.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pMt4.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.rMtE.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.pMtE.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
+//        if(o.observaciones.isEmpty()){
+//            mensajeError.value = "Ingrese todo los campos"
+//            return
+//        }
         insertOrUpdteOtOtProtocolo(o)
     }
 
     fun validateProtocoloP3(o: OtProtocolo) {
-
         if(o.proyecto.isEmpty()){
             mensajeError.value = "Ingrese Proyecto/Orden Trabajo"
             return
         }
-        if(o.tipoSistema.isEmpty()){
-            mensajeError.value = "Ingrese Tipo de Sistema"
-            return
-        }
-        if(o.grupoResis.isEmpty()){
-            mensajeError.value = "Ingrese Grupo Resistividad"
-            return
-        }
-        if(o.nivelResis.isEmpty()){
-            mensajeError.value = "Ingrese Nivel Resistividad"
-            return
-        }
-        if(o.btNpozos.isEmpty()){
-            mensajeError.value = "Ingrese Nº Pozos BT"
-            return
-        }
-        if(o.btNdosis.isEmpty()){
-            mensajeError.value = "Ingrese Nº Dosis por Pozo"
-            return
-        }
-        if(o.btCompuesto.isEmpty()){
-            mensajeError.value = "Ingrese Compuesto Quimico Tratante"
-            return
-        }
-        if(o.mtNpozos.isEmpty()){
-            mensajeError.value = "Ingrese Nº Pozos MT"
-            return
-        }
-        if(o.mtNdosis.isEmpty()){
-            mensajeError.value = "Ingrese Nº Dosis por Pozo"
-            return
-        }
-        if(o.mtCompuesto.isEmpty()){
-            mensajeError.value = "Ingrese Compuesto Quimico Tratante"
-            return
-        }
-        if(o.observaciones.isEmpty()){
-            mensajeError.value = "Ingrese Observaciones"
-            return
-        }
-
+//        if(o.tipoSistema.isEmpty()){
+//            mensajeError.value = "Ingrese Tipo de Sistema"
+//            return
+//        }
+//        if(o.grupoResis.isEmpty()){
+//            mensajeError.value = "Ingrese Grupo Resistividad"
+//            return
+//        }
+//        if(o.nivelResis.isEmpty()){
+//            mensajeError.value = "Ingrese Nivel Resistividad"
+//            return
+//        }
+//        if(o.btNpozos.isEmpty()){
+//            mensajeError.value = "Ingrese Nº Pozos BT"
+//            return
+//        }
+//        if(o.btNdosis.isEmpty()){
+//            mensajeError.value = "Ingrese Nº Dosis por Pozo"
+//            return
+//        }
+//        if(o.btCompuesto.isEmpty()){
+//            mensajeError.value = "Ingrese Compuesto Quimico Tratante"
+//            return
+//        }
+//        if(o.mtNpozos.isEmpty()){
+//            mensajeError.value = "Ingrese Nº Pozos MT"
+//            return
+//        }
+//        if(o.mtNdosis.isEmpty()){
+//            mensajeError.value = "Ingrese Nº Dosis por Pozo"
+//            return
+//        }
+//        if(o.mtCompuesto.isEmpty()){
+//            mensajeError.value = "Ingrese Compuesto Quimico Tratante"
+//            return
+//        }
+//        if(o.observaciones.isEmpty()){
+//            mensajeError.value = "Ingrese Observaciones"
+//            return
+//        }
         insertOrUpdteOtOtProtocolo(o)
     }
 
@@ -242,9 +240,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 override fun onError(e: Throwable) {
                     mensajeError.value = e.message
                 }
-
             })
-
     }
 
     fun getEquipoByTipo(tipo: Int, formatoId: Int): LiveData<List<OtEquipo>> {

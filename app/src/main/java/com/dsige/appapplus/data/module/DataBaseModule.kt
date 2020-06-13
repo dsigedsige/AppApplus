@@ -85,6 +85,11 @@ class DataBaseModule {
     }
 
     @Provides
+    internal fun provideOtPhotoDao(appDataBase: AppDataBase): OtPhotoDao {
+        return appDataBase.otPhotoDao()
+    }
+
+    @Provides
     internal fun provideSedDao(appDataBase: AppDataBase): SedDao {
         return appDataBase.sedDao()
     }
