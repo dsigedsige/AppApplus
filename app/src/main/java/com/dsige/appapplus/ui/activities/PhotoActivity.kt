@@ -1,8 +1,9 @@
 package com.dsige.appapplus.ui.activities
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
@@ -13,6 +14,8 @@ import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.OtPhoto
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
+import com.dsige.appapplus.helper.Permission
+import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.OtPhotoAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -23,11 +26,14 @@ import javax.inject.Inject
 class PhotoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
-        startActivity(
-            Intent(this, CameraActivity::class.java)
-                .putExtra("formatoId", formatoId)
-                .putExtra("usuarioId", usuarioId)
-        )
+        when (v.id) {
+            R.id.fabCamara -> startActivity(
+                Intent(this, CameraActivity::class.java)
+                    .putExtra("formatoId", formatoId)
+                    .putExtra("usuarioId", usuarioId)
+            )
+            R.id.fabGaleria -> goGalery()
+        }
     }
 
     @Inject
@@ -90,7 +96,25 @@ class PhotoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 photoAdapter.addItems(f)
             }
         })
-        fab.setOnClickListener(this)
+        fabCamara.setOnClickListener(this)
+        fabGaleria.setOnClickListener(this)
+
+        registroViewModel.success.observe(this, Observer { s ->
+            if (s != null) {
+                startActivity(
+                    Intent(this, PreviewCameraActivity::class.java)
+                        .putExtra("formatoId", formatoId)
+                        .putExtra("usuarioId", usuarioId)
+                        .putExtra("nameImg", s)
+                        .putExtra("galery", true)
+                )
+            }
+        })
+        registroViewModel.error.observe(this, Observer {s->
+            if (s != null){
+             Util.toastMensaje(this,s)
+            }
+        })
     }
 
     private fun deletePhoto(o: OtPhoto) {
@@ -105,5 +129,23 @@ class PhotoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 dialog.cancel()
             }
         dialog.show()
+    }
+
+    private fun goGalery() {
+        val i = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(i, Permission.GALERY_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Permission.GALERY_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                registroViewModel.generarArchivo(
+                    Util.getFechaActualForPhoto(formatoId),
+                    this,
+                    data
+                )
+            }
+        }
     }
 }

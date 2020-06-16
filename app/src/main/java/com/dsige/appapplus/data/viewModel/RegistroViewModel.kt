@@ -1,5 +1,8 @@
 package com.dsige.appapplus.data.viewModel
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.dsige.appapplus.data.local.model.Usuario
@@ -7,6 +10,7 @@ import com.dsige.appapplus.data.local.model.*
 import com.dsige.appapplus.data.local.repository.ApiError
 import com.dsige.appapplus.data.local.repository.AppRepository
 import com.dsige.appapplus.helper.Mensaje
+import com.dsige.appapplus.helper.Util
 import io.reactivex.CompletableObserver
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -463,7 +467,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    mensajeSuccess.value = "Eliminado"
+                    mensajeError.value = "Eliminado"
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -471,7 +475,25 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onError(e: Throwable) {
-                    mensajeError.value = e.message
+                }
+            })
+    }
+
+    fun generarArchivo(nameImg: String, context: Context, data: Intent) {
+        Util.getFolderAdjunto(nameImg, context, data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = nameImg
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.i("TAG", e.toString())
                 }
             })
     }

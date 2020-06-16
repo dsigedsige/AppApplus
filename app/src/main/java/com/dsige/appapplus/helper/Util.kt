@@ -690,9 +690,7 @@ object Util {
         )
     }
 
-    fun getFolderAdjunto(
-        file: String, context: Context, data: Intent
-    ): Completable {
+    fun getFolderAdjunto(file: String, context: Context, data: Intent): Completable {
         return Completable.fromAction {
             val imagepath = getFolder().toString() + "/" + file
             val f = File(imagepath)
@@ -703,7 +701,6 @@ object Util {
                         Log.i("TAG", "FILE CREATED")
                     }
                     copyFile(File(getRealPathFromURI(context, data.data!!)), f)
-//                    shrinkBitmapOnlyReduceCamera2(imagepath)
                     getAngleImage(imagepath)
                 } catch (e: IOException) {
                     e.printStackTrace()

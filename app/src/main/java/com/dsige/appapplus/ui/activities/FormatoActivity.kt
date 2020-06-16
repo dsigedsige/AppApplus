@@ -96,25 +96,26 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         val oTAdapter = OtCabeceraAdapter(object : OnItemClickListener.OTCabeceraListener {
             override fun onItemClick(r: OtCabecera, view: View, position: Int) {
-                when (r.tipoFormatoId) {
-                    2 -> startActivity(
-                        Intent(this@FormatoActivity, HojaMainActivity::class.java)
-                            .putExtra("id", r.formatoId)
-                            .putExtra("otId", r.otId)
-                            .putExtra("title", r.nombreTipoFormato)
-                            .putExtra("tipo", r.tipoFormatoId)
-                            .putExtra("codigo", textView1.text)
-                            .putExtra("estado", 1)
-                            .putExtra("usuarioId", usuarioId)
-                    )
-                    1, 3, 4, 5 -> generateCabecera(
-                        r.nombreTipoFormato,
-                        r.tipoFormatoId,
-                        r.formatoId,
-                        textView1.text.toString(),
-                        r.otId,
-                        1
-                    )
+                if (r.active == 1) {
+                    when (r.tipoFormatoId) {
+                        2 -> startActivity(
+                            Intent(this@FormatoActivity, HojaMainActivity::class.java)
+                                .putExtra("id", r.formatoId)
+                                .putExtra("otId", r.otId)
+                                .putExtra("title", r.nombreTipoFormato)
+                                .putExtra("tipo", r.tipoFormatoId)
+                                .putExtra("codigo", textView1.text)
+                                .putExtra("estado", 1)
+                                .putExtra("usuarioId", usuarioId)
+                        )
+                        1, 3, 4, 5 -> generateCabecera(
+                            r.nombreTipoFormato,
+                            r.tipoFormatoId,
+                            r.formatoId,
+                            textView1.text.toString(),
+                            r.otId,
+                            1
+                        )
 //                    5 -> startActivity(
 //                        Intent(this@FormatoActivity, EquipoMainActivity::class.java)
 //                            .putExtra("id", r.formatoId)
@@ -124,17 +125,19 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 //                            .putExtra("codigo", textView1.text)
 //                            .putExtra("estado", 1)
 //                    )
-                    6 -> startActivity(
-                        Intent(this@FormatoActivity, ProtocoloMainActivity::class.java)
-                            .putExtra("id", r.formatoId)
-                            .putExtra("otId", r.otId)
-                            .putExtra("title", r.nombreTipoFormato)
-                            .putExtra("tipo", r.tipoFormatoId)
-                            .putExtra("codigo", textView1.text)
-                            .putExtra("estado", 1)
-                            .putExtra("usuarioId", usuarioId)
-                    )
-                }
+                        6 -> startActivity(
+                            Intent(this@FormatoActivity, ProtocoloMainActivity::class.java)
+                                .putExtra("id", r.formatoId)
+                                .putExtra("otId", r.otId)
+                                .putExtra("title", r.nombreTipoFormato)
+                                .putExtra("tipo", r.tipoFormatoId)
+                                .putExtra("codigo", textView1.text)
+                                .putExtra("estado", 1)
+                                .putExtra("usuarioId", usuarioId)
+                        )
+                    }
+                } else
+                    registroViewModel.setError("Inspección Cerrada")
             }
         })
 

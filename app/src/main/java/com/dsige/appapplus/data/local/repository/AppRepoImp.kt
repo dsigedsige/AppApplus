@@ -42,6 +42,19 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun deleteUsuario(): Completable {
         return Completable.fromAction {
+            dataBase.estadoDao().deleteAll()
+            dataBase.formatoDao().deleteAll()
+            dataBase.grupoDao().deleteAll()
+            dataBase.otCabeceraDao().deleteAll()
+            dataBase.otDao().deleteAll()
+            dataBase.otDetalleDao().deleteAll()
+            dataBase.otEquipoDao().deleteAll()
+            dataBase.otHoja123Dao().deleteAll()
+            dataBase.otHoja4Dao().deleteAll()
+            dataBase.otHoja56Dao().deleteAll()
+            dataBase.otPhotoDao().deleteAll()
+            dataBase.otProtocoloDao().deleteAll()
+            dataBase.sedDao().deleteAll()
             dataBase.usuarioDao().deleteAll()
         }
     }

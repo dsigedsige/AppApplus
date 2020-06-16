@@ -24,7 +24,9 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.fabClose -> {
+            R.id.fabClose -> if (galery) {
+                finish()
+            } else {
                 startActivity(
                     Intent(this, CameraActivity::class.java)
                         .putExtra("formatoId", formatoId)
@@ -40,10 +42,11 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var registroViewModel: RegistroViewModel
 
-   private var formatoId: Int = 0
-   private var usuarioId: Int = 0
-   private var nameImg: String = ""
-   private lateinit var o: OtPhoto
+    private var formatoId: Int = 0
+    private var usuarioId: Int = 0
+    private var nameImg: String = ""
+    private var galery: Boolean = false
+    private lateinit var o: OtPhoto
     private val Folder = "/Dsige/Applus/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +60,7 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
             formatoId = b.getInt("formatoId")
             usuarioId = b.getInt("usuarioId")
             nameImg = b.getString("nameImg")!!
+            galery = b.getBoolean("galery")
             bindUI(b.getString("nameImg")!!)
         }
     }

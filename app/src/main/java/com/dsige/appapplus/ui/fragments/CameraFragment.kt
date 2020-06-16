@@ -730,6 +730,7 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
                                 .putExtra("formatoId", formatoId)
                                 .putExtra("usuarioId", usuarioId)
                                 .putExtra("nameImg", nameImg)
+                                .putExtra("galery", false)
                         )
                         activity!!.finish()
                     }, 200)
