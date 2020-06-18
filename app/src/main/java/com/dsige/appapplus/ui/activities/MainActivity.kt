@@ -83,7 +83,8 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 "Ordenes de Trabajo"
             )
             R.id.logout -> dialogLogout()
-            R.id.envio -> sendTrabajos()
+            R.id.envio -> sendTrabajos(1)
+            R.id.enviOT -> sendTrabajos(2)
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -185,13 +186,21 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         dialog.show()
     }
 
-    private fun sendTrabajos() {
+    private fun sendTrabajos(tipo: Int) {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle("Mensaje")
-            .setMessage("Deseas Enviar los Trabajos Pendientes ?")
+            .setMessage(
+                when (tipo) {
+                    1 -> "Deseas Enviar los Trabajos Pendientes ?"
+                    else -> "Deseas Enviar las reasignaciones Pendientes ?"
+                }
+            )
             .setPositiveButton("SI") { dialog, _ ->
-                load("Enviando Trabajos")
-                usuarioViewModel.sendTrabajo()
+                load("Enviando...")
+                when (tipo) {
+                    1 -> usuarioViewModel.sendTrabajo()
+                    else -> usuarioViewModel.sendReasignaciones()
+                }
                 dialog.dismiss()
             }
             .setNegativeButton("NO") { dialog, _ ->

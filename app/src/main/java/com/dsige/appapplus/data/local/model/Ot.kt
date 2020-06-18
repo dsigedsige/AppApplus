@@ -20,8 +20,13 @@ open class Ot {
     var fechaRecepcion: String = ""
     var estado: String = ""
     var diasVencimiento: Int = 0
-    var estadoId : Int = 0
+    var estadoId: Int = 0
+
+    var active: Int = 0 // 1 -> para enviar // 2 -> enviado
+    var comentario: String = ""
+    var motivoId: Int = 0
+    var nombreMotivoId: String = ""
 
     @Ignore
-    var otCabecera : List<OtCabecera> = ArrayList()
+    var otCabecera: List<OtCabecera> = ArrayList()
 }

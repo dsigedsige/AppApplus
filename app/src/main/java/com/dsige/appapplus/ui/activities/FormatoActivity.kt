@@ -16,15 +16,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.Formato
+import com.dsige.appapplus.data.local.model.Grupo
+import com.dsige.appapplus.data.local.model.Ot
 import com.dsige.appapplus.data.local.model.OtCabecera
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
+import com.dsige.appapplus.data.viewModel.UsuarioViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.FormatoAdapter
+import com.dsige.appapplus.ui.adapters.GrupoAdapter
 import com.dsige.appapplus.ui.adapters.OtCabeceraAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_formato.*
@@ -41,35 +46,48 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             R.id.fab4 -> goActivity(4, "Soporte BT")
             R.id.fab5 -> goActivity(5, "Equipo Existente")
             R.id.fab6 -> goActivity(6, "Protocolo NSPT")
-            R.id.editTextCombo -> spinnerCombo()
+            R.id.editTextCombo -> spinnerCombo(estadoId)
+            R.id.fabGenerate -> formOT()
         }
     }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var registroViewModel: RegistroViewModel
+    lateinit var usuarioViewModel: UsuarioViewModel
 
     private var otId: Int = 0
     private var formatoId: Int = 0
     private var usuarioId: Int = 0
+    private var estadoId: Int = 0
     lateinit var builder: AlertDialog.Builder
     var dialog: AlertDialog? = null
+    lateinit var builderR: AlertDialog.Builder
+    var dialogR: AlertDialog? = null
+
+    lateinit var ot: Ot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formato)
+
+        ot = Ot()
+
         val b = intent.extras
         if (b != null) {
-            bindUI(b.getInt("id"), b.getInt("usuarioId"))
+            bindUI(b.getInt("id"), b.getInt("usuarioId"), b.getInt("estadoId"))
         }
     }
 
-    private fun bindUI(id: Int, usu: Int) {
+    private fun bindUI(id: Int, usu: Int, e: Int) {
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
+        usuarioViewModel =
+            ViewModelProvider(this, viewModelFactory).get(UsuarioViewModel::class.java)
 
         otId = id
         usuarioId = usu
+        estadoId = e
 
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Lista de Formato"
@@ -78,11 +96,17 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         registroViewModel.getOtById(id).observe(this, Observer { t ->
             if (t != null) {
+                ot = t
                 textView1.text = t.nroOt
                 textView2.text = t.estado
                 textView3.text = t.nombre
                 textView4.text = t.fechaRecepcion
                 textView5.text = String.format("Dia Vcto: %s", t.diasVencimiento)
+
+                if (e == 6) {
+                    editTextCombo.setText(t.nombreMotivoId)
+                    editTextComentario.setText(t.comentario)
+                }
             }
         })
 
@@ -92,7 +116,19 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         fab4.setOnClickListener(this)
         fab5.setOnClickListener(this)
         fab6.setOnClickListener(this)
+        fabGenerate.setOnClickListener(this)
         editTextCombo.setOnClickListener(this)
+
+        if (e == 6) {
+            textViewCombo.hint = "Motivo de Reasignación"
+            textViewComentario.visibility = View.VISIBLE
+            fabGenerate.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            fab.visibility = View.GONE
+            supportActionBar!!.title = "Reasignación de OT"
+        } else {
+            supportActionBar!!.title = "Lista de Formato"
+        }
 
         val oTAdapter = OtCabeceraAdapter(object : OnItemClickListener.OTCabeceraListener {
             override fun onItemClick(r: OtCabecera, view: View, position: Int) {
@@ -153,7 +189,6 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             })
         registroViewModel.cabecera.value = 0
 
-
         registroViewModel.getMaxIdOt().observe(this, Observer { i ->
             formatoId = if (i != null) {
                 i + 1
@@ -192,23 +227,23 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             }
         })
 
-        registroViewModel.error.observe(this, Observer { s ->
+        usuarioViewModel.error.observe(this, Observer { s ->
             if (s != null) {
+                closeLoad()
                 Util.toastMensaje(this, s)
             }
         })
 
-//        val b = FloatingActionButton(this)
-//        b.title = "Camara"
-//        b.colorNormal = ContextCompat.getColor(this, R.color.colorWhite)
-//        b.colorPressed = ContextCompat.getColor(this, R.color.white_pressed)
-//        b.setIconDrawable(resources.getDrawable(R.drawable.ic_camera,resources.newTheme()))
-//        fab.addButton(b)
-
-
+        usuarioViewModel.success.observe(this, Observer { s ->
+            if (s != null) {
+                closeLoad()
+                Util.toastMensaje(this, s)
+                finish()
+            }
+        })
     }
 
-    private fun spinnerCombo() {
+    private fun spinnerCombo(estadoId: Int) {
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
         @SuppressLint("InflateParams") val v =
             LayoutInflater.from(this).inflate(R.layout.dialog_combo, null)
@@ -226,21 +261,41 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         val dialog = builder.create()
         dialog.show()
 
-        textViewTitulo.text = String.format("Formato")
+        textViewTitulo.text =
+            if (estadoId == 6) String.format("Motivo de Reasignación") else String.format("Formato")
 
-        val formatoAdapter = FormatoAdapter(object : OnItemClickListener.FormatoListener {
-            override fun onItemClick(f: Formato, view: View, position: Int) {
-                editTextCombo.setText(f.nombre)
-                registroViewModel.cabecera.value = f.formatoId
-                dialog.dismiss()
+        when (estadoId) {
+            6 -> {
+                val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
+                    override fun onItemClick(g: Grupo, view: View, position: Int) {
+                        ot.motivoId = g.grupoId
+                        editTextCombo.setText(g.descripcion)
+                        dialog.dismiss()
+                    }
+                })
+                recyclerView.adapter = grupoAdapter
+                registroViewModel.getGrupoById(19).observe(this, Observer { g ->
+                    if (g != null) {
+                        grupoAdapter.addItems(g)
+                    }
+                })
             }
-        })
-        recyclerView.adapter = formatoAdapter
-        registroViewModel.getFormato().observe(this, Observer { p ->
-            if (p != null) {
-                formatoAdapter.addItems(p)
+            else -> {
+                val formatoAdapter = FormatoAdapter(object : OnItemClickListener.FormatoListener {
+                    override fun onItemClick(f: Formato, view: View, position: Int) {
+                        editTextCombo.setText(f.nombre)
+                        registroViewModel.cabecera.value = f.formatoId
+                        dialog.dismiss()
+                    }
+                })
+                recyclerView.adapter = formatoAdapter
+                registroViewModel.getFormato().observe(this, Observer { p ->
+                    if (p != null) {
+                        formatoAdapter.addItems(p)
+                    }
+                })
             }
-        })
+        }
     }
 
     private fun goActivity(i: Int, title: String) {
@@ -337,5 +392,50 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 dialog!!.dismiss()
             }
         }
+    }
+
+    private fun load() {
+        builderR = AlertDialog.Builder(ContextThemeWrapper(this@FormatoActivity, R.style.AppTheme))
+        @SuppressLint("InflateParams") val view =
+            LayoutInflater.from(this@FormatoActivity).inflate(R.layout.dialog_login, null)
+        builderR.setView(view)
+        val textViewTitle: TextView = view.findViewById(R.id.textView)
+        textViewTitle.text = String.format("Enviando...")
+        dialogR = builderR.create()
+        dialogR!!.setCanceledOnTouchOutside(false)
+        dialogR!!.setCancelable(false)
+        dialogR!!.show()
+    }
+
+    private fun closeLoad() {
+        if (dialogR != null) {
+            if (dialogR!!.isShowing) {
+                dialogR!!.dismiss()
+            }
+        }
+    }
+
+    private fun formOT() {
+        ot.comentario = editTextComentario.text.toString()
+        ot.nombreMotivoId = editTextCombo.text.toString()
+        sendOt(ot)
+    }
+
+    private fun sendOt(ot: Ot) {
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("Mensaje")
+            .setMessage("Deseas Reasignar Ot ?")
+            .setPositiveButton("SI") { dialog, _ ->
+                load()
+                usuarioViewModel.updateOtReasignacion(ot, true)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Guardar") { dialog, _ ->
+
+                ot.active = 1
+                usuarioViewModel.updateOtReasignacion(ot, false)
+                dialog.dismiss()
+            }
+        dialog.show()
     }
 }

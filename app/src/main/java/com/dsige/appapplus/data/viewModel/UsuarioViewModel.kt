@@ -1,6 +1,5 @@
 package com.dsige.appapplus.data.viewModel
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -257,6 +256,140 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
                 override fun onError(e: Throwable) {
                     Log.i("TAG", e.toString())
+                }
+            })
+    }
+
+    fun sendReasignaciones() {
+        val ot: Observable<List<Ot>> = roomRepository.getOtSend(1)
+        ot.flatMap { observable ->
+            Observable.fromIterable(observable).flatMap { a ->
+                val json = Gson().toJson(a)
+                Log.i("TAG", json)
+                val body =
+                    RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+                Observable.zip(
+                    Observable.just(a), roomRepository.updateOt(body),
+                    BiFunction<Ot, Mensaje, Mensaje> { _, mensaje ->
+                        mensaje
+                    })
+            }
+        }.subscribeOn(Schedulers.io())
+            .delay(1000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Mensaje> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.i("TAG", d.toString())
+                }
+
+                override fun onNext(m: Mensaje) {
+                    Log.i("TAG", "RECIBIENDO LOS DATOS")
+                    updateOt(m)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (e is HttpException) {
+                        val body = e.response().errorBody()
+                        try {
+                            val error = retrofit.errorConverter.convert(body!!)
+                            mensajeError.postValue(error.Message)
+                        } catch (e1: IOException) {
+                            e1.printStackTrace()
+                            Log.i("TAG", e1.toString())
+                        }
+                    } else {
+                        mensajeError.postValue(e.message)
+                    }
+                }
+
+                override fun onComplete() {
+                }
+            })
+    }
+
+    fun updateOtReasignacion(o: Ot, tipo: Boolean) {
+        roomRepository.updateOtReasignacion(o)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    if (tipo)
+                        sendReasignacion(o.otId)
+                    else
+                        mensajeSuccess.value = "Guardado"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.i("TAG", e.toString())
+                }
+            })
+    }
+
+    private fun sendReasignacion(id: Int) {
+        val ot: Observable<Ot> = roomRepository.getOtSendById(id)
+        ot.flatMap { a ->
+            val json = Gson().toJson(a)
+            Log.i("TAG", json)
+            val body =
+                RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+            Observable.zip(
+                Observable.just(a), roomRepository.updateOt(body),
+                BiFunction<Ot, Mensaje, Mensaje> { _, mensaje ->
+                    mensaje
+                })
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Mensaje> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.i("TAG", d.toString())
+                }
+
+                override fun onNext(m: Mensaje) {
+                    Log.i("TAG", "RECIBIENDO LOS DATOS")
+                    updateOt(m)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (e is HttpException) {
+                        val body = e.response().errorBody()
+                        try {
+                            val error = retrofit.errorConverter.convert(body!!)
+                            mensajeError.postValue(error.Message)
+                        } catch (e1: IOException) {
+                            e1.printStackTrace()
+                            Log.i("TAG", e1.toString())
+                        }
+                    } else {
+                        mensajeError.postValue(e.message)
+                    }
+                }
+
+                override fun onComplete() {
+                }
+            })
+    }
+
+    private fun updateOt(m: Mensaje) {
+        roomRepository.updateOtById(m)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = "Reasignación Completa"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value =e.message
                 }
             })
     }

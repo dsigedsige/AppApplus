@@ -22,4 +22,7 @@ interface ApiService {
     @POST("SaveTrabajo")
     fun saveTrabajo(@Body body: RequestBody): Observable<Mensaje>
 
+    @Headers("Cache-Control: no-cache")
+    @POST("UpdateOt")
+    fun updateOt(@Body body: RequestBody): Observable<Mensaje>
 }

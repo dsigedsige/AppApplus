@@ -34,4 +34,19 @@ interface OtDao {
 
     @Query("SELECT * FROM Ot WHERE estadoId =:id")
     fun getOtByTipoPaging(id: Int): DataSource.Factory<Int, Ot>
+
+    @Query("SELECT * FROM Ot WHERE estadoId =:id AND nroOt LIKE :s")
+    fun getOtByTipoPaging(id: Int,s:String): DataSource.Factory<Int, Ot>
+
+    @Query("SELECT * FROM Ot WHERE nroOt LIKE :s")
+    fun getOtByTipoPaging(s:String): DataSource.Factory<Int, Ot>
+
+    @Query("SELECT * FROM Ot WHERE active =:i")
+    fun getOtReasignacion(i: Int): List<Ot>
+
+    @Query("SELECT * FROM Ot WHERE otId =:id")
+    fun getOtSendById(id: Int): Ot
+
+    @Query("UPDATE Ot SET active = 2 WHERE otId =:id")
+    fun updateOtById(id: Int)
 }

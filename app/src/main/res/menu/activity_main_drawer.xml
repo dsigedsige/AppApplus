@@ -12,6 +12,10 @@
             android:id="@+id/envio"
             android:icon="@drawable/ic_menu_send"
             android:title="@string/envio_de_pendientes" />
+        <item
+            android:id="@+id/enviOT"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Envio Reasignaciones OT" />
     </group>
 
     <item android:title="">

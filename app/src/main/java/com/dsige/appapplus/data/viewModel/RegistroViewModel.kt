@@ -11,6 +11,7 @@ import com.dsige.appapplus.data.local.repository.ApiError
 import com.dsige.appapplus.data.local.repository.AppRepository
 import com.dsige.appapplus.helper.Mensaje
 import com.dsige.appapplus.helper.Util
+import com.google.gson.Gson
 import io.reactivex.CompletableObserver
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +28,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
     private val mensajeError = MutableLiveData<String>()
     private val mensajeSuccess: MutableLiveData<String> = MutableLiveData()
-    val search: MutableLiveData<Int> = MutableLiveData()
+    val search: MutableLiveData<String> = MutableLiveData()
     val cabecera: MutableLiveData<Int> = MutableLiveData()
     val detalle: MutableLiveData<Int> = MutableLiveData()
     val mensaje: MutableLiveData<Mensaje> = MutableLiveData()
@@ -47,12 +48,23 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
     fun getOtByTipoPaging(): LiveData<PagedList<Ot>> {
         return Transformations.switchMap(search) { input ->
-            if (input == 0) {
+            if (input.isEmpty() || input == null) {
                 roomRepository.getOtByTipoPaging()
             } else {
-                roomRepository.getOtByTipoPaging(
-                    input //String.format("%s%s%s", "%", input, "%")
-                )
+                val f = Gson().fromJson(input, Filtro::class.java)
+                if (f.pageSize != 0) {
+                    if (f.search.isEmpty()) {
+                        roomRepository.getOtByTipoPaging(
+                            f.pageSize //String.format("%s%s%s", "%", input, "%")
+                        )
+                    } else {
+                        roomRepository.getOtByTipoPaging(
+                            f.pageSize, String.format("%s%s%s", "%", f.search, "%")
+                        )
+                    }
+                } else {
+                    roomRepository.getOtByTipoPaging(String.format("%s%s%s", "%", f.search, "%"))
+                }
             }
         }
     }

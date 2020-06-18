@@ -126,4 +126,8 @@
     <string name="next">Siguiente</string>
     <string name="before">Antes</string>
     <string name="format">Formato</string>
+    <string name="comentario">Comentario</string>
+    <string name="send">Enviar a Reasignar</string>
+    <string name="acept">Aceptar OT</string>
+    <string name="notAcept">Reasignar OT</string>
 </resources>

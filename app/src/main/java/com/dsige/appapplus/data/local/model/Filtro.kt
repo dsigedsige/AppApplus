@@ -11,6 +11,8 @@ open class Filtro {
     var imei: String = ""
     var version: String = ""
 
+    constructor()
+
     constructor(login: String) {
         this.login = login
     }

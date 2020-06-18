@@ -24,7 +24,7 @@ import com.dsige.appapplus.data.local.model.*
         Estado::class,
         OtPhoto::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {

@@ -30,6 +30,10 @@ interface AppRepository {
 
     fun getOtByTipoPaging(id: Int): LiveData<PagedList<Ot>>
 
+    fun getOtByTipoPaging(id: Int,s:String): LiveData<PagedList<Ot>>
+
+    fun getOtByTipoPaging(s:String): LiveData<PagedList<Ot>>
+
     fun getOtById(id: Int): LiveData<Ot>
 
     fun getFormato(): LiveData<List<Formato>>
@@ -86,6 +90,8 @@ interface AppRepository {
 
     fun saveTrabajo(body: RequestBody): Observable<Mensaje>
 
+    fun updateOt(body: RequestBody): Observable<Mensaje>
+
     fun getGrupoById(id: Int): LiveData<List<Grupo>>
 
     fun insertOrUpdateCabecera(o: OtCabecera): Completable
@@ -109,4 +115,12 @@ interface AppRepository {
     fun insertOrUpdatePhoto(o: OtPhoto): Completable
 
     fun deletePhoto(o: OtPhoto): Completable
+
+    fun getOtSend(i: Int): Observable<List<Ot>>
+
+    fun getOtSendById(id: Int): Observable<Ot>
+
+    fun updateOtById(m: Mensaje): Completable
+
+    fun updateOtReasignacion(o: Ot): Completable
 }

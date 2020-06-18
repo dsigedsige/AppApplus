@@ -95,13 +95,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinput"
+                android:id="@+id/textViewCombo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:hint="@string/format"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view">
 
@@ -113,6 +113,26 @@
                     android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textViewComentario"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/comentario"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCombo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextComentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="150"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
@@ -121,9 +141,25 @@
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textinput" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewComentario" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabGenerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="16dp"
+        android:text="@string/send"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:backgroundTint="@color/colorAccent"
+        app:iconGravity="end"
+        app:iconTint="@color/colorWhite"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="287dp" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab"

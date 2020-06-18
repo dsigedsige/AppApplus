@@ -118,6 +118,18 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         )
     }
 
+    override fun getOtByTipoPaging(id: Int, s: String): LiveData<PagedList<Ot>> {
+        return dataBase.otDao().getOtByTipoPaging(id,s).toLiveData(
+            Config(pageSize = 20, enablePlaceholders = true)
+        )
+    }
+
+    override fun getOtByTipoPaging(s: String): LiveData<PagedList<Ot>> {
+        return dataBase.otDao().getOtByTipoPaging(s).toLiveData(
+            Config(pageSize = 20, enablePlaceholders = true)
+        )
+    }
+
     override fun getOtById(id: Int): LiveData<Ot> {
         return dataBase.otDao().getOtById(id)
     }
@@ -316,6 +328,10 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         return apiService.saveTrabajo(body)
     }
 
+    override fun updateOt(body: RequestBody): Observable<Mensaje> {
+        return apiService.updateOt(body)
+    }
+
     override fun getGrupoById(id: Int): LiveData<List<Grupo>> {
         return dataBase.grupoDao().getGrupoById(id)
     }
@@ -386,6 +402,38 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     override fun deletePhoto(o: OtPhoto): Completable {
         return Completable.fromAction {
             dataBase.otPhotoDao().deleteOtPhotoTask(o)
+        }
+    }
+
+    override fun getOtSend(i: Int): Observable<List<Ot>> {
+        return Observable.create { e ->
+            val ot = dataBase.otDao().getOtReasignacion(i)
+            if (ot.isEmpty()) {
+                e.onError(Throwable("Usted no tiene pendientes por enviar"))
+                e.onComplete()
+                return@create
+            }
+            e.onNext(ot)
+            e.onComplete()
+        }
+    }
+
+    override fun getOtSendById(id: Int): Observable<Ot> {
+        return Observable.create { e ->
+            e.onNext(dataBase.otDao().getOtSendById(id))
+            e.onComplete()
+        }
+    }
+
+    override fun updateOtById(m: Mensaje): Completable {
+        return Completable.fromAction {
+            dataBase.otDao().updateOtById(m.codigoBase)
+        }
+    }
+
+    override fun updateOtReasignacion(o: Ot): Completable {
+        return Completable.fromAction {
+            dataBase.otDao().updateOtTask(o)
         }
     }
 }
