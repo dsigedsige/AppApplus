@@ -98,10 +98,10 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             if (t != null) {
                 ot = t
                 textView1.text = t.nroOt
-                textView2.text = t.estado
+                textView2.text = String.format("Dia Vcto: %s", t.diasVencimiento)
                 textView3.text = t.nombre
                 textView4.text = t.fechaRecepcion
-                textView5.text = String.format("Dia Vcto: %s", t.diasVencimiento)
+                textView5.text = t.fechaAsignacion
 
                 if (e == 6) {
                     editTextCombo.setText(t.nombreMotivoId)
@@ -274,7 +274,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     }
                 })
                 recyclerView.adapter = grupoAdapter
-                registroViewModel.getGrupoById(19).observe(this, Observer { g ->
+                registroViewModel.getGrupoById(20).observe(this, Observer { g ->
                     if (g != null) {
                         grupoAdapter.addItems(g)
                     }
@@ -431,7 +431,6 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 dialog.dismiss()
             }
             .setNegativeButton("Guardar") { dialog, _ ->
-
                 ot.active = 1
                 usuarioViewModel.updateOtReasignacion(ot, false)
                 dialog.dismiss()

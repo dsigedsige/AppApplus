@@ -509,4 +509,23 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
             })
     }
+
+    fun changeEstado(ot: Ot) {
+        roomRepository.changeEstado(ot.otId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                }
+            })
+
+    }
 }

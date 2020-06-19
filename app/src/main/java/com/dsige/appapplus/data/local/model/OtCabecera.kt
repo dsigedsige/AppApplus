@@ -22,6 +22,7 @@ open class OtCabecera {
     var ubicacion: String = ""
     var distrito: String = ""
     var ubicacionSed: String = ""
+    var nombreUbicacionSed: String = ""
     var coordenadaX: String = ""
     var coordenadaY: String = ""
     var fechaRegistro: String = ""

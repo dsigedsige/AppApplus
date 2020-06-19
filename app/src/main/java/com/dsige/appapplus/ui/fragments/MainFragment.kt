@@ -3,6 +3,7 @@ package com.dsige.appapplus.ui.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ import com.dsige.appapplus.ui.activities.FormatoActivity
 import com.dsige.appapplus.ui.adapters.EstadoAdapter
 import com.dsige.appapplus.ui.adapters.OtAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -93,14 +95,13 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 when (o.estadoId) {
                     6 -> if (o.active == 2) {
                         Util.toastMensaje(context!!, "OT reasignado")
-
                     } else {
                         val popupMenu = PopupMenu(context!!, view)
                         popupMenu.menu.add(1, 1, 1, getText(R.string.acept))
                         popupMenu.menu.add(2, 2, 2, getText(R.string.notAcept))
                         popupMenu.setOnMenuItemClickListener { item ->
                             when (item.itemId) {
-                                1 -> gOTActivity(o, true)
+                                1 -> messageOT(o)
                                 2 -> gOTActivity(o, false)
                             }
                             false
@@ -123,7 +124,6 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 }
             })
         registroViewModel.search.value = ""
-
         editTextSearch.setOnEditorActionListener(this)
     }
 
@@ -185,5 +185,23 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 estadoAdapter.addItems(p)
             }
         })
+    }
+
+    private fun messageOT(ot: Ot) {
+        val dialog = MaterialAlertDialogBuilder(context!!)
+            .setTitle("Mensaje")
+            .setMessage("Estas seguro de aceptar Ot ?")
+            .setPositiveButton("SI") { dialog, _ ->
+                Util.toastMensajeShort(context!!,"Actualizando Estado...")
+                registroViewModel.changeEstado(ot)
+                Handler().postDelayed({
+                    gOTActivity(ot, true)
+                    dialog.dismiss()
+                }, 600)
+            }
+            .setNegativeButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }
+        dialog.show()
     }
 }

@@ -29,7 +29,7 @@ interface OtDao {
     @Query("DELETE FROM Ot")
     fun deleteAll()
 
-    @Query("SELECT * FROM Ot")
+    @Query("SELECT * FROM Ot WHERE estadoId != 8 ")
     fun getOtByTipoPaging(): DataSource.Factory<Int, Ot>
 
     @Query("SELECT * FROM Ot WHERE estadoId =:id")
@@ -38,7 +38,7 @@ interface OtDao {
     @Query("SELECT * FROM Ot WHERE estadoId =:id AND nroOt LIKE :s")
     fun getOtByTipoPaging(id: Int,s:String): DataSource.Factory<Int, Ot>
 
-    @Query("SELECT * FROM Ot WHERE nroOt LIKE :s")
+    @Query("SELECT * FROM Ot WHERE estadoId != 8 AND nroOt LIKE :s")
     fun getOtByTipoPaging(s:String): DataSource.Factory<Int, Ot>
 
     @Query("SELECT * FROM Ot WHERE active =:i")
@@ -47,6 +47,9 @@ interface OtDao {
     @Query("SELECT * FROM Ot WHERE otId =:id")
     fun getOtSendById(id: Int): Ot
 
-    @Query("UPDATE Ot SET active = 2 WHERE otId =:id")
+    @Query("UPDATE Ot SET active = 2 , estadoId = 25 WHERE otId =:id")
     fun updateOtById(id: Int)
+
+    @Query("UPDATE Ot SET estadoId = 8 WHERE otId =:id")
+    fun changeEstado(id: Int)
 }

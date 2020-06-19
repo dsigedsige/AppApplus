@@ -511,6 +511,10 @@ object Util {
         Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show()
     }
 
+    fun toastMensajeShort(context: Context, mensaje: String) {
+        Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show()
+    }
+
     fun dialogMensaje(context: Context, title: String, mensaje: String) {
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(title)

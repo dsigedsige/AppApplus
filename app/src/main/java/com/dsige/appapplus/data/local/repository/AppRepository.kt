@@ -123,4 +123,6 @@ interface AppRepository {
     fun updateOtById(m: Mensaje): Completable
 
     fun updateOtReasignacion(o: Ot): Completable
+
+    fun changeEstado(otId: Int): Completable
 }

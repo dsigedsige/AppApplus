@@ -38,11 +38,11 @@ class OtAdapter(private var listener: OnItemClickListener.OTListener) :
         internal fun bind(o: Ot, listener: OnItemClickListener.OTListener) =
             with(itemView) {
                 textView1.text = o.nroOt
-                textView2.text = o.estado
+                textView2.text = String.format("Dia Vcto: %s", o.diasVencimiento)
                 textView3.text = o.nombre
                 textView4.text = o.distrito
                 textView5.text = o.fechaRecepcion
-                textView6.text = String.format("Dia Vcto: %s", o.diasVencimiento)
+                textView6.text = o.fechaAsignacion
                 itemView.setOnClickListener { v -> listener.onItemClick(o, v, adapterPosition) }
             }
     }
