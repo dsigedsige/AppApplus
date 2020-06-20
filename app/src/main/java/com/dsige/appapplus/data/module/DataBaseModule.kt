@@ -98,4 +98,9 @@ class DataBaseModule {
     internal fun provideEstadoDao(appDataBase: AppDataBase): EstadoDao {
         return appDataBase.estadoDao()
     }
+
+    @Provides
+    internal fun provideCadistaDao(appDataBase: AppDataBase): CadistaDao {
+        return appDataBase.cadistaDao()
+    }
 }

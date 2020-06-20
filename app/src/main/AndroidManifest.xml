@@ -29,6 +29,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
+        <activity android:name=".ui.activities.LevantamientoMainActivity"></activity>
         <activity android:name=".ui.activities.PhotoActivity" />
         <activity android:name=".ui.activities.ProtocoloMainActivity" />
         <activity android:name=".ui.activities.HojaMainActivity" />

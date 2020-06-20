@@ -101,7 +101,7 @@
     <string name="nav_header_title">header_title</string>
     <string name="nav_header_subtitle">sub_title</string>
     <string name="logout">Cerrar Sesión</string>
-    <string name="envio_de_pendientes">Enviar Pendientes</string>
+    <string name="envio_formularios">Enviar Formularios</string>
     <string name="vehiculos">Vehiculos</string>
     <string name="reparacion">Reparación Veredas</string>
     <string name="work">Trabajos SS</string>

@@ -103,6 +103,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             if (es != null) {
                 dataBase.estadoDao().insertEstadoListTask(es)
             }
+
+            val ca : List<Cadista>? = s.cadistas
+            if (ca != null){
+                dataBase.cadistaDao().insertCadistaListTask(ca)
+            }
         }
     }
 
@@ -441,5 +446,9 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         return Completable.fromAction {
             dataBase.otDao().changeEstado(otId)
         }
+    }
+
+    override fun getCadistas(): LiveData<List<Cadista>> {
+        return dataBase.cadistaDao().getCadistas()
     }
 }

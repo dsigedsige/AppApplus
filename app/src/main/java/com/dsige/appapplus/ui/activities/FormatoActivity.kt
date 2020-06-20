@@ -134,8 +134,14 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             override fun onItemClick(r: OtCabecera, view: View, position: Int) {
                 if (r.active == 1) {
                     when (r.tipoFormatoId) {
-                        2 -> startActivity(
-                            Intent(this@FormatoActivity, HojaMainActivity::class.java)
+                        1, 2, 6 -> startActivity(
+                            Intent(
+                                this@FormatoActivity, when (r.tipoFormatoId) {
+                                    1 -> LevantamientoMainActivity::class.java
+                                    2 -> HojaMainActivity::class.java
+                                    else -> ProtocoloMainActivity::class.java
+                                }
+                            )
                                 .putExtra("id", r.formatoId)
                                 .putExtra("otId", r.otId)
                                 .putExtra("title", r.nombreTipoFormato)
@@ -144,32 +150,13 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                                 .putExtra("estado", 1)
                                 .putExtra("usuarioId", usuarioId)
                         )
-                        1, 3, 4, 5 -> generateCabecera(
+                        3, 4, 5 -> generateCabecera(
                             r.nombreTipoFormato,
                             r.tipoFormatoId,
                             r.formatoId,
                             textView1.text.toString(),
                             r.otId,
                             1
-                        )
-//                    5 -> startActivity(
-//                        Intent(this@FormatoActivity, EquipoMainActivity::class.java)
-//                            .putExtra("id", r.formatoId)
-//                            .putExtra("otId", r.otId)
-//                            .putExtra("title", r.nombreTipoFormato)
-//                            .putExtra("tipo", r.tipoFormatoId)
-//                            .putExtra("codigo", textView1.text)
-//                            .putExtra("estado", 1)
-//                    )
-                        6 -> startActivity(
-                            Intent(this@FormatoActivity, ProtocoloMainActivity::class.java)
-                                .putExtra("id", r.formatoId)
-                                .putExtra("otId", r.otId)
-                                .putExtra("title", r.nombreTipoFormato)
-                                .putExtra("tipo", r.tipoFormatoId)
-                                .putExtra("codigo", textView1.text)
-                                .putExtra("estado", 1)
-                                .putExtra("usuarioId", usuarioId)
                         )
                     }
                 } else
@@ -300,8 +287,14 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     private fun goActivity(i: Int, title: String) {
         when (i) {
-            2 -> startActivity(
-                Intent(this, HojaMainActivity::class.java)
+            1, 2, 6 -> startActivity(
+                Intent(
+                    this, when (i) {
+                        1 -> LevantamientoMainActivity::class.java
+                        2 -> HojaMainActivity::class.java
+                        else -> ProtocoloMainActivity::class.java
+                    }
+                )
                     .putExtra("tipo", i)
                     .putExtra("id", formatoId)
                     .putExtra("otId", otId)
@@ -310,26 +303,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     .putExtra("estado", 0)
                     .putExtra("usuarioId", usuarioId)
             )
-            1, 3, 4, 5 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
-//            5 -> startActivity(
-//                Intent(this, EquipoMainActivity::class.java)
-//                    .putExtra("tipo", i)
-//                    .putExtra("id", formatoId)
-//                    .putExtra("otId", otId)
-//                    .putExtra("title", title)
-//                    .putExtra("codigo", textView1.text.toString())
-//                    .putExtra("estado", 0)
-//            )
-            6 -> startActivity(
-                Intent(this, ProtocoloMainActivity::class.java)
-                    .putExtra("tipo", i)
-                    .putExtra("id", formatoId)
-                    .putExtra("otId", otId)
-                    .putExtra("title", title)
-                    .putExtra("codigo", textView1.text.toString())
-                    .putExtra("estado", 0)
-                    .putExtra("usuarioId", usuarioId)
-            )
+            3, 4, 5 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
         }
     }
 

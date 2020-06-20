@@ -21,7 +21,7 @@
                 android:layout_margin="8dp"
                 android:drawableEnd="@drawable/ic_down"
                 android:focusable="false"
-                android:hint="@string/estado" />
+                android:hint="Estado" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextSearch"

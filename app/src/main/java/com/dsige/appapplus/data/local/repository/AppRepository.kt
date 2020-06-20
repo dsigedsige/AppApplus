@@ -125,4 +125,6 @@ interface AppRepository {
     fun updateOtReasignacion(o: Ot): Completable
 
     fun changeEstado(otId: Int): Completable
+
+    fun getCadistas(): LiveData<List<Cadista>>
 }

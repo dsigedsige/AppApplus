@@ -528,4 +528,8 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
 
     }
+
+    fun getCadistas(): LiveData<List<Cadista>> {
+        return roomRepository.getCadistas()
+    }
 }

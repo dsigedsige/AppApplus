@@ -35,16 +35,20 @@ interface OnItemClickListener {
         fun onItemClick56(d: OtHoja56, view: View, position: Int)
     }
 
-    interface GrupoListener{
+    interface GrupoListener {
         fun onItemClick(g: Grupo, view: View, position: Int)
     }
 
-    interface EstadoListener{
+    interface EstadoListener {
         fun onItemClick(e: Estado, view: View, position: Int)
     }
 
     interface OtPhotoListener {
         fun onItemClick(o: OtPhoto, view: View, position: Int)
+    }
+
+    interface CadistaListener {
+        fun onItemClick(c: Cadista, view: View, position: Int)
     }
 
 }

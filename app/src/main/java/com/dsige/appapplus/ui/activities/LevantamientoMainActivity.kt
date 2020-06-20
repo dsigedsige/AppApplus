@@ -15,20 +15,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
-import com.dsige.appapplus.data.local.model.Grupo
+import com.dsige.appapplus.data.local.model.Cadista
 import com.dsige.appapplus.data.local.model.OtCabecera
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
-import com.dsige.appapplus.ui.adapters.GrupoAdapter
+import com.dsige.appapplus.ui.adapters.CadistaAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_hoja_main.*
+import kotlinx.android.synthetic.main.activity_levantamiento_main.*
 import java.util.*
 import javax.inject.Inject
 
-class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
+class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         spinnerCombo()
@@ -42,7 +42,7 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hoja_main)
+        setContentView(R.layout.activity_levantamiento_main)
 
         o = OtCabecera()
 
@@ -75,18 +75,8 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 o = ot
                 editTextNroSed.setText(ot.sed)
                 editTextAlimentador.setText(ot.alimentador)
-                chkConvencional.isChecked = ot.convencional == "1"
-                chkCompacta.isChecked = ot.compacta == "1"
-                chkAerea.isChecked = ot.aerea == "1"
-                chkPMI.isChecked = ot.pmi == "1"
-                chkAnivel.isChecked = ot.aNivel == "1"
-                chkPedestal.isChecked = ot.pedestal == "1"
-                chkMonoPoste.isChecked = ot.monoposte == "1"
-                chkRecloser.isChecked = ot.reCloser == "1"
-                chkSubTerranea.isChecked = ot.subTerranea == "1"
-                chkBoveda.isChecked = ot.convencional == "1"
-                chkBiposte.isChecked = ot.biposte == "1"
-                chkSBC.isChecked = ot.sbc == "1"
+                chkDibujo.isChecked = ot.dibujar == "1"
+                editTextCombo.setText(ot.nombreCadista)
             }
         })
 
@@ -105,22 +95,10 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     o.active = 1
                     o.sed = editTextNroSed.text.toString().toUpperCase(Locale.getDefault())
                     o.alimentador = editTextAlimentador.text.toString()
-
-                    o.convencional = if (chkConvencional.isChecked) "1" else "0"
-                    o.compacta = if (chkCompacta.isChecked) "1" else "0"
-                    o.aerea = if (chkAerea.isChecked) "1" else "0"
-                    o.pmi = if (chkPMI.isChecked) "1" else "0"
-                    o.aNivel = if (chkAnivel.isChecked) "1" else "0"
-                    o.pedestal = if (chkPedestal.isChecked) "1" else "0"
-                    o.monoposte = if (chkMonoPoste.isChecked) "1" else "0"
-                    o.reCloser = if (chkRecloser.isChecked) "1" else "0"
-                    o.subTerranea = if (chkSubTerranea.isChecked) "1" else "0"
-                    o.boveda = if (chkBoveda.isChecked) "1" else "0"
-                    o.biposte = if (chkBiposte.isChecked) "1" else "0"
-                    o.sbc = if (chkSBC.isChecked) "1" else "0"
+                    o.dibujar = if (chkDibujo.isChecked) "1" else "0"
                     o.usuario = usuarioId
                     o.fechaRegistro = Util.getFecha()
-                    o.nombreUbicacionSed = editTextCombo.text.toString()
+                    o.nombreCadista = editTextCombo.text.toString()
                     registroViewModel.validateHoja(o)
                     Util.toastMensaje(this, "Verificando...")
                 }
@@ -132,13 +110,14 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         registroViewModel.success.observe(this, Observer { s ->
             if (s != null) {
                 startActivity(
-                    Intent(this@HojaMainActivity, HojaActivity::class.java)
+                    Intent(this@LevantamientoMainActivity, PhotoActivity::class.java)
                         .putExtra("id", id)
                         .putExtra("otId", otId)
                         .putExtra("title", title)
                         .putExtra("tipo", tipo)
                         .putExtra("codigo", codigo)
                         .putExtra("estado", 1)
+                        .putExtra("usuarioId", usuarioId)
                 )
                 finish()
             }
@@ -171,19 +150,18 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         val dialog = builder.create()
         dialog.show()
 
-        textViewTitulo.text = String.format("Ubicación de la sed proyectada")
-
-        val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
-            override fun onItemClick(g: Grupo, view: View, position: Int) {
-                o.ubicacionSed = g.grupoId.toString()
-                editTextCombo.setText(g.descripcion)
+        textViewTitulo.text = String.format("Cadista")
+        val cadistaAdapter = CadistaAdapter(object : OnItemClickListener.CadistaListener{
+            override fun onItemClick(c: Cadista, view: View, position: Int) {
+                o.cadistaId = c.cadistaId
+                editTextCombo.setText(c.nombre)
                 dialog.dismiss()
             }
         })
-        recyclerView.adapter = grupoAdapter
-        registroViewModel.getGrupoById(19).observe(this, Observer { g ->
+        recyclerView.adapter = cadistaAdapter
+        registroViewModel.getCadistas().observe(this, Observer { g ->
             if (g != null) {
-                grupoAdapter.addItems(g)
+                cadistaAdapter.addItems(g)
             }
         })
     }

@@ -6,4 +6,5 @@ open class Sync {
     var ots: List<Ot> = ArrayList()
     var seds: List<Sed> = ArrayList()
     var estados: List<Estado> = ArrayList()
+    var cadistas: List<Cadista> = ArrayList()
 }

@@ -56,5 +56,8 @@ abstract class ActivityBindingModule {
     internal abstract fun bindHoja56Activity(): Hoja56Activity
 
     @ContributesAndroidInjector
+    internal abstract fun bindLevantamientoActivity(): LevantamientoMainActivity
+
+    @ContributesAndroidInjector
     internal abstract fun bindPhotoActivity(): PhotoActivity
 }

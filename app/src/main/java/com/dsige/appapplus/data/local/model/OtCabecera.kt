@@ -51,6 +51,9 @@ open class OtCabecera {
     var active: Int = 0 // 1-> por enviar 0 -> enviado
     var identity: Int = 0
     var usuario :Int = 0
+    var cadistaId :Int = 0
+    var nombreCadista:String = ""
+    var dibujar : String = ""
 
     @Ignore
     var details: List<OtDetalle> = ArrayList()

@@ -123,7 +123,12 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                     oTAdapter.addItems(s)
                 }
             })
-        registroViewModel.search.value = ""
+
+        f.pageSize = 6
+        val json = Gson().toJson(f)
+        registroViewModel.search.value = json
+
+        editTextEstado.setText(String.format("Asignado al Proyectista"))
         editTextSearch.setOnEditorActionListener(this)
     }
 
@@ -192,7 +197,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
             .setTitle("Mensaje")
             .setMessage("Estas seguro de aceptar Ot ?")
             .setPositiveButton("SI") { dialog, _ ->
-                Util.toastMensajeShort(context!!,"Actualizando Estado...")
+                Util.toastMensajeShort(context!!, "Actualizando Estado...")
                 registroViewModel.changeEstado(ot)
                 Handler().postDelayed({
                     gOTActivity(ot, true)
