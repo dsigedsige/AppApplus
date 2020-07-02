@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
-import com.dsige.appapplus.data.local.model.Formato
-import com.dsige.appapplus.data.local.model.Grupo
-import com.dsige.appapplus.data.local.model.Ot
-import com.dsige.appapplus.data.local.model.OtCabecera
+import com.dsige.appapplus.data.local.model.*
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.UsuarioViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
@@ -27,12 +24,17 @@ import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.FormatoAdapter
 import com.dsige.appapplus.ui.adapters.GrupoAdapter
 import com.dsige.appapplus.ui.adapters.OtCabeceraAdapter
+import com.dsige.appapplus.ui.adapters.SupervisorAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_formato.*
+import java.net.URISyntaxException
 import java.util.*
 import javax.inject.Inject
 
@@ -60,12 +62,16 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private var formatoId: Int = 0
     private var usuarioId: Int = 0
     private var estadoId: Int = 0
+//    private var supervisorId: Int = 0
+//    private var nombreSupervisor: String = ""
+
     lateinit var builder: AlertDialog.Builder
     var dialog: AlertDialog? = null
     lateinit var builderR: AlertDialog.Builder
     var dialogR: AlertDialog? = null
 
     lateinit var ot: Ot
+    lateinit var socket: Socket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +108,8 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 textView3.text = t.nombre
                 textView4.text = t.fechaRecepcion
                 textView5.text = t.fechaAsignacion
+//                supervisorId = t.supervisorId
+//                nombreSupervisor = t.nombre
 
                 if (e == 6) {
                     editTextCombo.setText(t.nombreMotivoId)
@@ -149,6 +157,8 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                                 .putExtra("codigo", textView1.text)
                                 .putExtra("estado", 1)
                                 .putExtra("usuarioId", usuarioId)
+                                .putExtra("sId", r.supervisorId)
+                                .putExtra("nS", r.nombreSupervisor)
                         )
                         3, 4, 5 -> generateCabecera(
                             r.nombreTipoFormato,
@@ -157,6 +167,8 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                             textView1.text.toString(),
                             r.otId,
                             1
+//                            r.supervisorId,
+//                            r.nombreSupervisor
                         )
                     }
                 } else
@@ -223,6 +235,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         usuarioViewModel.success.observe(this, Observer { s ->
             if (s != null) {
+                sendSocket()
                 closeLoad()
                 Util.toastMensaje(this, s)
                 finish()
@@ -302,61 +315,17 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     .putExtra("codigo", textView1.text.toString())
                     .putExtra("estado", 0)
                     .putExtra("usuarioId", usuarioId)
+//                    .putExtra("sId", supervisorId)
+//                    .putExtra("nS", nombreSupervisor)
             )
-            3, 4, 5 -> generateCabecera(title, i, formatoId, textView1.text.toString(), otId, 0)
-        }
-    }
-
-    private fun generateCabecera(
-        title: String, tipo: Int, id: Int, codigo: String, otId: Int, estado: Int
-    ) {
-        builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
-        @SuppressLint("InflateParams") val v =
-            LayoutInflater.from(this).inflate(R.layout.dialog_cabecera, null)
-
-        val textViewTitulo: TextView = v.findViewById(R.id.textViewTitulo)
-        val editTextSetAlim: TextInputEditText = v.findViewById(R.id.editTextSetAlim)
-        val editTextSed: TextInputEditText = v.findViewById(R.id.editTextSed)
-        val buttonSave: MaterialButton = v.findViewById(R.id.buttonSave)
-
-        builder.setView(v)
-        dialog = builder.create()
-        dialog!!.show()
-
-        var o = OtCabecera()
-
-        registroViewModel.getOtCabeceraById(id).observe(this, Observer { e ->
-            if (e != null) {
-                o = e
-                editTextSetAlim.setText(o.alimentador)
-                editTextSed.setText(o.sed)
-            }
-        })
-
-        textViewTitulo.text = title
-
-        buttonSave.setOnClickListener {
-            val gps = Gps(this)
-            if (gps.isLocationEnabled()) {
-                if (gps.latitude.toString() != "0.0" || gps.longitude.toString() != "0.0") {
-                    o.formatoId = id
-                    o.tipoFormatoId = tipo
-                    o.nombreTipoFormato = title
-                    o.nroOt = codigo
-                    o.otId = otId
-                    o.active = 1
-                    o.coordenadaX = gps.latitude.toString()
-                    o.coordenadaY = gps.longitude.toString()
-                    o.alimentador = editTextSetAlim.text.toString()
-                    o.sed = editTextSed.text.toString().toUpperCase(Locale.getDefault())
-                    o.fechaRegistro = Util.getFecha()
-                    o.usuario = usuarioId
-                    registroViewModel.validateCabeceraMTBTEquipo(o)
-                    Util.toastMensaje(this, "Verificando Sed...")
-                }
-            } else {
-                gps.showSettingsAlert(this)
-            }
+            3, 4, 5 -> generateCabecera(
+                title,
+                i,
+                formatoId,
+                textView1.text.toString(),
+                otId,
+                0
+            )//,supervisorId,nombreSupervisor)
         }
     }
 
@@ -410,5 +379,122 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 dialog.dismiss()
             }
         dialog.show()
+    }
+
+    private fun sendSocket() {
+        try {
+            socket = IO.socket("http://173.248.174.62:5000/")
+            val n = Notificacion()
+            n.id_personal = ot.coordinadorId
+            n.cant_ot = 1
+            n.tipo = "Proyectista"
+            val json = Gson().toJson(n)
+            socket.emit("Notificacion_movil_OT", json)
+            var web = String.format("%s|%s|%s|%s",1,ot.coordinadorId,"Mensaje de Reasignación","Proyectista")
+            socket.emit("Notificacion_movil_web_OT", web)
+        } catch (e: URISyntaxException) {
+        }
+        socket.connect()
+    }
+
+
+    private fun generateCabecera(
+        title: String,
+        tipo: Int,
+        id: Int,
+        codigo: String,
+        otId: Int,
+        estado: Int
+//        sId: Int,
+//        nS: String
+    ) {
+        builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
+        @SuppressLint("InflateParams") val v =
+            LayoutInflater.from(this).inflate(R.layout.dialog_cabecera, null)
+
+        val textViewTitulo: TextView = v.findViewById(R.id.textViewTitulo)
+        val editTextSupervisor: TextInputEditText = v.findViewById(R.id.editTextSupervisor)
+        val editTextSetAlim: TextInputEditText = v.findViewById(R.id.editTextSetAlim)
+        val editTextSed: TextInputEditText = v.findViewById(R.id.editTextSed)
+        val buttonSave: MaterialButton = v.findViewById(R.id.buttonSave)
+
+        builder.setView(v)
+        dialog = builder.create()
+        dialog!!.show()
+
+        var o = OtCabecera()
+
+        registroViewModel.getOtCabeceraById(id).observe(this, Observer { e ->
+            if (e != null) {
+                o = e
+                editTextSetAlim.setText(o.alimentador)
+                editTextSed.setText(o.sed)
+            }
+        })
+
+        textViewTitulo.text = title
+
+        editTextSupervisor.setOnClickListener {
+            spinnerSupervisor(editTextSupervisor, o)
+        }
+
+        buttonSave.setOnClickListener {
+            val gps = Gps(this)
+            if (gps.isLocationEnabled()) {
+                if (gps.latitude.toString() != "0.0" || gps.longitude.toString() != "0.0") {
+                    o.formatoId = id
+                    o.tipoFormatoId = tipo
+                    o.nombreTipoFormato = title
+                    o.nroOt = codigo
+                    o.otId = otId
+                    o.active = 1
+                    o.coordenadaX = gps.latitude.toString()
+                    o.coordenadaY = gps.longitude.toString()
+                    o.sed = editTextSed.text.toString().toUpperCase(Locale.getDefault())
+                    o.fechaRegistro = Util.getFecha()
+                    o.usuario = usuarioId
+                    o.nombreSupervisor = editTextSupervisor.text.toString()
+                    registroViewModel.validateCabeceraMTBTEquipo(o)
+                    Util.toastMensaje(this, "Verificando Sed...")
+                }
+            } else {
+                gps.showSettingsAlert(this)
+            }
+        }
+    }
+
+    private fun spinnerSupervisor(editText: TextInputEditText, o: OtCabecera) {
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
+        @SuppressLint("InflateParams") val v =
+            LayoutInflater.from(this).inflate(R.layout.dialog_combo, null)
+        val textViewTitulo: TextView = v.findViewById(R.id.textViewTitulo)
+        val recyclerView: RecyclerView = v.findViewById(R.id.recyclerView)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = layoutManager
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context, DividerItemDecoration.VERTICAL
+            )
+        )
+        builder.setView(v)
+        val dialog = builder.create()
+        dialog.show()
+
+        textViewTitulo.text = String.format("Supervisores")
+
+        val supervisorAdapter = SupervisorAdapter(object : OnItemClickListener.SupervisorListener {
+            override fun onItemClick(s: Supervisor, view: View, position: Int) {
+                o.supervisorId = s.supervisorId
+                editText.setText(s.nombre)
+                dialog.dismiss()
+            }
+        })
+        recyclerView.adapter = supervisorAdapter
+        registroViewModel.getSupervisor().observe(this, Observer { g ->
+            if (g != null) {
+                supervisorAdapter.addItems(g)
+            }
+        })
     }
 }

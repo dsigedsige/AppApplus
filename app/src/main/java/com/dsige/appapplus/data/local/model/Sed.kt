@@ -7,4 +7,5 @@ import androidx.room.PrimaryKey
 open class Sed {
     @PrimaryKey
     var codigo: String = ""
+    var alimentador : String = ""
 }

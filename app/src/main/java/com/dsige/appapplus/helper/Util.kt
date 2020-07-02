@@ -10,7 +10,6 @@ import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.telephony.TelephonyManager
@@ -40,6 +39,11 @@ object Util {
     val Folder = "Dsige/Applus"
     val UrlFoto = "http://www.dsige.com/webApiDemo/image/"
     val UrlMovie = "http://www.dsige.com/webApiDemo/movie/"
+
+    var KEY_UPDATE_ENABLE = "isUpdate"
+    val KEY_UPDATE_VERSION = "version"
+    val KEY_UPDATE_URL = "url"
+    val KEY_UPDATE_NAME = "name"
 
     private var FechaActual: String? = ""
     private var date: Date? = null
@@ -91,6 +95,15 @@ object Util {
     fun getFormatDate(date: Date): String {
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a")
         return format.format(date)
+    }
+
+    fun getFechaDiaMas(): String {
+        date = Date()
+        @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("dd/MM/yyyy")
+        val c = Calendar.getInstance()
+        c.time = format.parse(format.format(date))!!
+        c.add(Calendar.DATE, 1) // number of days to add
+        return format.format(c.time) // dt is now the new date
     }
 
     fun getFecha(): String {
@@ -167,32 +180,20 @@ object Util {
         return result
     }
 
-    fun getFolder(): File {
-//        val folder = File(context.getExternalFilesDir(null)!!.absolutePath)
-//        if (!folder.exists()) {
-//            val success = folder.mkdirs()
-//            if (!success) {
-//                folder.mkdir()
-//            }
-//        }
-//        return folder
-
-
-        val folder =
-            File(Environment.getExternalStorageDirectory(), Folder)
-
+    fun getFolder(context: Context): File {
+        val folder = File(context.getExternalFilesDir(null)!!.absolutePath)
         if (!folder.exists()) {
-            folder.mkdirs()
+            val success = folder.mkdirs()
+            if (!success) {
+                folder.mkdir()
+            }
         }
         return folder
-
-//        val folder = File(Environment.getExternalStorageDirectory(), FolderImg)
+//        val folder =
+//            File(Environment.getExternalStorageDirectory(), Folder)
+//
 //        if (!folder.exists()) {
-//            val success = folder.mkdirs()
-//            if (!success) {
-//                folder.mkdir()
-//                folder.createNewFile()
-//            }
+//            folder.mkdirs()
 //        }
 //        return folder
     }
@@ -696,8 +697,7 @@ object Util {
 
     fun getFolderAdjunto(file: String, context: Context, data: Intent): Completable {
         return Completable.fromAction {
-            val imagepath = getFolder().toString() + "/" + file
-            val f = File(imagepath)
+            val f = File(getFolder(context), file)
             if (!f.exists()) {
                 try {
                     val success = f.createNewFile()
@@ -705,7 +705,7 @@ object Util {
                         Log.i("TAG", "FILE CREATED")
                     }
                     copyFile(File(getRealPathFromURI(context, data.data!!)), f)
-                    getAngleImage(imagepath)
+                    getAngleImage(f.absolutePath)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

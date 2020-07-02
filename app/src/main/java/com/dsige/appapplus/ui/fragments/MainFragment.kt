@@ -27,6 +27,7 @@ import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.activities.FormatoActivity
+import com.dsige.appapplus.ui.activities.ParteDiarioActivity
 import com.dsige.appapplus.ui.adapters.EstadoAdapter
 import com.dsige.appapplus.ui.adapters.OtAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
@@ -102,13 +103,13 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                         popupMenu.setOnMenuItemClickListener { item ->
                             when (item.itemId) {
                                 1 -> messageOT(o)
-                                2 -> gOTActivity(o, false)
+                                2 -> gOTActivity(6, o, false)
                             }
                             false
                         }
                         popupMenu.show()
                     }
-                    else -> gOTActivity(o, false)
+                    else -> gOTActivity(o.estadoId, o, false)
                 }
             }
         })
@@ -132,9 +133,12 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         editTextSearch.setOnEditorActionListener(this)
     }
 
-    private fun gOTActivity(o: Ot, t: Boolean) {
+    private fun gOTActivity(estado: Int, o: Ot, t: Boolean) {
         startActivity(
-            Intent(context, FormatoActivity::class.java)
+            Intent(
+                context,
+                if (estado == 9) ParteDiarioActivity::class.java else FormatoActivity::class.java
+            )
                 .putExtra("id", o.otId)
                 .putExtra("usuarioId", usuarioId)
                 .putExtra("estadoId", if (t) 0 else o.estadoId)
@@ -200,7 +204,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 Util.toastMensajeShort(context!!, "Actualizando Estado...")
                 registroViewModel.changeEstado(ot)
                 Handler().postDelayed({
-                    gOTActivity(ot, true)
+                    gOTActivity(6,ot, true)
                     dialog.dismiss()
                 }, 600)
             }

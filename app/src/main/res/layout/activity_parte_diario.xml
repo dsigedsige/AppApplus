@@ -4,21 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.ProtocoloMainActivity">
+    tools:context=".ui.activities.ParteDiarioActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/side_nav_bar"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            android:elevation="@dimen/fab_margin"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,10 +45,39 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Supervisor">
+                android:hint="Distrito">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextSupervisor"
+                    android:id="@+id/editTextDistrito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de Salida">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_date"
+                    android:focusable="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Turno">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextTurno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/ic_down"
@@ -61,23 +88,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nro Sed">
+                android:hint="Hora Inicio">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNroSed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"  />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Alimentador">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextAlimentador"
+                    android:id="@+id/editTextHInicio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false" />
@@ -87,77 +101,57 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Soporte">
+                android:hint="Hora Fin">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextSoporte"
+                    android:id="@+id/editTextHFin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="SET">
+                android:hint="Trabajo Programado">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextSet"
+                    android:id="@+id/editTextTrabajo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:drawableEnd="@drawable/ic_down"
+                    android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cuadricula">
+                android:hint="SED">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextCuadricula"
+                    android:id="@+id/editTextSed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Lamina">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextLamina"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Letra">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextLetra"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabGenerate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="16dp"
+        android:text="@string/save"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:backgroundTint="@color/colorAccent"
-        app:srcCompat="@drawable/ic_save"
-        app:tint="@color/colorWhite" />
+        app:icon="@drawable/ic_save"
+        app:iconGravity="end"
+        app:iconTint="@color/colorWhite"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="287dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

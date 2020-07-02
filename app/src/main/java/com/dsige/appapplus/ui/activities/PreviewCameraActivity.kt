@@ -74,10 +74,7 @@ class PreviewCameraActivity : DaggerAppCompatActivity(), View.OnClickListener {
         textViewImg.text = nameImg
 
         Handler().postDelayed({
-            val f = File(
-                Environment.getExternalStorageDirectory()
-                    .toString() + Folder + "/$name"
-            )
+            val f = File(Util.getFolder(this), name)
             Picasso.get().load(f)
                 .into(imageView, object : Callback {
                     override fun onSuccess() {

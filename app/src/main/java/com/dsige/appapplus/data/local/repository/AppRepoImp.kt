@@ -24,6 +24,10 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         return dataBase.usuarioDao().getUsuario()
     }
 
+    override fun getUsuarioIdTask(): Int {
+        return dataBase.usuarioDao().getUsuarioIdTask()
+    }
+
     override fun getUsuarioService(
         usuario: String, password: String, imei: String, version: String
     ): Observable<Usuario> {
@@ -56,6 +60,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             dataBase.otProtocoloDao().deleteAll()
             dataBase.sedDao().deleteAll()
             dataBase.usuarioDao().deleteAll()
+
+            dataBase.puestoTierraDao().deleteAll()
+            dataBase.parteDiarioDao().deleteAll()
+            dataBase.supervisorDao().deleteAll()
+            dataBase.cadistaDao().deleteAll()
         }
     }
 
@@ -104,9 +113,19 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 dataBase.estadoDao().insertEstadoListTask(es)
             }
 
-            val ca : List<Cadista>? = s.cadistas
-            if (ca != null){
+            val ca: List<Cadista>? = s.cadistas
+            if (ca != null) {
                 dataBase.cadistaDao().insertCadistaListTask(ca)
+            }
+
+            val t: List<PuestoTierra>? = s.puestos
+            if (t != null) {
+                dataBase.puestoTierraDao().insertPuestoTierraListTask(t)
+            }
+
+            val su : List<Supervisor>? = s.supervisores
+            if (su != null){
+                dataBase.supervisorDao().insertSupervisorListTask(su)
             }
         }
     }
@@ -124,7 +143,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     }
 
     override fun getOtByTipoPaging(id: Int, s: String): LiveData<PagedList<Ot>> {
-        return dataBase.otDao().getOtByTipoPaging(id,s).toLiveData(
+        return dataBase.otDao().getOtByTipoPaging(id, s).toLiveData(
             Config(pageSize = 20, enablePlaceholders = true)
         )
     }
@@ -382,7 +401,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 e.onComplete()
                 return@create
             }
-            e.onNext("Ok")
+            e.onNext(s.alimentador)
             e.onComplete()
         }
     }
@@ -450,5 +469,52 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun getCadistas(): LiveData<List<Cadista>> {
         return dataBase.cadistaDao().getCadistas()
+    }
+
+    override fun getPuestoTierra(): LiveData<List<PuestoTierra>> {
+        return dataBase.puestoTierraDao().getPuestoTierras()
+    }
+
+    override fun insertOrUpdateParteDiario(p: ParteDiario): Completable {
+        return Completable.fromAction {
+
+            dataBase.otDao().updateEstadoOt(p.otId)
+
+            if (p.parteDiarioId == 0)
+                dataBase.parteDiarioDao().insertParteDiarioTask(p)
+            else
+                dataBase.parteDiarioDao().updateParteDiarioTask(p)
+        }
+    }
+
+    override fun getParteDiarioByOt(id: Int): LiveData<ParteDiario> {
+        return dataBase.parteDiarioDao().getParteDiarioByOt(id)
+    }
+
+    override fun getSupervisor(): LiveData<List<Supervisor>> {
+        return dataBase.supervisorDao().getSupervisor()
+    }
+
+    override fun getOtSendParteDiario(): Observable<List<ParteDiario>> {
+        return Observable.create{e->
+            val ot = dataBase.parteDiarioDao().getPrteDiarioTask(1)
+            if (ot.isEmpty()) {
+                e.onError(Throwable("Usted no tiene pendientes por enviar"))
+                e.onComplete()
+                return@create
+            }
+            e.onNext(ot)
+            e.onComplete()
+        }
+    }
+
+    override fun updateParteDiario(m: Mensaje): Completable {
+        return Completable.fromAction {
+            dataBase.parteDiarioDao().updateEnabledParteDiario(m.codigoBase,m.codigoRetorno)
+        }
+    }
+
+    override fun sendParteDiario(body: RequestBody): Observable<Mensaje> {
+        return apiService.sendParteDiario(body)
     }
 }

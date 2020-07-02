@@ -60,4 +60,7 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     internal abstract fun bindPhotoActivity(): PhotoActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun bindParteDiarioActivity(): ParteDiarioActivity
 }

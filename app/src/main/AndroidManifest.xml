@@ -29,7 +29,14 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".ui.activities.LevantamientoMainActivity"></activity>
+        <activity android:name=".ui.activities.ParteDiarioActivity"></activity>
+
+        <service
+            android:name=".ui.services.SocketServices"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".ui.activities.LevantamientoMainActivity" />
         <activity android:name=".ui.activities.PhotoActivity" />
         <activity android:name=".ui.activities.ProtocoloMainActivity" />
         <activity android:name=".ui.activities.HojaMainActivity" />

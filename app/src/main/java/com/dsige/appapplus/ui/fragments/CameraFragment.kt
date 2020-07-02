@@ -344,7 +344,7 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         nameImg = Util.getFechaActualForPhoto(formatoId)
-        file = File(Util.getFolder(), nameImg)
+        file = File(Util.getFolder(context!!), nameImg)
     }
 
     override fun onResume() {
@@ -733,7 +733,7 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
                                 .putExtra("galery", false)
                         )
                         activity!!.finish()
-                    }, 200)
+                    }, 500)
                 }
             }
 

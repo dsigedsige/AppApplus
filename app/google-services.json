@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1069331556445",
+    "firebase_url": "https://appapplus-94a1a.firebaseio.com",
+    "project_id": "appapplus-94a1a",
+    "storage_bucket": "appapplus-94a1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069331556445:android:74c95ed530e3d0eb55c5b4",
+        "android_client_info": {
+          "package_name": "com.dsige.appapplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069331556445-85rrg0t5sm04m033v2vpen9qokdjv7kv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dsige.appapplus",
+            "certificate_hash": "048636545d0acf24b76c3fd4e9f46eccc3b0a915"
+          }
+        },
+        {
+          "client_id": "1069331556445-j0r69lmhp0son9e05bq7vk4e5p698jfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI8kUS-J6Mr71giPNofrBJQAyScuEialk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069331556445-j0r69lmhp0son9e05bq7vk4e5p698jfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

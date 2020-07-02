@@ -52,4 +52,7 @@ interface OtDao {
 
     @Query("UPDATE Ot SET estadoId = 8 WHERE otId =:id")
     fun changeEstado(id: Int)
+
+    @Query("UPDATE Ot SET estadoParteDiario = 1 WHERE otId =:id")
+    fun updateEstadoOt(id: Int)
 }

@@ -41,7 +41,7 @@ class OtPhotoAdapter(private var listener: OnItemClickListener.OtPhotoListener) 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal fun bind(o: OtPhoto, listener: OnItemClickListener.OtPhotoListener) =
             with(itemView) {
-                val url = File(Util.getFolder(), o.fotoUrl)
+                val url = File(Util.getFolder(itemView.context), o.fotoUrl)
                 Picasso.get()
                     .load(url)
                     .into(imageViewPhoto, object : Callback {

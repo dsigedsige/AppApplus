@@ -12,6 +12,8 @@ interface AppRepository {
 
     fun getUsuario(): LiveData<Usuario>
 
+    fun getUsuarioIdTask() : Int
+
     fun getUsuarioService(
         usuario: String, password: String, imei: String, version: String
     ): Observable<Usuario>
@@ -127,4 +129,18 @@ interface AppRepository {
     fun changeEstado(otId: Int): Completable
 
     fun getCadistas(): LiveData<List<Cadista>>
+
+    fun getPuestoTierra(): LiveData<List<PuestoTierra>>
+
+    fun insertOrUpdateParteDiario(p: ParteDiario): Completable
+
+    fun getParteDiarioByOt(id: Int): LiveData<ParteDiario>
+
+    fun getSupervisor(): LiveData<List<Supervisor>>
+
+    fun getOtSendParteDiario(): Observable<List<ParteDiario>>
+
+    fun updateParteDiario(m: Mensaje): Completable
+
+    fun sendParteDiario(body: RequestBody): Observable<Mensaje>
 }

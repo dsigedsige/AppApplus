@@ -130,4 +130,7 @@
     <string name="send">Enviar a Reasignar</string>
     <string name="acept">Aceptar OT</string>
     <string name="notAcept">Reasignar OT</string>
+    <string name="thorgel">THORGEL</string>
+    <string name="description_version">AppApplus requiere de una nueva actualización</string>
+    <string name="wait_download">Espere mientras termina la descargar !</string>
 </resources>

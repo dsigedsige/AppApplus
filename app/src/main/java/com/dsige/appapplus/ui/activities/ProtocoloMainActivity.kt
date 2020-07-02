@@ -1,15 +1,29 @@
 package com.dsige.appapplus.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
+import com.dsige.appapplus.data.local.model.Grupo
 import com.dsige.appapplus.data.local.model.OtCabecera
+import com.dsige.appapplus.data.local.model.Supervisor
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
+import com.dsige.appapplus.ui.adapters.SupervisorAdapter
+import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_protocolo_main.*
 import java.util.*
@@ -32,13 +46,30 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
         val b = intent.extras
         if (b != null) {
             bindUI(
-                b.getString("title")!!, b.getInt("tipo"), b.getInt("id"), b.getString("codigo")!!,
-                b.getInt("otId"), b.getInt("estado"),b.getInt("usuarioId")
+                b.getString("title")!!,
+                b.getInt("tipo"),
+                b.getInt("id"),
+                b.getString("codigo")!!,
+                b.getInt("otId"),
+                b.getInt("estado"),
+                b.getInt("usuarioId")
+//                b.getInt("sId"),
+//                b.getString("nS")!!
             )
         }
     }
 
-    private fun bindUI(title: String, tipo: Int, id: Int, codigo: String, otId: Int, estado: Int,usuarioId:Int) {
+    private fun bindUI(
+        title: String,
+        tipo: Int,
+        id: Int,
+        codigo: String,
+        otId: Int,
+        estado: Int,
+        usuarioId: Int
+//        sId: Int, // supervisor Id
+//        nS: String // nombre supervisor
+    ) {
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
 
@@ -61,8 +92,11 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
                 editTextCuadricula.setText(ot.cuadrilla)
                 editTextLamina.setText(ot.lamina)
                 editTextLetra.setText(ot.letra)
+                editTextSupervisor.setText(ot.nombreSupervisor)
             }
         })
+
+        editTextSupervisor.setOnClickListener { spinnerCombo() }
 
         fab.setOnClickListener {
             val gps = Gps(this)
@@ -86,6 +120,7 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
                     o.letra = editTextLetra.text.toString()
                     o.fechaRegistro = Util.getFecha()
                     o.usuario = usuarioId
+                    o.nombreSupervisor = editTextSupervisor.text.toString()
                     registroViewModel.validateProtocolo(o)
                     Util.toastMensaje(this, "Verificando Sed...")
                 }
@@ -112,6 +147,41 @@ class ProtocoloMainActivity : DaggerAppCompatActivity() {
         registroViewModel.error.observe(this, Observer { s ->
             if (s != null) {
                 Util.toastMensaje(this, s)
+            }
+        })
+    }
+
+    private fun spinnerCombo() {
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
+        @SuppressLint("InflateParams") val v =
+            LayoutInflater.from(this).inflate(R.layout.dialog_combo, null)
+        val textViewTitulo: TextView = v.findViewById(R.id.textViewTitulo)
+        val recyclerView: RecyclerView = v.findViewById(R.id.recyclerView)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = layoutManager
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                recyclerView.context, DividerItemDecoration.VERTICAL
+            )
+        )
+        builder.setView(v)
+        val dialog = builder.create()
+        dialog.show()
+
+        textViewTitulo.text = String.format("Supervisores")
+
+        val supervisorAdapter = SupervisorAdapter(object : OnItemClickListener.SupervisorListener {
+            override fun onItemClick(s: Supervisor, view: View, position: Int) {
+                o.supervisorId = s.supervisorId
+                editTextSupervisor.setText(s.nombre)
+                dialog.dismiss()
+            }
+        })
+        recyclerView.adapter = supervisorAdapter
+        registroViewModel.getSupervisor().observe(this, Observer { g ->
+            if (g != null) {
+                supervisorAdapter.addItems(g)
             }
         })
     }

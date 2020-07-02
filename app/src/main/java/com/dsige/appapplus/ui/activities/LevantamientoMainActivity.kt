@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.Cadista
 import com.dsige.appapplus.data.local.model.OtCabecera
+import com.dsige.appapplus.data.local.model.Supervisor
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.CadistaAdapter
+import com.dsige.appapplus.ui.adapters.SupervisorAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_levantamiento_main.*
@@ -31,7 +33,10 @@ import javax.inject.Inject
 class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
-        spinnerCombo()
+        when (v.id) {
+            R.id.editTextCombo -> spinnerCombo(1, "Cadista")
+            R.id.editTextSupervisor -> spinnerCombo(2, "Supervisores")
+        }
     }
 
     @Inject
@@ -77,6 +82,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
                 editTextAlimentador.setText(ot.alimentador)
                 chkDibujo.isChecked = ot.dibujar == "1"
                 editTextCombo.setText(ot.nombreCadista)
+                editTextSupervisor.setText(ot.nombreSupervisor)
             }
         })
 
@@ -99,6 +105,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
                     o.usuario = usuarioId
                     o.fechaRegistro = Util.getFecha()
                     o.nombreCadista = editTextCombo.text.toString()
+                    o.nombreSupervisor = editTextSupervisor.text.toString()
                     registroViewModel.validateHoja(o)
                     Util.toastMensaje(this, "Verificando...")
                 }
@@ -130,9 +137,10 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
         })
 
         editTextCombo.setOnClickListener(this)
+        editTextSupervisor.setOnClickListener(this)
     }
 
-    private fun spinnerCombo() {
+    private fun spinnerCombo(tipo: Int, title: String) {
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
         @SuppressLint("InflateParams") val v =
             LayoutInflater.from(this).inflate(R.layout.dialog_combo, null)
@@ -150,19 +158,39 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
         val dialog = builder.create()
         dialog.show()
 
-        textViewTitulo.text = String.format("Cadista")
-        val cadistaAdapter = CadistaAdapter(object : OnItemClickListener.CadistaListener{
-            override fun onItemClick(c: Cadista, view: View, position: Int) {
-                o.cadistaId = c.cadistaId
-                editTextCombo.setText(c.nombre)
-                dialog.dismiss()
+        textViewTitulo.text = title
+        when (tipo) {
+            1 -> {
+                val cadistaAdapter = CadistaAdapter(object : OnItemClickListener.CadistaListener {
+                    override fun onItemClick(c: Cadista, view: View, position: Int) {
+                        o.cadistaId = c.cadistaId
+                        editTextCombo.setText(c.nombre)
+                        dialog.dismiss()
+                    }
+                })
+                recyclerView.adapter = cadistaAdapter
+                registroViewModel.getCadistas().observe(this, Observer { g ->
+                    if (g != null) {
+                        cadistaAdapter.addItems(g)
+                    }
+                })
             }
-        })
-        recyclerView.adapter = cadistaAdapter
-        registroViewModel.getCadistas().observe(this, Observer { g ->
-            if (g != null) {
-                cadistaAdapter.addItems(g)
+            2 -> {
+                val supervisorAdapter =
+                    SupervisorAdapter(object : OnItemClickListener.SupervisorListener {
+                        override fun onItemClick(s: Supervisor, view: View, position: Int) {
+                            o.supervisorId = s.supervisorId
+                            editTextSupervisor.setText(s.nombre)
+                            dialog.dismiss()
+                        }
+                    })
+                recyclerView.adapter = supervisorAdapter
+                registroViewModel.getSupervisor().observe(this, Observer { g ->
+                    if (g != null) {
+                        supervisorAdapter.addItems(g)
+                    }
+                })
             }
-        })
+        }
     }
 }

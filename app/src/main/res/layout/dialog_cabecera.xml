@@ -14,19 +14,20 @@
         android:textColor="@color/colorPrimary"
         android:textSize="18sp" />
 
-
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="SET-ALIM">
+        android:hint="Supervisor">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextSetAlim"
+            android:id="@+id/editTextSupervisor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:drawableEnd="@drawable/ic_down"
+            android:focusable="false" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -38,13 +39,28 @@
             android:id="@+id/editTextSed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapCharacters" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="SET-ALIM">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextSetAlim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="@string/save"
-        android:layout_height="wrap_content"/>
+        android:text="@string/save" />
 </LinearLayout>

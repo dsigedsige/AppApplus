@@ -89,7 +89,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
         insertOrUpdteOtOtProtocolo(o)
     }
 
-    fun validateProtocoloP24(o:OtProtocolo){
+    fun validateProtocoloP24(o: OtProtocolo) {
 //        if(o.rBt1.isEmpty()){
 //            mensajeError.value = "Ingrese todo los campos"
 //            return
@@ -253,5 +253,9 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
     fun getProtocoloByTipo(formatoId: Int, tipo: Int): LiveData<OtProtocolo> {
         return roomRepository.getProtocoloByTipo(formatoId, tipo)
+    }
+
+    fun getPuestoTierra(): LiveData<List<PuestoTierra>> {
+        return roomRepository.getPuestoTierra()
     }
 }

@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.Grupo
 import com.dsige.appapplus.data.local.model.OtCabecera
+import com.dsige.appapplus.data.local.model.Supervisor
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.adapters.GrupoAdapter
+import com.dsige.appapplus.ui.adapters.SupervisorAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_hoja_main.*
@@ -31,7 +33,10 @@ import javax.inject.Inject
 class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
-        spinnerCombo()
+        when (v.id) {
+            R.id.editTextCombo -> spinnerCombo(1, "Ubicación de la sed proyectada")
+            R.id.editTextSupervisor -> spinnerCombo(2, "Supervisores")
+        }
     }
 
     @Inject
@@ -87,6 +92,7 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 chkBoveda.isChecked = ot.convencional == "1"
                 chkBiposte.isChecked = ot.biposte == "1"
                 chkSBC.isChecked = ot.sbc == "1"
+                editTextSupervisor.setText(ot.nombreSupervisor)
             }
         })
 
@@ -121,6 +127,7 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     o.usuario = usuarioId
                     o.fechaRegistro = Util.getFecha()
                     o.nombreUbicacionSed = editTextCombo.text.toString()
+                    o.nombreSupervisor = editTextSupervisor.text.toString()
                     registroViewModel.validateHoja(o)
                     Util.toastMensaje(this, "Verificando...")
                 }
@@ -151,9 +158,10 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         })
 
         editTextCombo.setOnClickListener(this)
+        editTextSupervisor.setOnClickListener(this)
     }
 
-    private fun spinnerCombo() {
+    private fun spinnerCombo(tipo: Int, title: String) {
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AppTheme))
         @SuppressLint("InflateParams") val v =
             LayoutInflater.from(this).inflate(R.layout.dialog_combo, null)
@@ -171,20 +179,40 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
         val dialog = builder.create()
         dialog.show()
 
-        textViewTitulo.text = String.format("Ubicación de la sed proyectada")
+        textViewTitulo.text = title
 
-        val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
-            override fun onItemClick(g: Grupo, view: View, position: Int) {
-                o.ubicacionSed = g.grupoId.toString()
-                editTextCombo.setText(g.descripcion)
-                dialog.dismiss()
+        when (tipo) {
+            1 -> {
+                val grupoAdapter = GrupoAdapter(object : OnItemClickListener.GrupoListener {
+                    override fun onItemClick(g: Grupo, view: View, position: Int) {
+                        o.ubicacionSed = g.grupoId.toString()
+                        editTextCombo.setText(g.descripcion)
+                        dialog.dismiss()
+                    }
+                })
+                recyclerView.adapter = grupoAdapter
+                registroViewModel.getGrupoById(19).observe(this, Observer { g ->
+                    if (g != null) {
+                        grupoAdapter.addItems(g)
+                    }
+                })
             }
-        })
-        recyclerView.adapter = grupoAdapter
-        registroViewModel.getGrupoById(19).observe(this, Observer { g ->
-            if (g != null) {
-                grupoAdapter.addItems(g)
+            2 -> {
+                val supervisorAdapter =
+                    SupervisorAdapter(object : OnItemClickListener.SupervisorListener {
+                        override fun onItemClick(s: Supervisor, view: View, position: Int) {
+                            o.supervisorId = s.supervisorId
+                            editTextSupervisor.setText(s.nombre)
+                            dialog.dismiss()
+                        }
+                    })
+                recyclerView.adapter = supervisorAdapter
+                registroViewModel.getSupervisor().observe(this, Observer { g ->
+                    if (g != null) {
+                        supervisorAdapter.addItems(g)
+                    }
+                })
             }
-        })
+        }
     }
 }

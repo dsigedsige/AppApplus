@@ -41,19 +41,22 @@ open class OtCabecera {
     var boveda: String = ""
     var biposte: String = ""
     var sbc: String = ""
-    var soporte:String = ""
-    var setProtocolo : String = ""
-    var cuadrilla : String = ""
-    var lamina : String = ""
-    var letra : String = ""
+    var soporte: String = ""
+    var setProtocolo: String = ""
+    var cuadrilla: String = ""
+    var lamina: String = ""
+    var letra: String = ""
 
 
     var active: Int = 0 // 1-> por enviar 0 -> enviado
     var identity: Int = 0
-    var usuario :Int = 0
-    var cadistaId :Int = 0
-    var nombreCadista:String = ""
-    var dibujar : String = ""
+    var usuario: Int = 0
+    var cadistaId: Int = 0
+    var nombreCadista: String = ""
+    var dibujar: String = ""
+
+    var supervisorId: Int = 0
+    var nombreSupervisor: String = ""
 
     @Ignore
     var details: List<OtDetalle> = ArrayList()

@@ -26,7 +26,18 @@ open class Ot {
     var comentario: String = ""
     var motivoId: Int = 0
     var nombreMotivoId: String = ""
+    var coordinadorId: Int = 0
+    var nombreCoordinador: String = ""
+
+    var supervisorId: Int = 0
+    var nombreSupervisor: String = ""
+
+    var estadoParteDiario : Int = 0 // 1 -> guardado  // 2 -> enviado
 
     @Ignore
     var otCabecera: List<OtCabecera> = ArrayList()
+//
+//    @Ignore
+//    var parteDiario: ParteDiario? = null
+
 }

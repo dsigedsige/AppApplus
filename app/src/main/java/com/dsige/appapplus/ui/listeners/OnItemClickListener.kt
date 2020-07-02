@@ -51,4 +51,11 @@ interface OnItemClickListener {
         fun onItemClick(c: Cadista, view: View, position: Int)
     }
 
+    interface PuestoListener {
+        fun onItemClick(p: PuestoTierra, view: View, position: Int)
+    }
+
+    interface SupervisorListener {
+        fun onItemClick(s: Supervisor, view: View, position: Int)
+    }
 }

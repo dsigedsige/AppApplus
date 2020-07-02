@@ -406,6 +406,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onNext(t: String) {
+                    o.alimentador = t
                     insertOrUpdateCabecera(1, o)
                 }
 
@@ -429,6 +430,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onNext(t: String) {
+                    o.alimentador = t
                     insertOrUpdateCabecera(0, o)
                 }
 
@@ -526,10 +528,63 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 override fun onError(e: Throwable) {
                 }
             })
-
     }
 
     fun getCadistas(): LiveData<List<Cadista>> {
         return roomRepository.getCadistas()
+    }
+
+    fun validateParteDiario(p: ParteDiario) {
+        roomRepository.findSed(p.nroSed)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<String> {
+                override fun onComplete() {
+
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onNext(t: String) {
+                    insertOrUpdateParteDiario(p)
+                }
+
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
+    }
+
+    private fun insertOrUpdateParteDiario(p: ParteDiario) {
+        roomRepository.insertOrUpdateParteDiario(p)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    if (p.parteDiarioId == 0)
+                        mensajeSuccess.value = "Guardado"
+                    else
+                        mensajeSuccess.value = "Actualizado"
+
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+            })
+    }
+
+    fun getParteDiarioByOt(id: Int): LiveData<ParteDiario> {
+        return roomRepository.getParteDiarioByOt(id)
+    }
+
+    fun getSupervisor(): LiveData<List<Supervisor>> {
+        return roomRepository.getSupervisor()
     }
 }

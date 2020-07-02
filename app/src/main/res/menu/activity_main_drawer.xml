@@ -16,6 +16,10 @@
             android:id="@+id/enviOT"
             android:icon="@drawable/ic_menu_send"
             android:title="Envio Reasignaciones OT" />
+        <item
+            android:id="@+id/envioPD"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Envio Parte Diario" />
     </group>
 
     <item android:title="">

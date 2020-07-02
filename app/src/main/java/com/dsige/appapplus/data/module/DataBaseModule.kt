@@ -103,4 +103,19 @@ class DataBaseModule {
     internal fun provideCadistaDao(appDataBase: AppDataBase): CadistaDao {
         return appDataBase.cadistaDao()
     }
+
+    @Provides
+    internal fun providePuestoTierraDao(appDataBase: AppDataBase): PuestoTierraDao {
+        return appDataBase.puestoTierraDao()
+    }
+
+    @Provides
+    internal fun provideParteDiarioDao(appDataBase: AppDataBase): ParteDiarioDao {
+        return appDataBase.parteDiarioDao()
+    }
+
+    @Provides
+    internal fun provideSupervisorDao(appDataBase: AppDataBase): SupervisorDao {
+        return appDataBase.supervisorDao()
+    }
 }

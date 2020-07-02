@@ -23,9 +23,12 @@ import com.dsige.appapplus.data.local.model.*
         Sed::class,
         Estado::class,
         OtPhoto::class,
-        Cadista::class
+        Cadista::class,
+        PuestoTierra::class,
+        ParteDiario::class,
+        Supervisor::class
     ],
-    version = 6,
+    version = 12,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -45,6 +48,9 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun sedDao(): SedDao
     abstract fun estadoDao(): EstadoDao
     abstract fun cadistaDao(): CadistaDao
+    abstract fun puestoTierraDao(): PuestoTierraDao
+    abstract fun parteDiarioDao(): ParteDiarioDao
+    abstract fun supervisorDao(): SupervisorDao
 
     companion object {
         @Volatile
