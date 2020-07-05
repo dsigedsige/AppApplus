@@ -28,7 +28,7 @@ import com.dsige.appapplus.data.local.model.*
         ParteDiario::class,
         Supervisor::class
     ],
-    version = 12,
+    version = 1,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
