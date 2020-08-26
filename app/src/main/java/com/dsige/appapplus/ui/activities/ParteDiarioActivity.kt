@@ -44,6 +44,7 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
     lateinit var registroViewModel: RegistroViewModel
     lateinit var p: ParteDiario
     private var otId: Int = 0
+    private var usuarioId: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +76,7 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         editTextFecha.setText(Util.getFechaDiaMas())
         otId = id
+        usuarioId= usu
 
         registroViewModel.getOtById(id).observe(this, Observer { t ->
             if (t != null) {
@@ -164,11 +166,14 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun formValidate() {
         p.otId = otId
         p.fechaSalida = editTextFecha.text.toString()
+        p.fechaSalidaProgramada = editTextFecha.text.toString()
         p.turno = editTextTurno.text.toString()
         p.horaInicio = editTextHInicio.text.toString()
         p.horaFin = editTextHFin.text.toString()
         p.nombreTrabajoProgramado = editTextTrabajo.text.toString()
         p.nroSed = editTextSed.text.toString().toUpperCase(Locale.getDefault())
+        p.proyectistaId = usuarioId
+        p.usuarioId = usuarioId
         p.estado = 1
         p.active = 1
         registroViewModel.validateParteDiario(p)

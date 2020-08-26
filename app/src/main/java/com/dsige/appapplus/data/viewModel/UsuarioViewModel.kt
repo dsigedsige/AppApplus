@@ -101,8 +101,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-
-    private fun sync(id: Int, v: String) {
+    fun sync(id: Int, v: String) {
         roomRepository.getSync(id, v)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -145,7 +144,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onComplete() {
-                    mensajeSuccess.value = "Logeado"
+                    mensajeSuccess.value = "Sincronizacón Completa"
                 }
 
                 override fun onError(e: Throwable) {
@@ -448,7 +447,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    mensajeSuccess.value = "Reasignación Completa"
+                    mensajeSuccess.value = "Envio Completo"
                 }
 
                 override fun onSubscribe(d: Disposable) {

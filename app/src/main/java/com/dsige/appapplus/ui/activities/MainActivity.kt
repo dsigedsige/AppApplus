@@ -84,7 +84,10 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 message()
                 startService(Intent(this, SocketServices::class.java))
                 val instance = FirebaseRemoteConfig.getInstance()
-                instance.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
+                instance.setConfigSettingsAsync(
+                    FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0)
+                        .build()
+                )
                 val cacheExpiration = instance.info.configSettings.minimumFetchIntervalInSeconds
                 instance.fetch(cacheExpiration)
                     .addOnCompleteListener(this) { t ->
@@ -119,6 +122,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.sync -> sendTrabajos(4)
             R.id.orden -> changeFragment(
                 MainFragment.newInstance(1, usuarioId),
                 "Ordenes de Trabajo"
@@ -234,16 +238,18 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             .setMessage(
                 when (tipo) {
                     1 -> "Deseas Enviar los Trabajos Pendientes ?"
-                    2->"Deseas Enviar las reasignaciones Pendientes ?"
-                    else -> "Deseas Enviar los Parte Diarios ?"
+                    2 -> "Deseas Enviar las reasignaciones Pendientes ?"
+                    3 -> "Deseas Enviar los Parte Diarios ?"
+                    else -> "Deseas Sincronizar ?"
                 }
             )
             .setPositiveButton("SI") { dialog, _ ->
                 load("Enviando...")
                 when (tipo) {
                     1 -> usuarioViewModel.sendTrabajo(this)
-                    2->usuarioViewModel.sendReasignaciones()
-                    else -> usuarioViewModel.sendParteDiarios()
+                    2 -> usuarioViewModel.sendReasignaciones()
+                    3 -> usuarioViewModel.sendParteDiarios()
+                    4 -> usuarioViewModel.sync(usuarioId,Util.getVersion(this))
                 }
                 dialog.dismiss()
             }
@@ -309,7 +315,12 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             val onComplete = object : BroadcastReceiver() {
                 override fun onReceive(ctxt: Context, intent: Intent) {
                     val uri =
-                        Uri.fromFile(File(Environment.getExternalStorageDirectory().toString() + "/download/" + name))
+                        Uri.fromFile(
+                            File(
+                                Environment.getExternalStorageDirectory()
+                                    .toString() + "/download/" + name
+                            )
+                        )
                     val install = Intent(Intent.ACTION_VIEW)
                     install.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     install.setDataAndType(

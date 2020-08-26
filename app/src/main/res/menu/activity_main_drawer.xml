@@ -5,6 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/sync"
+            android:icon="@drawable/ic_sync"
+            android:title="Sincronizar" />
+
+        <item
             android:id="@+id/orden"
             android:icon="@drawable/ic_sync"
             android:title="Ordenes de Trabajo" />

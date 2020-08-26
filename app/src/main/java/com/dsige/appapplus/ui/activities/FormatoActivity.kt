@@ -172,7 +172,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                         )
                     }
                 } else
-                    registroViewModel.setError("Inspección Cerrada")
+                    usuarioViewModel.setError("Inspección Cerrada")
             }
         })
 
@@ -384,20 +384,15 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private fun sendSocket() {
         try {
             socket = IO.socket("http://173.248.174.62:5000/")
-            val n = Notificacion()
-            n.id_personal = ot.coordinadorId
-            n.cant_ot = 1
-            n.tipo = "Proyectista"
-            val json = Gson().toJson(n)
-            socket.emit("Notificacion_movil_OT", json)
-            var web = String.format("%s|%s|%s|%s",1,ot.coordinadorId,"Mensaje de Reasignación","Proyectista")
+            val movil = Notificacion(1,"Envio a movil",ot.coordinadorId,"Proyectista")
+            socket.emit("Notificacion_movil_OT", Gson().toJson(movil))
+            val web = String.format("%s|%s|%s|%s",1,ot.coordinadorId,"Mensaje de Reasignación","Proyectista")
             socket.emit("Notificacion_movil_web_OT", web)
         } catch (e: URISyntaxException) {
         }
         socket.connect()
     }
-
-
+    
     private fun generateCabecera(
         title: String,
         tipo: Int,
