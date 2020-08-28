@@ -25,6 +25,6 @@ interface EstadoDao {
     @Query("DELETE FROM Estado")
     fun deleteAll()
 
-    @Query("SELECT * FROM Estado")
+    @Query("SELECT * FROM Estado ORDER BY orden ASC")
     fun getEstados(): LiveData<List<Estado>>
 }

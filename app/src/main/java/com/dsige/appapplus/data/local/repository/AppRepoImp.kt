@@ -461,9 +461,10 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         }
     }
 
-    override fun changeEstado(otId: Int): Completable {
+    // 8
+    override fun changeEstado(otId: Int,estado:Int): Completable {
         return Completable.fromAction {
-            dataBase.otDao().changeEstado(otId)
+            dataBase.otDao().changeEstado(otId,estado)
         }
     }
 

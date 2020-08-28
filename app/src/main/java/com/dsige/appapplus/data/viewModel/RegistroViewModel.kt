@@ -512,13 +512,13 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun changeEstado(ot: Ot) {
-        roomRepository.changeEstado(ot.otId)
+    fun changeEstado(ot: Ot, estado: Int) {
+        roomRepository.changeEstado(ot.otId, estado)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-
+                    mensajeSuccess.value = "Actualizado"
                 }
 
                 override fun onSubscribe(d: Disposable) {

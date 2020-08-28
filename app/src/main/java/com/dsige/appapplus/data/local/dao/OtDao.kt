@@ -50,8 +50,8 @@ interface OtDao {
     @Query("UPDATE Ot SET active = 2 , estadoId = 25 WHERE otId =:id")
     fun updateOtById(id: Int)
 
-    @Query("UPDATE Ot SET estadoId = 8 WHERE otId =:id")
-    fun changeEstado(id: Int)
+    @Query("UPDATE Ot SET estadoId =:e WHERE otId =:id")
+    fun changeEstado(id: Int,e:Int)
 
     @Query("UPDATE Ot SET estadoParteDiario = 1 WHERE otId =:id")
     fun updateEstadoOt(id: Int)

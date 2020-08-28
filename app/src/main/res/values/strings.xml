@@ -133,4 +133,5 @@
     <string name="thorgel">THORGEL</string>
     <string name="description_version">AppApplus requiere de una nueva actualización</string>
     <string name="wait_download">Espere mientras termina la descargar !</string>
+    <string name="aperturar">Aperturar Parte Diario</string>
 </resources>

@@ -136,7 +136,7 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
                         editTextTurno.setText(g.descripcion)
                         when (g.descripcion) {
                             "Mañana" -> {
-                                editTextHInicio.setText(String.format("08:30 am"))
+                                editTextHInicio.setText(String.format("08:30:00 am"))
                                 editTextHFin.setText(String.format("1:00 pm"))
                             }
                             "Tarde" -> {

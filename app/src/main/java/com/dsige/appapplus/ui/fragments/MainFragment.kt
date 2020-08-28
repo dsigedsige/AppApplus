@@ -109,6 +109,17 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                         }
                         popupMenu.show()
                     }
+                    8 -> {
+                        val popupMenu = PopupMenu(context!!, view)
+                        popupMenu.menu.add(1, 1, 1, getText(R.string.aperturar))
+                        popupMenu.setOnMenuItemClickListener { item ->
+                            when (item.itemId) {
+                                1 -> messageParteDiario(o)
+                            }
+                            false
+                        }
+                        popupMenu.show()
+                    }
                     else -> gOTActivity(o.estadoId, o, false)
                 }
             }
@@ -131,6 +142,11 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
 
         editTextEstado.setText(String.format("Asignado al Proyectista"))
         editTextSearch.setOnEditorActionListener(this)
+
+
+        registroViewModel.success.observe(viewLifecycleOwner, Observer {
+            Util.toastMensaje(context!!, it)
+        })
     }
 
     private fun gOTActivity(estado: Int, o: Ot, t: Boolean) {
@@ -201,12 +217,31 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
             .setTitle("Mensaje")
             .setMessage("Estas seguro de aceptar Ot ?")
             .setPositiveButton("SI") { dialog, _ ->
-                Util.toastMensajeShort(context!!, "Actualizando Estado...")
-                registroViewModel.changeEstado(ot)
-                Handler().postDelayed({
-                    gOTActivity(6,ot, true)
-                    dialog.dismiss()
-                }, 600)
+//                Util.toastMensajeShort(context!!, "Actualizando Estado...")
+                registroViewModel.changeEstado(ot, 8)
+                dialog.dismiss()
+//                Handler().postDelayed({
+//                    gOTActivity(6, ot, true)
+//                    dialog.dismiss()
+//                }, 600)
+            }
+            .setNegativeButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }
+        dialog.show()
+    }
+
+    private fun messageParteDiario(ot: Ot) {
+        val dialog = MaterialAlertDialogBuilder(context!!)
+            .setTitle("Mensaje")
+            .setMessage("Deseas Aperturar Parte Diario ?")
+            .setPositiveButton("SI") { dialog, _ ->
+                registroViewModel.changeEstado(ot, 9)
+                dialog.dismiss()
+//                Handler().postDelayed({
+//                    gOTActivity(6, ot, true)
+//                    dialog.dismiss()
+//                }, 600)
             }
             .setNegativeButton("NO") { dialog, _ ->
                 dialog.dismiss()
