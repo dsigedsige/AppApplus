@@ -29,13 +29,30 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".ui.activities.ParteDiarioActivity"></activity>
 
+        <receiver
+            android:name=".ui.broadcasts.GpsReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".ui.broadcasts.MovilReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".ui.services.GpsService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".ui.services.MovilService"
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name=".ui.services.SocketServices"
             android:enabled="true"
             android:exported="false" />
 
+        <activity android:name=".ui.activities.ParteDiarioActivity" />
         <activity android:name=".ui.activities.LevantamientoMainActivity" />
         <activity android:name=".ui.activities.PhotoActivity" />
         <activity android:name=".ui.activities.ProtocoloMainActivity" />
@@ -63,5 +80,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

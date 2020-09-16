@@ -1,5 +1,6 @@
 package com.dsige.appapplus.data.module
 
+import com.dsige.appapplus.ui.broadcasts.*
 import com.dsige.appapplus.ui.services.SocketServices
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -8,11 +9,12 @@ import dagger.android.ContributesAndroidInjector
 abstract class ServicesModule {
 
     @ContributesAndroidInjector
-    internal abstract fun provideSocketServices(): SocketServices
-//
-//    @ContributesAndroidInjector
-//    internal abstract fun provideGpsReceiver(): GpsReceiver
-//
-//    @ContributesAndroidInjector
-//    internal abstract fun provideRegistroServices(): RegistroServices
+    internal abstract fun provideMainReceiver(): MovilReceiver
+
+    @ContributesAndroidInjector
+    internal abstract fun provideGpsReceiver(): GpsReceiver
+
+    @ContributesAndroidInjector
+    internal abstract fun provideSocketReceiver(): SocketServices
+
 }

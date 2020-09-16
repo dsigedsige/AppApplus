@@ -7,6 +7,7 @@ import com.dsige.appapplus.helper.Mensaje
 import io.reactivex.Completable
 import io.reactivex.Observable
 import okhttp3.RequestBody
+import retrofit2.Call
 
 interface AppRepository {
 
@@ -143,4 +144,8 @@ interface AppRepository {
     fun updateParteDiario(m: Mensaje): Completable
 
     fun sendParteDiario(body: RequestBody): Observable<Mensaje>
+
+    fun saveGps(body: RequestBody): Call<Mensaje>
+
+    fun saveMovil(body: RequestBody): Call<Mensaje>
 }

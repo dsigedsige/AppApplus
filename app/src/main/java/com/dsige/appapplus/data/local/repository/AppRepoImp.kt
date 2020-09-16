@@ -15,6 +15,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import retrofit2.Call
 import java.io.File
 
 class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDataBase) :
@@ -123,8 +124,8 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 dataBase.puestoTierraDao().insertPuestoTierraListTask(t)
             }
 
-            val su : List<Supervisor>? = s.supervisores
-            if (su != null){
+            val su: List<Supervisor>? = s.supervisores
+            if (su != null) {
                 dataBase.supervisorDao().insertSupervisorListTask(su)
             }
         }
@@ -462,9 +463,9 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     }
 
     // 8
-    override fun changeEstado(otId: Int,estado:Int): Completable {
+    override fun changeEstado(otId: Int, estado: Int): Completable {
         return Completable.fromAction {
-            dataBase.otDao().changeEstado(otId,estado)
+            dataBase.otDao().changeEstado(otId, estado)
         }
     }
 
@@ -497,7 +498,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     }
 
     override fun getOtSendParteDiario(): Observable<List<ParteDiario>> {
-        return Observable.create{e->
+        return Observable.create { e ->
             val ot = dataBase.parteDiarioDao().getPrteDiarioTask(1)
             if (ot.isEmpty()) {
                 e.onError(Throwable("Usted no tiene pendientes por enviar"))
@@ -511,11 +512,21 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun updateParteDiario(m: Mensaje): Completable {
         return Completable.fromAction {
-            dataBase.parteDiarioDao().updateEnabledParteDiario(m.codigoBase,m.codigoRetorno)
+            dataBase.parteDiarioDao().updateEnabledParteDiario(m.codigoBase, m.codigoRetorno)
         }
     }
 
     override fun sendParteDiario(body: RequestBody): Observable<Mensaje> {
         return apiService.sendParteDiario(body)
     }
+
+    override fun saveGps(body: RequestBody): Call<Mensaje> {
+        return apiService.saveGps(body)
+    }
+
+    override fun saveMovil(body: RequestBody): Call<Mensaje> {
+        return apiService.saveMovil(body)
+    }
+
+
 }
