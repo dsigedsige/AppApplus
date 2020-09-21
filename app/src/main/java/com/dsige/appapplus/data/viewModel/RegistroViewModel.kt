@@ -355,6 +355,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onNext(t: String) {
+                    o.alimentador = t
                     insertOrUpdateCabecera(0, o)
                 }
 

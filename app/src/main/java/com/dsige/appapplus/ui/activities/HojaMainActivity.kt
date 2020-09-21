@@ -75,7 +75,7 @@ class HojaMainActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         textViewCodigo.text = codigo
 
-        registroViewModel.getHojaById(id).observe(this, Observer { ot ->
+        registroViewModel.getHojaById(id).observe(this, { ot ->
             if (ot != null) {
                 o = ot
                 editTextNroSed.setText(ot.sed)

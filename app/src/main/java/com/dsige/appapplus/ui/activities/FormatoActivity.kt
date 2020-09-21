@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -100,7 +99,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
 
-        registroViewModel.getOtById(id).observe(this, Observer { t ->
+        registroViewModel.getOtById(id).observe(this, { t ->
             if (t != null) {
                 ot = t
                 textView1.text = t.nroOt
@@ -181,21 +180,21 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = oTAdapter
         registroViewModel.getOtCabeceraByTipoPaging(id)
-            .observe(this, Observer { s ->
+            .observe(this, { s ->
                 if (s != null) {
                     oTAdapter.addItems(s)
                 }
             })
         registroViewModel.cabecera.value = 0
 
-        registroViewModel.getMaxIdOt().observe(this, Observer { i ->
+        registroViewModel.getMaxIdOt().observe(this, { i ->
             formatoId = if (i != null) {
                 i + 1
             } else
                 1
         })
 
-        registroViewModel.mensaje.observe(this, Observer { s ->
+        registroViewModel.mensaje.observe(this, { s ->
             if (s != null) {
                 closeDialog()
                 startActivity(
@@ -226,14 +225,14 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             }
         })
 
-        usuarioViewModel.error.observe(this, Observer { s ->
+        usuarioViewModel.error.observe(this, { s ->
             if (s != null) {
                 closeLoad()
                 Util.toastMensaje(this, s)
             }
         })
 
-        usuarioViewModel.success.observe(this, Observer { s ->
+        usuarioViewModel.success.observe(this, { s ->
             if (s != null) {
                 sendSocket()
                 closeLoad()
@@ -274,7 +273,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     }
                 })
                 recyclerView.adapter = grupoAdapter
-                registroViewModel.getGrupoById(20).observe(this, Observer { g ->
+                registroViewModel.getGrupoById(20).observe(this, { g ->
                     if (g != null) {
                         grupoAdapter.addItems(g)
                     }
@@ -289,7 +288,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     }
                 })
                 recyclerView.adapter = formatoAdapter
-                registroViewModel.getFormato().observe(this, Observer { p ->
+                registroViewModel.getFormato().observe(this, { p ->
                     if (p != null) {
                         formatoAdapter.addItems(p)
                     }
@@ -419,7 +418,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
         var o = OtCabecera()
 
-        registroViewModel.getOtCabeceraById(id).observe(this, Observer { e ->
+        registroViewModel.getOtCabeceraById(id).observe(this, { e ->
             if (e != null) {
                 o = e
                 editTextSetAlim.setText(o.alimentador)
@@ -486,7 +485,7 @@ class FormatoActivity : DaggerAppCompatActivity(), View.OnClickListener {
             }
         })
         recyclerView.adapter = supervisorAdapter
-        registroViewModel.getSupervisor().observe(this, Observer { g ->
+        registroViewModel.getSupervisor().observe(this, { g ->
             if (g != null) {
                 supervisorAdapter.addItems(g)
             }

@@ -35,13 +35,13 @@ class OtCabeceraAdapter(private var listener: OnItemClickListener.OTCabeceraList
         return ViewHolder(v!!)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal fun bind(d: OtCabecera, listener: OnItemClickListener.OTCabeceraListener) =
             with(itemView) {
                 textView1.text = d.nombreTipoFormato
-                textView2.text = d.nombreEstado
-                textView3.text = d.alimentador
-                textView4.text = d.modulo
+                textView2.text = if (d.active == 1) "Ejecutado" else "Cerrado"
+                textView3.text = String.format("Nro Sed : %s", d.sed)
+                textView4.text = String.format("A: %s", d.alimentador)
                 textView5.text = String.format("Fecha Registro : %s", d.fechaRegistro)
                 itemView.setOnClickListener { v -> listener.onItemClick(d, v, adapterPosition) }
             }

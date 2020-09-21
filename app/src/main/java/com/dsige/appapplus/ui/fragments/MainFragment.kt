@@ -130,7 +130,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = oTAdapter
         registroViewModel.getOtByTipoPaging()
-            .observe(viewLifecycleOwner, Observer { s ->
+            .observe(viewLifecycleOwner, { s ->
                 if (s != null) {
                     oTAdapter.addItems(s)
                 }

@@ -26,7 +26,7 @@ interface OtCabeceraDao {
     @Query("SELECT * FROM OtCabecera WHERE otId =:id ")
     fun getOtCabeceraByTipoPaging(id:Int): DataSource.Factory<Int, OtCabecera>
 
-    @Query("SELECT * FROM OtCabecera WHERE otId =:id AND formatoId =:e")
+    @Query("SELECT * FROM OtCabecera WHERE otId =:id AND tipoFormatoId =:e")
     fun getOtCabeceraByTipoPaging(id:Int,e:Int): DataSource.Factory<Int, OtCabecera>
 
     @Query("SELECT * FROM OtCabecera WHERE formatoId =:id")

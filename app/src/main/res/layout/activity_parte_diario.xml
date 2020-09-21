@@ -151,7 +151,5 @@
         app:backgroundTint="@color/colorAccent"
         app:icon="@drawable/ic_save"
         app:iconGravity="end"
-        app:iconTint="@color/colorWhite"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="287dp" />
+        app:iconTint="@color/colorWhite" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
