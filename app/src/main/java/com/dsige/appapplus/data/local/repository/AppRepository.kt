@@ -95,6 +95,8 @@ interface AppRepository {
 
     fun updateOt(body: RequestBody): Observable<Mensaje>
 
+    fun updateEstadoOt(id:Int,estado :Int) : Observable<Mensaje>
+
     fun getGrupoById(id: Int): LiveData<List<Grupo>>
 
     fun insertOrUpdateCabecera(o: OtCabecera): Completable

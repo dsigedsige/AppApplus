@@ -357,6 +357,10 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         return apiService.updateOt(body)
     }
 
+    override fun updateEstadoOt(id: Int, estado: Int): Observable<Mensaje> {
+        return apiService.updateEstadoOt(id, estado)
+    }
+
     override fun getGrupoById(id: Int): LiveData<List<Grupo>> {
         return dataBase.grupoDao().getGrupoById(id)
     }

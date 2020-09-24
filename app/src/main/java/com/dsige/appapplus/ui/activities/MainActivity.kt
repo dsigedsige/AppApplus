@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -57,6 +58,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     var link: String = ""
     var name: String = ""
 
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.menu, menu)
+//        return true
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,7 +72,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     private fun bindUI() {
         usuarioViewModel =
             ViewModelProvider(this, viewModelFactory).get(UsuarioViewModel::class.java)
-        usuarioViewModel.user.observe(this, Observer { u ->
+        usuarioViewModel.user.observe(this, { u ->
             if (u != null) {
                 setSupportActionBar(toolbar)
                 val toggle = ActionBarDrawerToggle(

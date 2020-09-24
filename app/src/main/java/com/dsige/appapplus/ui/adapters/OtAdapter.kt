@@ -36,15 +36,19 @@ class OtAdapter(private var listener: OnItemClickListener.OTListener) :
         return ViewHolder(v!!)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal fun bind(o: Ot, listener: OnItemClickListener.OTListener) =
             with(itemView) {
-
                 if (o.estadoId == 9) {
                     if (o.estadoParteDiario == 1)
                         layoutFondo.setBackgroundColor(
                             ContextCompat.getColor(itemView.context, R.color.colorGrey)
                         )
+                }
+
+                if (o.estadoId == 8){
+                    checkboxAdd.visibility = View.VISIBLE
+                    checkboxAdd.setOnClickListener { v -> listener.onItemClick(o, v, adapterPosition) }
                 }
 
                 textView1.text = o.nroOt

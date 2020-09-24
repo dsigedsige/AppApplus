@@ -37,4 +37,8 @@ interface ApiService {
     @Headers("Cache-Control: no-cache")
     @POST("SaveMovil")
     fun saveMovil(@Body body: RequestBody): Call<Mensaje>
+
+    @Headers("Cache-Control: no-cache")
+    @POST("UpdateEstadoOt")
+    fun updateEstadoOt(@Query("id") id: Int, @Query("estado") estado: Int): Observable<Mensaje>
 }

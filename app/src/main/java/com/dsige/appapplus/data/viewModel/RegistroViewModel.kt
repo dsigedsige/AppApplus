@@ -12,13 +12,14 @@ import com.dsige.appapplus.data.local.repository.AppRepository
 import com.dsige.appapplus.helper.Mensaje
 import com.dsige.appapplus.helper.Util
 import com.google.gson.Gson
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import io.reactivex.CompletableObserver
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import rx.CompletableSubscriber
-import rx.Scheduler
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -32,6 +33,25 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     val cabecera: MutableLiveData<Int> = MutableLiveData()
     val detalle: MutableLiveData<Int> = MutableLiveData()
     val mensaje: MutableLiveData<Mensaje> = MutableLiveData()
+
+    val ots = ArrayList<Ot>()
+    val otsData = MutableLiveData<List<Ot>>()
+
+    fun setOts(o: Ot) {
+        ots.add(o)
+        otsData.value = ots
+    }
+
+    fun removeItemAt(o: Ot) {
+        val oldValue = ots
+        oldValue.remove(o)
+        otsData.value = oldValue
+    }
+
+    fun removeAll() {
+        ots.clear()
+        otsData.value = mutableListOf()
+    }
 
     val success: LiveData<String>
         get() = mensajeSuccess
@@ -513,13 +533,12 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun changeEstado(ot: Ot, estado: Int) {
-        roomRepository.changeEstado(ot.otId, estado)
+    fun changeEstado(id:Int, estado: Int) {
+        roomRepository.changeEstado(id, estado)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    mensajeSuccess.value = "Actualizado"
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -588,4 +607,88 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     fun getSupervisor(): LiveData<List<Supervisor>> {
         return roomRepository.getSupervisor()
     }
+
+    fun sendEstadoOt(o: Ot, estado: Int) {
+        roomRepository.updateEstadoOt(o.otId, estado)
+            .subscribeOn(Schedulers.io())
+            .delay(1000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Mensaje> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.i("TAG", d.toString())
+                }
+
+                override fun onNext(m: Mensaje) {
+                    changeEstado(o.otId, estado)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (e is HttpException) {
+                        val body = e.response().errorBody()
+                        try {
+                            val error = retrofit.errorConverter.convert(body!!)
+                            mensajeError.postValue(error.Message)
+                        } catch (e1: IOException) {
+                            e1.printStackTrace()
+                            Log.i("TAG", e1.toString())
+                        }
+                    } else {
+                        mensajeError.postValue(e.message)
+                    }
+                }
+
+                override fun onComplete() {
+                    removeItemAt(o)
+                    mensajeSuccess.value = "Actualizado"
+                }
+            })
+    }
+
+    fun changeMasiveEstado(estado:Int) {
+        val data: Observable<List<Ot>> = Observable.create { e ->
+            e.onNext(otsData.value!!)
+            e.onComplete()
+        }
+        data.flatMap { observable ->
+            Observable.fromIterable(observable).flatMap { a ->
+                Observable.zip(
+                    Observable.just(a), roomRepository.updateEstadoOt(a.otId,estado), { _, mensaje ->
+                        mensaje
+                    })
+            }
+        }.subscribeOn(Schedulers.io())
+            .delay(1000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Mensaje> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.i("TAG", d.toString())
+                }
+
+                override fun onNext(m: Mensaje) {
+                    changeEstado(m.codigoBase, estado)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (e is HttpException) {
+                        val body = e.response().errorBody()
+                        try {
+                            val error = retrofit.errorConverter.convert(body!!)
+                            mensajeError.postValue(error.Message)
+                        } catch (e1: IOException) {
+                            e1.printStackTrace()
+                            Log.i("TAG", e1.toString())
+                        }
+                    } else {
+                        mensajeError.postValue(e.message)
+                    }
+                }
+
+                override fun onComplete() {
+                    mensajeSuccess.value = "Datos Actualizados"
+                }
+            })
+    }
+
 }

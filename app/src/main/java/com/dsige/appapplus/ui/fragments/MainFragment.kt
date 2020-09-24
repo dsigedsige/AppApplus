@@ -3,16 +3,11 @@ package com.dsige.appapplus.ui.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -31,6 +26,7 @@ import com.dsige.appapplus.ui.activities.ParteDiarioActivity
 import com.dsige.appapplus.ui.adapters.EstadoAdapter
 import com.dsige.appapplus.ui.adapters.OtAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import dagger.android.support.DaggerFragment
@@ -41,6 +37,21 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorActionListener {
+
+//    override fun onPrepareOptionsMenu(menu: Menu) {
+//        super.onPrepareOptionsMenu(menu)
+//        topMenu = menu
+//    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.check -> {            }
+//            R.id.send -> {            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onEditorAction(v: TextView, p1: Int, p2: KeyEvent?): Boolean {
         if (v.text.isNotEmpty()) {
@@ -54,12 +65,15 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
     override fun onClick(v: View) {
         when (v.id) {
             R.id.editTextEstado -> spinnerEstado()
+            R.id.fabEnvio -> messageOtMasive()
         }
     }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var registroViewModel: RegistroViewModel
+    lateinit var builder: AlertDialog.Builder
+    var dialog: AlertDialog? = null
 
     private var tipo: Int = 0
     private var usuarioId: Int = 0
@@ -67,13 +81,13 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         f = Filtro()
 
         arguments?.let {
             tipo = it.getInt(ARG_PARAM1)
             usuarioId = it.getInt(ARG_PARAM2)
         }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -93,6 +107,16 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         editTextEstado.setOnClickListener(this)
         val oTAdapter = OtAdapter(object : OnItemClickListener.OTListener {
             override fun onItemClick(o: Ot, view: View, position: Int) {
+                if (view is MaterialCheckBox) {
+                    val checked: Boolean = view.isChecked
+                    if (checked) {
+                        registroViewModel.setOts(o)
+                    } else {
+                        registroViewModel.removeItemAt(o)
+                    }
+                    return
+                }
+
                 when (o.estadoId) {
                     6 -> if (o.active == 2) {
                         Util.toastMensaje(context!!, "OT reasignado")
@@ -142,10 +166,21 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
 
         editTextEstado.setText(String.format("Asignado al Proyectista"))
         editTextSearch.setOnEditorActionListener(this)
+        fabEnvio.setOnClickListener(this)
 
-
-        registroViewModel.success.observe(viewLifecycleOwner, Observer {
+        registroViewModel.success.observe(viewLifecycleOwner, {
+            registroViewModel.removeAll()
+            closeLoad()
             Util.toastMensaje(context!!, it)
+        })
+
+        registroViewModel.otsData.observe(viewLifecycleOwner, {
+            if (it.isNotEmpty()) {
+                fabEnvio.visibility = View.VISIBLE
+                fabEnvio.text = String.format("Actualizar %s", it.size)
+            } else {
+                fabEnvio.visibility = View.GONE
+            }
         })
     }
 
@@ -200,12 +235,18 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 editTextSearch.setText("")
                 val json = Gson().toJson(f)
                 registroViewModel.search.value = json
+
+                if (f.pageSize != 8) {
+                    registroViewModel.removeAll()
+                    fabEnvio.visibility = View.GONE
+                }
+
                 dialog.dismiss()
             }
         })
         recyclerView.adapter = estadoAdapter
 
-        registroViewModel.getEstados().observe(this, Observer { p ->
+        registroViewModel.getEstados().observe(this, { p ->
             if (p != null) {
                 estadoAdapter.addItems(p)
             }
@@ -217,13 +258,8 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
             .setTitle("Mensaje")
             .setMessage("Estas seguro de aceptar Ot ?")
             .setPositiveButton("SI") { dialog, _ ->
-//                Util.toastMensajeShort(context!!, "Actualizando Estado...")
-                registroViewModel.changeEstado(ot, 8)
+                registroViewModel.changeEstado(ot.otId, 8)
                 dialog.dismiss()
-//                Handler().postDelayed({
-//                    gOTActivity(6, ot, true)
-//                    dialog.dismiss()
-//                }, 600)
             }
             .setNegativeButton("NO") { dialog, _ ->
                 dialog.dismiss()
@@ -236,12 +272,45 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
             .setTitle("Mensaje")
             .setMessage("Deseas Aperturar Parte Diario ?")
             .setPositiveButton("SI") { dialog, _ ->
-                registroViewModel.changeEstado(ot, 9)
+                load()
+                registroViewModel.sendEstadoOt(ot, 9)
                 dialog.dismiss()
-//                Handler().postDelayed({
-//                    gOTActivity(6, ot, true)
-//                    dialog.dismiss()
-//                }, 600)
+            }
+            .setNegativeButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }
+        dialog.show()
+    }
+
+    private fun load() {
+        builder = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AppTheme))
+        @SuppressLint("InflateParams") val view =
+            LayoutInflater.from(context).inflate(R.layout.dialog_login, null)
+        builder.setView(view)
+        val textViewTitle: TextView = view.findViewById(R.id.textView)
+        textViewTitle.text = String.format("Actualizando..")
+        dialog = builder.create()
+        dialog!!.setCanceledOnTouchOutside(false)
+        dialog!!.setCancelable(false)
+        dialog!!.show()
+    }
+
+    private fun closeLoad() {
+        if (dialog != null) {
+            if (dialog!!.isShowing) {
+                dialog!!.dismiss()
+            }
+        }
+    }
+
+    private fun messageOtMasive() {
+        val dialog = MaterialAlertDialogBuilder(context!!)
+            .setTitle("Mensaje")
+            .setMessage("Deseas Aperturar Parte Diario los campos seleccionados ?")
+            .setPositiveButton("SI") { dialog, _ ->
+                load()
+                registroViewModel.changeMasiveEstado(9)
+                dialog.dismiss()
             }
             .setNegativeButton("NO") { dialog, _ ->
                 dialog.dismiss()

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/check"
+        android:title="Check"
+        android:checkable="true"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.CheckBox" />
+    <item
+        android:id="@+id/send"
+        android:icon="@drawable/ic_save"
+        android:title="Enviar"
+        app:showAsAction="ifRoom" />
+</menu>
