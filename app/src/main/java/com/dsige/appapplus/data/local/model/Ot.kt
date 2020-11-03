@@ -32,7 +32,8 @@ open class Ot {
     var supervisorId: Int = 0
     var nombreSupervisor: String = ""
 
-    var estadoParteDiario : Int = 0 // 1 -> guardado  // 2 -> enviado
+    var estadoParteDiario: Int = 0 // 1 -> guardado 2 -> enviado
+    var checkParteDiario: Int = 0 // 1-> activado  0 -> desactivado
 
     @Ignore
     var otCabecera: List<OtCabecera> = ArrayList()

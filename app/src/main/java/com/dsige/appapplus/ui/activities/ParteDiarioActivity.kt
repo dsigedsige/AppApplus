@@ -46,20 +46,17 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
     private var otId: Int = 0
     private var usuarioId: Int = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parte_diario)
         val b = intent.extras
         if (b != null) {
-
             p = ParteDiario()
-
-            bindUI(b.getInt("id"), b.getInt("usuarioId"), b.getInt("estadoId"))
+            bindUI(b.getInt("id"), b.getInt("usuarioId"))
         }
     }
 
-    private fun bindUI(id: Int, usu: Int, e: Int) {
+    private fun bindUI(id: Int, usu: Int) {
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
 
@@ -67,43 +64,46 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
         supportActionBar!!.title = "Parte Diario"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
-
         editTextTurno.setOnClickListener(this)
         editTextTrabajo.setOnClickListener(this)
         editTextHInicio.setOnClickListener(this)
         editTextHFin.setOnClickListener(this)
         fabGenerate.setOnClickListener(this)
-
         editTextFecha.setText(Util.getFechaDiaMas())
         otId = id
-        usuarioId= usu
+        usuarioId = usu
 
-        registroViewModel.getOtById(id).observe(this, Observer { t ->
-            if (t != null) {
-                textViewCodigo.text = t.nroOt
-                editTextDistrito.setText(t.distrito)
-            }
-        })
+        if (id != 0) {
+            registroViewModel.getOtById(id).observe(this, { t ->
+                if (t != null) {
+                    textViewCodigo.text = t.nroOt
+                    editTextDistrito.setText(t.distrito)
+                }
+            })
 
-        registroViewModel.getParteDiarioByOt(id).observe(this, Observer { t ->
-            if (t != null) {
-                p = t
-                editTextFecha.setText(t.fechaSalida)
-                editTextTurno.setText(t.turno)
-                editTextHInicio.setText(t.horaInicio)
-                editTextHFin.setText(t.horaFin)
-                editTextTrabajo.setText(t.nombreTrabajoProgramado)
-                editTextSed.setText(t.nroSed)
-            }
-        })
+            registroViewModel.getParteDiarioByOt(id).observe(this, { t ->
+                if (t != null) {
+                    p = t
+                    editTextFecha.setText(t.fechaSalida)
+                    editTextTurno.setText(t.turno)
+                    editTextHInicio.setText(t.horaInicio)
+                    editTextHFin.setText(t.horaFin)
+                    editTextTrabajo.setText(t.nombreTrabajoProgramado)
+                    editTextSed.setText(t.nroSed)
+                }
+            })
+        } else {
+            textViewCodigo.visibility = View.GONE
+            editTextDistrito.visibility = View.GONE
+        }
 
-        registroViewModel.error.observe(this, Observer { s ->
+        registroViewModel.error.observe(this, { s ->
             if (s != null) {
                 Util.toastMensaje(this, s)
             }
         })
 
-        registroViewModel.success.observe(this, Observer { s ->
+        registroViewModel.success.observe(this, { s ->
             if (s != null) {
                 Util.toastMensaje(this, s)
                 finish()
@@ -156,7 +156,7 @@ class ParteDiarioActivity : DaggerAppCompatActivity(), View.OnClickListener {
             }
         })
         recyclerView.adapter = grupoAdapter
-        registroViewModel.getGrupoById(tipo).observe(this, Observer { g ->
+        registroViewModel.getGrupoById(tipo).observe(this, { g ->
             if (g != null) {
                 grupoAdapter.addItems(g)
             }

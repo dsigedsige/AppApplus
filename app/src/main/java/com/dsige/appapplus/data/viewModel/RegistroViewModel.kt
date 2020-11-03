@@ -533,7 +533,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun changeEstado(id:Int, estado: Int) {
+    fun changeEstado(id: Int, estado: Int) {
         roomRepository.changeEstado(id, estado)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -555,26 +555,28 @@ internal constructor(private val roomRepository: AppRepository, private val retr
     }
 
     fun validateParteDiario(p: ParteDiario) {
-        roomRepository.findSed(p.nroSed)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<String> {
-                override fun onComplete() {
+//        roomRepository.findSed(p.nroSed)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object : Observer<String> {
+//                override fun onComplete() {
+//
+//                }
+//
+//                override fun onSubscribe(d: Disposable) {
+//
+//                }
+//
+//                override fun onNext(t: String) {
+//                    insertOrUpdateParteDiario(p)
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    mensajeError.value = e.message
+//                }
+//            })
 
-                }
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onNext(t: String) {
-                    insertOrUpdateParteDiario(p)
-                }
-
-                override fun onError(e: Throwable) {
-                    mensajeError.value = e.message
-                }
-            })
+        insertOrUpdateParteDiario(p)
     }
 
     private fun insertOrUpdateParteDiario(p: ParteDiario) {
@@ -587,7 +589,6 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                         mensajeSuccess.value = "Guardado"
                     else
                         mensajeSuccess.value = "Actualizado"
-
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -645,7 +646,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun changeMasiveEstado(estado:Int) {
+    fun changeMasiveEstado(estado: Int) {
         val data: Observable<List<Ot>> = Observable.create { e ->
             e.onNext(otsData.value!!)
             e.onComplete()
@@ -653,7 +654,9 @@ internal constructor(private val roomRepository: AppRepository, private val retr
         data.flatMap { observable ->
             Observable.fromIterable(observable).flatMap { a ->
                 Observable.zip(
-                    Observable.just(a), roomRepository.updateEstadoOt(a.otId,estado), { _, mensaje ->
+                    Observable.just(a),
+                    roomRepository.updateEstadoOt(a.otId, estado),
+                    { _, mensaje ->
                         mensaje
                     })
             }
@@ -687,6 +690,25 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
                 override fun onComplete() {
                     mensajeSuccess.value = "Datos Actualizados"
+                }
+            })
+    }
+
+    fun addOtParteDiario() {
+        roomRepository.addOtParteDiario(otsData.value!!)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    mensajeSuccess.value = "PD"
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+
                 }
             })
     }

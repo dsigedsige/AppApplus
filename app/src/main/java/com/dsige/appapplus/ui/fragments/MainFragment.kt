@@ -116,7 +116,6 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                     }
                     return
                 }
-
                 when (o.estadoId) {
                     6 -> if (o.active == 2) {
                         Util.toastMensaje(context!!, "OT reasignado")
@@ -126,7 +125,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                         popupMenu.menu.add(2, 2, 2, getText(R.string.notAcept))
                         popupMenu.setOnMenuItemClickListener { item ->
                             when (item.itemId) {
-                                1 -> messageOT(o)
+                                1 -> messageDialog(o, 8, "Estas seguro de aceptar Ot ?")
                                 2 -> gOTActivity(6, o, false)
                             }
                             false
@@ -138,7 +137,18 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                         popupMenu.menu.add(1, 1, 1, getText(R.string.aperturar))
                         popupMenu.setOnMenuItemClickListener { item ->
                             when (item.itemId) {
-                                1 -> messageParteDiario(o)
+                                1 -> messageDialog(o, 9, "Deseas Aperturar Parte Diario ?")
+                            }
+                            false
+                        }
+                        popupMenu.show()
+                    }
+                    9 -> {
+                        val popupMenu = PopupMenu(context!!, view)
+                        popupMenu.menu.add(1, 1, 1, getText(R.string.registrar))
+                        popupMenu.setOnMenuItemClickListener { item ->
+                            when (item.itemId) {
+                                1 -> gOTActivity(o.estadoId, o, false)
                             }
                             false
                         }
@@ -171,7 +181,15 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         registroViewModel.success.observe(viewLifecycleOwner, {
             registroViewModel.removeAll()
             closeLoad()
-            Util.toastMensaje(context!!, it)
+
+            if (it == "PD") {
+                startActivity(
+                    Intent(context, ParteDiarioActivity::class.java)
+                        .putExtra("id", 0)
+                        .putExtra("usuarioId", usuarioId)
+                )
+            } else
+                Util.toastMensaje(context!!, it)
         })
 
         registroViewModel.otsData.observe(viewLifecycleOwner, {
@@ -235,17 +253,12 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 editTextSearch.setText("")
                 val json = Gson().toJson(f)
                 registroViewModel.search.value = json
-
-                if (f.pageSize != 8) {
-                    registroViewModel.removeAll()
-                    fabEnvio.visibility = View.GONE
-                }
-
+                registroViewModel.removeAll()
+                fabEnvio.visibility = View.GONE
                 dialog.dismiss()
             }
         })
         recyclerView.adapter = estadoAdapter
-
         registroViewModel.getEstados().observe(this, { p ->
             if (p != null) {
                 estadoAdapter.addItems(p)
@@ -253,12 +266,17 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         })
     }
 
-    private fun messageOT(ot: Ot) {
+    /**
+     * ot = Ot
+     * e = estado
+     */
+    private fun messageDialog(ot: Ot, e: Int, title: String) {
         val dialog = MaterialAlertDialogBuilder(context!!)
             .setTitle("Mensaje")
-            .setMessage("Estas seguro de aceptar Ot ?")
+            .setMessage(title)
             .setPositiveButton("SI") { dialog, _ ->
-                registroViewModel.changeEstado(ot.otId, 8)
+                load()
+                registroViewModel.sendEstadoOt(ot, e)
                 dialog.dismiss()
             }
             .setNegativeButton("NO") { dialog, _ ->
@@ -306,10 +324,18 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
     private fun messageOtMasive() {
         val dialog = MaterialAlertDialogBuilder(context!!)
             .setTitle("Mensaje")
-            .setMessage("Deseas Aperturar Parte Diario los campos seleccionados ?")
+            .setMessage("Deseas actualizar los campos seleccionados ?")
             .setPositiveButton("SI") { dialog, _ ->
-                load()
-                registroViewModel.changeMasiveEstado(9)
+                if (f.pageSize != 9) {
+                    load()
+                    when (f.pageSize) {
+                        6 -> registroViewModel.changeMasiveEstado(8)
+                        8 -> registroViewModel.changeMasiveEstado(9)
+//                        9 -> registroViewModel.changeMasiveEstado(15)
+                    }
+                } else {
+                    registroViewModel.addOtParteDiario()
+                }
                 dialog.dismiss()
             }
             .setNegativeButton("NO") { dialog, _ ->

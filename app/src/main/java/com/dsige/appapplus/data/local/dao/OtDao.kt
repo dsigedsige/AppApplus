@@ -36,10 +36,10 @@ interface OtDao {
     fun getOtByTipoPaging(id: Int): DataSource.Factory<Int, Ot>
 
     @Query("SELECT * FROM Ot WHERE estadoId =:id AND nroOt LIKE :s")
-    fun getOtByTipoPaging(id: Int,s:String): DataSource.Factory<Int, Ot>
+    fun getOtByTipoPaging(id: Int, s: String): DataSource.Factory<Int, Ot>
 
     @Query("SELECT * FROM Ot WHERE estadoId != 8 AND nroOt LIKE :s")
-    fun getOtByTipoPaging(s:String): DataSource.Factory<Int, Ot>
+    fun getOtByTipoPaging(s: String): DataSource.Factory<Int, Ot>
 
     @Query("SELECT * FROM Ot WHERE active =:i")
     fun getOtReasignacion(i: Int): List<Ot>
@@ -51,8 +51,19 @@ interface OtDao {
     fun updateOtById(id: Int)
 
     @Query("UPDATE Ot SET estadoId =:e WHERE otId =:id")
-    fun changeEstado(id: Int,e:Int)
+    fun changeEstado(id: Int, e: Int)
 
     @Query("UPDATE Ot SET estadoParteDiario = 1 WHERE otId =:id")
     fun updateEstadoOt(id: Int)
+
+    @Query("UPDATE Ot SET checkParteDiario = 1 WHERE otId =:id")
+    fun updateOtParteDiario(id: Int)
+
+    @Query("UPDATE Ot SET checkParteDiario = 0")
+    fun disabledOtParteDiario()
+
+    @Query("SELECt * FROM  Ot WHERE checkParteDiario = 1")
+    fun getCheckOtParteDiario(): List<Ot>
+
+
 }

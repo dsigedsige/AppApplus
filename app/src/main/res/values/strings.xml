@@ -134,4 +134,6 @@
     <string name="description_version">AppApplus requiere de una nueva actualización</string>
     <string name="wait_download">Espere mientras termina la descargar !</string>
     <string name="aperturar">Aperturar Parte Diario</string>
+    <string name="aprobacion">Pendiente de aprobación de parte diario</string>
+    <string name="registrar">Registrar</string>
 </resources>

@@ -484,12 +484,20 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
     override fun insertOrUpdateParteDiario(p: ParteDiario): Completable {
         return Completable.fromAction {
 
-            dataBase.otDao().updateEstadoOt(p.otId)
-
-            if (p.parteDiarioId == 0)
-                dataBase.parteDiarioDao().insertParteDiarioTask(p)
-            else
-                dataBase.parteDiarioDao().updateParteDiarioTask(p)
+            if (p.otId == 0) {
+                val ots = dataBase.otDao().getCheckOtParteDiario()
+                for (o: Ot in ots) {
+                    dataBase.otDao().updateEstadoOt(o.otId)
+                    p.otId = o.otId
+                    dataBase.parteDiarioDao().insertParteDiarioTask(p)
+                }
+                dataBase.otDao().disabledOtParteDiario()
+            } else {
+                if (p.parteDiarioId == 0)
+                    dataBase.parteDiarioDao().insertParteDiarioTask(p)
+                else
+                    dataBase.parteDiarioDao().updateParteDiarioTask(p)
+            }
         }
     }
 
@@ -532,5 +540,12 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         return apiService.saveMovil(body)
     }
 
+    override fun addOtParteDiario(o: List<Ot>): Completable {
+        return Completable.fromAction {
+            for (t: Ot in o) {
+                dataBase.otDao().updateOtParteDiario(t.otId)
+            }
+        }
+    }
 
 }
