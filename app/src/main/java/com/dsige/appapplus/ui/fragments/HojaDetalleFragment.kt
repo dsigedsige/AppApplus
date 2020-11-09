@@ -38,10 +38,8 @@ class HojaDetalleFragment : DaggerFragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         oHoja123 = OtHoja123()
         oHoja567 = OtHoja56()
-
         arguments?.let {
             formatoId = it.getInt(ARG_PARAM1)
             item = it.getInt(ARG_PARAM2)

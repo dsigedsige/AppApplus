@@ -95,8 +95,13 @@ class DataBaseModule {
     }
 
     @Provides
-    internal fun provideEstadoDao(appDataBase: AppDataBase): EstadoDao {
-        return appDataBase.estadoDao()
+    internal fun provideEstadoTrabajoDao(appDataBase: AppDataBase): EstadoTrabajoDao {
+        return appDataBase.estadoTrabajoDao()
+    }
+
+    @Provides
+    internal fun provideEstadoPosteDao(appDataBase: AppDataBase): EstadoPosteDao {
+        return appDataBase.estadoPosteDao()
     }
 
     @Provides
@@ -117,5 +122,10 @@ class DataBaseModule {
     @Provides
     internal fun provideSupervisorDao(appDataBase: AppDataBase): SupervisorDao {
         return appDataBase.supervisorDao()
+    }
+
+    @Provides
+    internal fun provideInspeccioPosteDao(appDataBase: AppDataBase): InspeccionPosteDao {
+        return appDataBase.inspeccionPosteDao()
     }
 }

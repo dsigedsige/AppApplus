@@ -55,9 +55,7 @@ class BMT2Fragment : DaggerFragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         d = OtDetalle()
-
         arguments?.let {
             formatoId = it.getInt(ARG_PARAM1)
             codigo = it.getString(ARG_PARAM2)!!

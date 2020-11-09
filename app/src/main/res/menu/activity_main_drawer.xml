@@ -8,11 +8,14 @@
             android:id="@+id/sync"
             android:icon="@drawable/ic_sync"
             android:title="Sincronizar" />
-
         <item
             android:id="@+id/orden"
             android:icon="@drawable/ic_sync"
             android:title="Ordenes de Trabajo" />
+        <item
+            android:id="@+id/poste"
+            android:icon="@drawable/ic_sync"
+            android:title="Postes Asignado al Trabajador" />
         <item
             android:id="@+id/envio"
             android:icon="@drawable/ic_menu_send"

@@ -30,4 +30,8 @@ open class Filtro {
         this.pageIndex = pageIndex
         this.pageSize = pageSize
     }
+
+    constructor(pageSize: Int) {
+        this.pageSize = pageSize
+    }
 }

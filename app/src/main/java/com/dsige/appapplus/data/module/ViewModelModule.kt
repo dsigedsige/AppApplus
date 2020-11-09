@@ -37,5 +37,10 @@ abstract class ViewModelModule {
     internal abstract fun bindHojaViewModel(hojaViewModel: HojaViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(InspeccionViewModel::class)
+    internal abstract fun bindInspeccioonViewModel(inspeccionViewModel: InspeccionViewModel): ViewModel
+
+    @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

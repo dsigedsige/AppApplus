@@ -81,7 +81,7 @@ interface AppRepository {
     fun getEquipoDetalle(tipo: Int, formatoId: Int): LiveData<OtEquipo>
 
     fun findSed(sed: String): Observable<String>
-    fun getEstados(): LiveData<List<Estado>>
+    fun getEstados(): LiveData<List<EstadoTrabajo>>
 
     fun getPhotoById(id: Int): LiveData<List<OtPhoto>>
     fun insertOrUpdatePhoto(o: OtPhoto): Completable
@@ -107,4 +107,9 @@ interface AppRepository {
     fun saveMovil(body: RequestBody): Call<Mensaje>
 
     fun addOtParteDiario(o: List<Ot>) : Completable
+
+    fun getInspecciones(): LiveData<List<InspeccionPoste>>
+    fun getInspecciones(e:Int): LiveData<List<InspeccionPoste>>
+    fun getEstadoPostes(): LiveData<List<EstadoPoste>>
+    fun getInspeccionById(id: Int): LiveData<InspeccionPoste>
 }

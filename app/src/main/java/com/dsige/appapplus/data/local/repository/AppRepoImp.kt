@@ -47,7 +47,8 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun deleteUsuario(): Completable {
         return Completable.fromAction {
-            dataBase.estadoDao().deleteAll()
+            dataBase.estadoTrabajoDao().deleteAll()
+            dataBase.estadoPosteDao().deleteAll()
             dataBase.formatoDao().deleteAll()
             dataBase.grupoDao().deleteAll()
             dataBase.otCabeceraDao().deleteAll()
@@ -109,9 +110,13 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 dataBase.sedDao().insertSedListTask(l)
             }
 
-            val es: List<Estado>? = s.estados
+            val es: List<EstadoTrabajo>? = s.estadoTrabajo
             if (es != null) {
-                dataBase.estadoDao().insertEstadoListTask(es)
+                dataBase.estadoTrabajoDao().insertEstadoListTask(es)
+            }
+            val es2: List<EstadoPoste>? = s.estadoPoste
+            if (es2 != null) {
+                dataBase.estadoPosteDao().insertEstadoListTask(es2)
             }
 
             val ca: List<Cadista>? = s.cadistas
@@ -127,6 +132,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             val su: List<Supervisor>? = s.supervisores
             if (su != null) {
                 dataBase.supervisorDao().insertSupervisorListTask(su)
+            }
+
+            val a1: List<InspeccionPoste>? = s.otsPostes
+            if (a1 != null) {
+                dataBase.inspeccionPosteDao().insertInspeccionPosteListTask(a1)
             }
         }
     }
@@ -411,8 +421,8 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         }
     }
 
-    override fun getEstados(): LiveData<List<Estado>> {
-        return dataBase.estadoDao().getEstados()
+    override fun getEstados(): LiveData<List<EstadoTrabajo>> {
+        return dataBase.estadoTrabajoDao().getEstados()
     }
 
     override fun getPhotoById(id: Int): LiveData<List<OtPhoto>> {
@@ -548,4 +558,19 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         }
     }
 
+    override fun getInspecciones(): LiveData<List<InspeccionPoste>> {
+        return dataBase.inspeccionPosteDao().getInspeccionPoste()
+    }
+
+    override fun getInspecciones(e: Int): LiveData<List<InspeccionPoste>> {
+        return dataBase.inspeccionPosteDao().getInspeccionPoste(e)
+    }
+
+    override fun getEstadoPostes(): LiveData<List<EstadoPoste>> {
+        return dataBase.estadoPosteDao().getEstados()
+    }
+
+    override fun getInspeccionById(id: Int): LiveData<InspeccionPoste> {
+        return dataBase.inspeccionPosteDao().getInspeccionById(id)
+    }
 }

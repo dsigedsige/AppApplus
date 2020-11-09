@@ -29,6 +29,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
+        <activity android:name=".ui.activities.FormPosteActivity"></activity>
+        <activity android:name=".ui.activities.RegistroInspeccionActivity" />
 
         <receiver
             android:name=".ui.broadcasts.GpsReceiver"
@@ -80,4 +82,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

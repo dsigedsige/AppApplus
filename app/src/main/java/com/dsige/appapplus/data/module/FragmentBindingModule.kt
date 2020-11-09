@@ -19,6 +19,9 @@ abstract class FragmentBindingModule {
     abstract class Main {
         @ContributesAndroidInjector
         internal abstract fun providMainFragment(): MainFragment
+
+        @ContributesAndroidInjector
+        internal abstract fun providInspeccionPosteFragment(): InspeccionPosteFragment
     }
 
 
@@ -65,5 +68,27 @@ abstract class FragmentBindingModule {
     abstract class Camera {
         @ContributesAndroidInjector
         internal abstract fun providCameraFragment(): CameraFragment
+    }
+
+    @Module
+    abstract class Poste {
+        @ContributesAndroidInjector
+        internal abstract fun providPoste1Fragment(): Poste1Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste2Fragment(): Poste2Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste3Fragment(): Poste3Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste4Fragment(): Poste4Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste5Fragment(): Poste5Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste6Fragment(): Poste6Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste7Fragment(): Poste7Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste8Fragment(): Poste8Fragment
+        @ContributesAndroidInjector
+        internal abstract fun providPoste9Fragment(): Poste9Fragment
     }
 }

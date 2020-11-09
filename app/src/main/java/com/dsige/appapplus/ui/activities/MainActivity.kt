@@ -32,6 +32,7 @@ import com.dsige.appapplus.data.viewModel.UsuarioViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
 import com.dsige.appapplus.helper.Permission
 import com.dsige.appapplus.helper.Util
+import com.dsige.appapplus.ui.fragments.InspeccionPosteFragment
 import com.dsige.appapplus.ui.fragments.MainFragment
 import com.dsige.appapplus.ui.services.SocketServices
 import com.google.android.material.button.MaterialButton
@@ -132,6 +133,10 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.orden -> changeFragment(
                 MainFragment.newInstance(1, usuarioId),
                 "Ordenes de Trabajo"
+            )
+            R.id.poste -> changeFragment(
+                InspeccionPosteFragment.newInstance(1, usuarioId),
+                "Postes Asignado al Trabajador"
             )
             R.id.logout -> dialogLogout()
             R.id.envio -> sendTrabajos(1)
@@ -255,7 +260,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                     1 -> usuarioViewModel.sendTrabajo(this)
                     2 -> usuarioViewModel.sendReasignaciones()
                     3 -> usuarioViewModel.sendParteDiarios()
-                    4 -> usuarioViewModel.sync(usuarioId,Util.getVersion(this))
+                    4 -> usuarioViewModel.sync(usuarioId, Util.getVersion(this))
                 }
                 dialog.dismiss()
             }

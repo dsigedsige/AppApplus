@@ -21,14 +21,16 @@ import com.dsige.appapplus.data.local.model.*
         OtHoja4::class,
         OtHoja56::class,
         Sed::class,
-        Estado::class,
+        EstadoTrabajo::class,
+        EstadoPoste::class,
         OtPhoto::class,
         Cadista::class,
         PuestoTierra::class,
         ParteDiario::class,
-        Supervisor::class
+        Supervisor::class,
+        InspeccionPoste::class
     ],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -46,11 +48,13 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun otHoja56Dao(): OtHoja56Dao
     abstract fun otPhotoDao(): OtPhotoDao
     abstract fun sedDao(): SedDao
-    abstract fun estadoDao(): EstadoDao
+    abstract fun estadoTrabajoDao(): EstadoTrabajoDao
+    abstract fun estadoPosteDao(): EstadoPosteDao
     abstract fun cadistaDao(): CadistaDao
     abstract fun puestoTierraDao(): PuestoTierraDao
     abstract fun parteDiarioDao(): ParteDiarioDao
     abstract fun supervisorDao(): SupervisorDao
+    abstract fun inspeccionPosteDao(): InspeccionPosteDao
 
     companion object {
         @Volatile

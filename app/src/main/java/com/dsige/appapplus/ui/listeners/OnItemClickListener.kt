@@ -40,7 +40,7 @@ interface OnItemClickListener {
     }
 
     interface EstadoListener {
-        fun onItemClick(e: Estado, view: View, position: Int)
+        fun onItemClick(e: EstadoTrabajo, view: View, position: Int)
     }
 
     interface OtPhotoListener {
@@ -57,5 +57,13 @@ interface OnItemClickListener {
 
     interface SupervisorListener {
         fun onItemClick(s: Supervisor, view: View, position: Int)
+    }
+
+    interface InspeccionListener {
+        fun onItemClick(i: InspeccionPoste, view: View, position: Int)
+    }
+
+    interface EstadoPosteListener {
+        fun onItemClick(e: EstadoPoste, view: View, position: Int)
     }
 }

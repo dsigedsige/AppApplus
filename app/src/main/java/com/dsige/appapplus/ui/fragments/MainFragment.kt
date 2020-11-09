@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.dsige.appapplus.R
-import com.dsige.appapplus.data.local.model.Estado
+import com.dsige.appapplus.data.local.model.EstadoTrabajo
 import com.dsige.appapplus.data.local.model.Filtro
 import com.dsige.appapplus.data.local.model.Ot
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
@@ -37,21 +37,6 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorActionListener {
-
-//    override fun onPrepareOptionsMenu(menu: Menu) {
-//        super.onPrepareOptionsMenu(menu)
-//        topMenu = menu
-//    }
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.check -> {            }
-//            R.id.send -> {            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     override fun onEditorAction(v: TextView, p1: Int, p2: KeyEvent?): Boolean {
         if (v.text.isNotEmpty()) {
@@ -82,7 +67,6 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         f = Filtro()
-
         arguments?.let {
             tipo = it.getInt(ARG_PARAM1)
             usuarioId = it.getInt(ARG_PARAM2)
@@ -246,7 +230,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         textViewTitulo.text = String.format("Tipo de Estado")
 
         val estadoAdapter = EstadoAdapter(object : OnItemClickListener.EstadoListener {
-            override fun onItemClick(e: Estado, view: View, position: Int) {
+            override fun onItemClick(e: EstadoTrabajo, view: View, position: Int) {
                 editTextEstado.setText(e.descripcion)
                 f.pageSize = e.estadoId
                 f.search = ""

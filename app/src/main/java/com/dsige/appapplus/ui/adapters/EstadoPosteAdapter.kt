@@ -5,23 +5,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
-import com.dsige.appapplus.data.local.model.EstadoTrabajo
+import com.dsige.appapplus.data.local.model.EstadoPoste
 
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import kotlinx.android.synthetic.main.cardview_combo.view.*
 
-class EstadoAdapter(var listener: OnItemClickListener.EstadoListener) :
-        RecyclerView.Adapter<EstadoAdapter.ViewHolder>() {
+class EstadoPosteAdapter(var listener: OnItemClickListener.EstadoPosteListener) :
+    RecyclerView.Adapter<EstadoPosteAdapter.ViewHolder>() {
 
-    private var menus = emptyList<EstadoTrabajo>()
+    private var menus = emptyList<EstadoPoste>()
 
-    fun addItems(list: List<EstadoTrabajo>) {
+    fun addItems(list: List<EstadoPoste>) {
         menus = list
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview_combo, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.cardview_combo, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,9 +35,10 @@ class EstadoAdapter(var listener: OnItemClickListener.EstadoListener) :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(m: EstadoTrabajo, listener: OnItemClickListener.EstadoListener) = with(itemView) {
-            textViewNombre.text = m.descripcion
-            itemView.setOnClickListener { v -> listener.onItemClick(m, v, adapterPosition) }
-        }
+        fun bind(m: EstadoPoste, listener: OnItemClickListener.EstadoPosteListener) =
+            with(itemView) {
+                textViewNombre.text = m.descripcion
+                itemView.setOnClickListener { v -> listener.onItemClick(m, v, adapterPosition) }
+            }
     }
 }

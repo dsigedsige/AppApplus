@@ -461,7 +461,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun getEstados(): LiveData<List<Estado>> {
+    fun getEstados(): LiveData<List<EstadoTrabajo>> {
         return roomRepository.getEstados()
     }
 

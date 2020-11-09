@@ -34,9 +34,7 @@ class EquipoDetalleFragment : DaggerFragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         e = OtEquipo()
-
         arguments?.let {
             tipo = it.getInt(ARG_PARAM1)
             formatoId = it.getInt(ARG_PARAM2)

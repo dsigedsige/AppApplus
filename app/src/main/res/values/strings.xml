@@ -136,4 +136,13 @@
     <string name="aperturar">Aperturar Parte Diario</string>
     <string name="aprobacion">Pendiente de aprobación de parte diario</string>
     <string name="registrar">Registrar</string>
+    <string name="value1">Información de vano MT</string>
+    <string name="value2">Información Conductor MT</string>
+    <string name="value3">Información de vano BT</string>
+    <string name="valu4">Información de cables Telecomur</string>
+    <string name="value5">Información de cables BT existentes</string>
+    <string name="value6">"Información de retenida BT"</string>
+    <string name="value7">"Equipos existentes"</string>
+    <string name="value8">"Informacion adicional y de Cable"</string>
+    <string name="value9">"Observaciones y Resultado de Factibilidad"</string>
 </resources>
