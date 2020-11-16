@@ -69,4 +69,7 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [FragmentBindingModule.Poste::class])
     internal abstract fun bindFormPosteActivity(): FormPosteActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun bindPhotoInspeccionesActivity(): PhotoInspeccionesActivity
 }

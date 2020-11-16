@@ -29,7 +29,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".ui.activities.FormPosteActivity"></activity>
+        <activity android:name=".ui.activities.PhotoInspeccionesActivity" />
+        <activity android:name=".ui.activities.FormPosteActivity" />
         <activity android:name=".ui.activities.RegistroInspeccionActivity" />
 
         <receiver

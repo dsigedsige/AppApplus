@@ -29,6 +29,7 @@ import kotlin.math.sqrt
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM3 = "param3"
 
 class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
 
@@ -321,12 +322,14 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
     private var formatoId: Int = 0
     private var usuarioId: Int = 0
     private var nameImg: String = ""
+    private var tipo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             formatoId = it.getInt(ARG_PARAM1)
             usuarioId = it.getInt(ARG_PARAM2)
+            tipo = it.getInt(ARG_PARAM3)
         }
     }
 
@@ -731,6 +734,7 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
                                 .putExtra("usuarioId", usuarioId)
                                 .putExtra("nameImg", nameImg)
                                 .putExtra("galery", false)
+                                .putExtra("tipo", tipo)
                         )
                         activity!!.finish()
                     }, 500)
@@ -914,11 +918,12 @@ class CameraFragment : Fragment(), View.OnClickListener, View.OnTouchListener {
         }
 
         @JvmStatic
-        fun newInstance(param1: Int, param2: Int) =
+        fun newInstance(param1: Int, param2: Int,param3: Int) =
             CameraFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, param1)
                     putInt(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM3, param3)
                 }
             }
     }

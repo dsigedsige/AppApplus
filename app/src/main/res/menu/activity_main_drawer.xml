@@ -28,6 +28,10 @@
             android:id="@+id/envioPD"
             android:icon="@drawable/ic_menu_send"
             android:title="Envio Parte Diario" />
+        <item
+            android:id="@+id/envioInspecciones"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Envio Poste Asignado" />
     </group>
 
     <item android:title="">

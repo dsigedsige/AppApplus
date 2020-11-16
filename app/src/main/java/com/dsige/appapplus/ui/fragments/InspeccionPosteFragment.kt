@@ -3,6 +3,7 @@ package com.dsige.appapplus.ui.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -87,6 +88,7 @@ class InspeccionPosteFragment : DaggerFragment(), View.OnClickListener {
                         else -> startActivity(
                             Intent(context, RegistroInspeccionActivity::class.java)
                                 .putExtra("id", i.inspeccionCampoId)
+                                .putExtra("usuarioId", usuarioId)
                         )
                     }
                 }
@@ -96,9 +98,11 @@ class InspeccionPosteFragment : DaggerFragment(), View.OnClickListener {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = inspeccionAdapter
 
-        inspeccionViewModel.getInspecciones().observe(viewLifecycleOwner, {
-            inspeccionAdapter.addItems(it)
-        })
+        Handler().postDelayed({
+            inspeccionViewModel.getInspecciones().observe(viewLifecycleOwner, {
+                inspeccionAdapter.addItems(it)
+            })
+        }, 500)
         inspeccionViewModel.search.value = Gson().toJson(f)
         editTextEstado.setText("Asignado")
         editTextEstado.setOnClickListener(this)

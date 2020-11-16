@@ -142,6 +142,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.envio -> sendTrabajos(1)
             R.id.enviOT -> sendTrabajos(2)
             R.id.envioPD -> sendTrabajos(3)
+            R.id.envioInspecciones -> sendTrabajos(5)
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -207,7 +208,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     private fun message() {
-        usuarioViewModel.success.observe(this, Observer { s ->
+        usuarioViewModel.success.observe(this, { s ->
             if (s != null) {
                 closeLoad()
                 if (s == "Close") {
@@ -234,7 +235,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             .setPositiveButton("SI") { dialog, _ ->
                 logout = "on"
                 load("Cerrando Session")
-                usuarioViewModel.logout()
+                usuarioViewModel.logout(this)
                 dialog.dismiss()
             }
             .setNegativeButton("NO") { dialog, _ ->
@@ -251,7 +252,8 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                     1 -> "Deseas Enviar los Trabajos Pendientes ?"
                     2 -> "Deseas Enviar las reasignaciones Pendientes ?"
                     3 -> "Deseas Enviar los Parte Diarios ?"
-                    else -> "Deseas Sincronizar ?"
+                    4 -> "Deseas Sincronizar ?"
+                    else -> "Deseas Enviar los Inspecciones ?"
                 }
             )
             .setPositiveButton("SI") { dialog, _ ->
@@ -261,6 +263,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                     2 -> usuarioViewModel.sendReasignaciones()
                     3 -> usuarioViewModel.sendParteDiarios()
                     4 -> usuarioViewModel.sync(usuarioId, Util.getVersion(this))
+                    5 -> usuarioViewModel.sendInspeccion(this)
                 }
                 dialog.dismiss()
             }

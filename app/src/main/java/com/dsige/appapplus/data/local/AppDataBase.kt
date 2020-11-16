@@ -28,9 +28,13 @@ import com.dsige.appapplus.data.local.model.*
         PuestoTierra::class,
         ParteDiario::class,
         Supervisor::class,
-        InspeccionPoste::class
+        InspeccionPoste::class,
+        InspeccionConductor::class,
+        InspeccionCable::class,
+        InspeccionEquipo::class,
+        InspeccionPhoto::class
     ],
-    version = 3,
+    version = 8,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -55,6 +59,10 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun parteDiarioDao(): ParteDiarioDao
     abstract fun supervisorDao(): SupervisorDao
     abstract fun inspeccionPosteDao(): InspeccionPosteDao
+    abstract fun inspeccionConductorDao(): InspeccionConductorDao
+    abstract fun inspeccionCableDao(): InspeccionCableDao
+    abstract fun inspeccionEquipoDao(): InspeccionEquipoDao
+    abstract fun inspeccionPhotoDao(): InspeccionPhotoDao
 
     companion object {
         @Volatile

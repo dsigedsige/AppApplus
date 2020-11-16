@@ -47,5 +47,11 @@
             android:title="@string/value9"
             android:orderInCategory="9"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/fab10"
+            android:title="Agregar Fotos"
+            android:orderInCategory="10"
+            app:showAsAction="never" />
     </group>
 </menu>

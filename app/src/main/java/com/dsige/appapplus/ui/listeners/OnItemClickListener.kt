@@ -63,6 +63,10 @@ interface OnItemClickListener {
         fun onItemClick(i: InspeccionPoste, view: View, position: Int)
     }
 
+    interface InspeccionPhotoListener {
+        fun onItemClick(i: InspeccionPhoto, view: View, position: Int)
+    }
+
     interface EstadoPosteListener {
         fun onItemClick(e: EstadoPoste, view: View, position: Int)
     }

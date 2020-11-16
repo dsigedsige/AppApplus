@@ -1,5 +1,6 @@
 package com.dsige.appapplus.data.local.repository
 
+import android.content.Context
 import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -45,7 +46,7 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
         }
     }
 
-    override fun deleteUsuario(): Completable {
+    override fun deleteUsuario(context: Context): Completable {
         return Completable.fromAction {
             dataBase.estadoTrabajoDao().deleteAll()
             dataBase.estadoPosteDao().deleteAll()
@@ -67,15 +68,13 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             dataBase.parteDiarioDao().deleteAll()
             dataBase.supervisorDao().deleteAll()
             dataBase.cadistaDao().deleteAll()
-        }
-    }
 
-    override fun deleteTotal(): Completable {
-        return Completable.fromAction {
-            Util.deleteDirectory(
-                File(Environment.getExternalStorageDirectory(), Util.Folder)
-            )
-
+            dataBase.inspeccionPosteDao().deleteAll()
+            dataBase.inspeccionEquipoDao().deleteAll()
+            dataBase.inspeccionConductorDao().deleteAll()
+            dataBase.inspeccionCableDao().deleteAll()
+            dataBase.inspeccionPhotoDao().deleteAll()
+            Util.deleteDirectory(Util.getFolder(context))
         }
     }
 
@@ -572,5 +571,151 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun getInspeccionById(id: Int): LiveData<InspeccionPoste> {
         return dataBase.inspeccionPosteDao().getInspeccionById(id)
+    }
+
+    override fun insertInspeccionPoste(p: InspeccionPoste): Completable {
+        return Completable.fromAction {
+            val i: InspeccionPoste? =
+                dataBase.inspeccionPosteDao().getInspeccionByIdTask(p.inspeccionCampoId)
+            if (i != null) {
+                dataBase.inspeccionPosteDao().updateInspeccionPosteTask(p)
+            }
+        }
+    }
+
+    override fun getInspeccionConductorById(inspeccionId: Int): LiveData<InspeccionConductor> {
+        return dataBase.inspeccionConductorDao().getInspeccionConductorById(inspeccionId)
+    }
+
+    override fun insertInspeccionConductor(p: InspeccionConductor): Completable {
+        return Completable.fromAction {
+            val i: InspeccionConductor? =
+                dataBase.inspeccionConductorDao().getInspeccionByIdTask(p.inspeccionCampoId)
+            if (i != null) {
+                dataBase.inspeccionConductorDao().updateInspeccionConductorTask(p)
+            } else {
+                dataBase.inspeccionConductorDao().insertInspeccionConductorTask(p)
+            }
+        }
+    }
+
+    override fun getInspeccionCableById(inspeccionId: Int): LiveData<InspeccionCable> {
+        return dataBase.inspeccionCableDao().getInspeccionCableById(inspeccionId)
+    }
+
+    override fun insertInspeccionCable(p: InspeccionCable): Completable {
+        return Completable.fromAction {
+            val i: InspeccionCable? =
+                dataBase.inspeccionCableDao().getInspeccionByIdTask(p.inspeccionCampoId)
+            if (i != null) {
+                dataBase.inspeccionCableDao().updateInspeccionCableTask(p)
+            } else {
+                dataBase.inspeccionCableDao().insertInspeccionCableTask(p)
+            }
+        }
+    }
+
+    override fun getInspeccionEquipoById(inspeccionId: Int): LiveData<InspeccionEquipo> {
+        return dataBase.inspeccionEquipoDao().getInspeccionEquipoById(inspeccionId)
+    }
+
+    override fun insertInspeccionEquipo(p: InspeccionEquipo): Completable {
+        return Completable.fromAction {
+            val i: InspeccionEquipo? =
+                dataBase.inspeccionEquipoDao().getInspeccionByIdTask(p.inspeccionCampoId)
+            if (i != null) {
+                dataBase.inspeccionEquipoDao().updateInspeccionEquipoTask(p)
+            } else {
+                dataBase.inspeccionEquipoDao().insertInspeccionEquipoTask(p)
+            }
+        }
+    }
+
+    override fun getInspeccionesTask(): Observable<List<InspeccionPoste>> {
+        return Observable.create { e ->
+            val data: ArrayList<InspeccionPoste> = ArrayList()
+            val ot = dataBase.inspeccionPosteDao().getInspeccionesTask(1)
+            if (ot.isEmpty()) {
+                e.onError(Throwable("Usted no tiene pendientes por enviar"))
+                e.onComplete()
+                return@create
+            }
+            for (p: InspeccionPoste in ot) {
+                p.cable = dataBase.inspeccionCableDao().getInspeccionByIdTask(p.inspeccionCampoId)
+                p.conductor =
+                    dataBase.inspeccionConductorDao().getInspeccionByIdTask(p.inspeccionCampoId)
+                p.equipo = dataBase.inspeccionEquipoDao().getInspeccionByIdTask(p.inspeccionCampoId)
+
+                p.photos =
+                    dataBase.inspeccionPhotoDao().getInspeccionPhotoByIdTask(p.inspeccionCampoId)
+
+                data.add(p)
+            }
+            e.onNext(data)
+            e.onComplete()
+        }
+    }
+
+    override fun getInspeccionPhotoById(id: Int): LiveData<List<InspeccionPhoto>> {
+        return dataBase.inspeccionPhotoDao().getInspeccionPhotoById(id)
+    }
+
+    override fun deleteInspeccionPhoto(o: InspeccionPhoto, context: Context): Completable {
+        return Completable.fromAction {
+            Util.deleteImage(o.fotoUrl, context)
+            dataBase.inspeccionPhotoDao().deleteInspeccionPhotoTask(o)
+        }
+    }
+
+    override fun insertInspeccionPhoto(o: InspeccionPhoto): Completable {
+        return Completable.fromAction {
+            val p: InspeccionPhoto? =
+                dataBase.inspeccionPhotoDao().getInspeccionByUrlTask(o.fotoUrl)
+            if (p == null) {
+                dataBase.inspeccionPhotoDao().insertInspeccionPhotoTask(o)
+            }
+        }
+    }
+
+    override fun getInspeccionesPhotoTask(): Observable<List<InspeccionPhoto>> {
+        return Observable.create { e ->
+            val data: ArrayList<InspeccionPhoto> = ArrayList()
+            val ot = dataBase.inspeccionPosteDao().getInspeccionesTask(1)
+            if (ot.isEmpty()) {
+                e.onError(Throwable("Usted no tiene pendientes por enviar"))
+                e.onComplete()
+                return@create
+            }
+            for (p: InspeccionPoste in ot) {
+                val photos: List<InspeccionPhoto>? =
+                    dataBase.inspeccionPhotoDao().getInspeccionPhotoByIdTask(p.inspeccionCampoId)
+                if (photos != null) {
+                    for (f: InspeccionPhoto in photos) {
+                        data.add(f)
+                    }
+                }
+            }
+            e.onNext(data)
+            e.onComplete()
+        }
+    }
+
+    override fun sendInspeccionPhotos(body: RequestBody): Observable<String> {
+        return apiService.sendInspeccionPhotos(body)
+    }
+
+    override fun sendInspecciones(body: RequestBody): Observable<Mensaje> {
+        return apiService.sendInspecciones(body)
+    }
+
+    override fun updateInspeccion(m: Mensaje): Completable {
+        return Completable.fromAction {
+            dataBase.inspeccionPosteDao().updateEnabledInspeccion(m.codigoBase)
+            dataBase.inspeccionCableDao().updateEnabledCable(m.codigoBase, m.codigoRetornoCable)
+            dataBase.inspeccionConductorDao()
+                .updateEnabledConductor(m.codigoBase, m.codigoRetornoConductor)
+            dataBase.inspeccionEquipoDao().updateEnabledEquipo(m.codigoBase, m.codigoRetornoEquipo)
+            dataBase.inspeccionPhotoDao().updateEnabledPhoto(m.codigoBase)
+        }
     }
 }

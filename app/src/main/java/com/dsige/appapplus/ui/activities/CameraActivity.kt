@@ -17,7 +17,8 @@ class CameraActivity : DaggerAppCompatActivity() {
                     R.id.container,
                     CameraFragment.newInstance(
                         b.getInt("formatoId"),
-                        b.getInt("usuarioId")
+                        b.getInt("usuarioId"),
+                        b.getInt("tipo")
                     )
                 )
                 .commit()

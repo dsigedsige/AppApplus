@@ -154,7 +154,7 @@ class Hoja56Activity : DaggerAppCompatActivity(), View.OnClickListener {
             }
         })
         recyclerView.adapter = grupoAdapter
-        hojaViewModel.getGrupoById(8).observe(this, Observer { g ->
+        hojaViewModel.getGrupoById(8).observe(this, { g ->
             if (g != null) {
                 grupoAdapter.addItems(g)
             }

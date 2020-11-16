@@ -1,5 +1,6 @@
 package com.dsige.appapplus.data.local.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.dsige.appapplus.data.local.model.*
@@ -18,9 +19,8 @@ interface AppRepository {
     ): Observable<Usuario>
 
     fun insertUsuario(u: Usuario): Completable
-    fun deleteUsuario(): Completable
+    fun deleteUsuario(context: Context): Completable
 
-    fun deleteTotal(): Completable
     fun getSync(id: Int, version: String): Observable<Sync>
     fun saveSync(s: Sync): Completable
 
@@ -106,10 +106,32 @@ interface AppRepository {
     fun saveGps(body: RequestBody): Call<Mensaje>
     fun saveMovil(body: RequestBody): Call<Mensaje>
 
-    fun addOtParteDiario(o: List<Ot>) : Completable
+    fun addOtParteDiario(o: List<Ot>): Completable
 
     fun getInspecciones(): LiveData<List<InspeccionPoste>>
-    fun getInspecciones(e:Int): LiveData<List<InspeccionPoste>>
+    fun getInspecciones(e: Int): LiveData<List<InspeccionPoste>>
     fun getEstadoPostes(): LiveData<List<EstadoPoste>>
     fun getInspeccionById(id: Int): LiveData<InspeccionPoste>
+
+    fun insertInspeccionPoste(p: InspeccionPoste): Completable
+
+    fun getInspeccionConductorById(inspeccionId: Int): LiveData<InspeccionConductor>
+    fun insertInspeccionConductor(p: InspeccionConductor): Completable
+
+    fun getInspeccionCableById(inspeccionId: Int): LiveData<InspeccionCable>
+    fun insertInspeccionCable(p: InspeccionCable): Completable
+
+    fun getInspeccionEquipoById(inspeccionId: Int): LiveData<InspeccionEquipo>
+    fun insertInspeccionEquipo(p: InspeccionEquipo): Completable
+
+    fun getInspeccionesTask(): Observable<List<InspeccionPoste>>
+
+    fun getInspeccionPhotoById(id: Int): LiveData<List<InspeccionPhoto>>
+
+    fun deleteInspeccionPhoto(o: InspeccionPhoto, context: Context): Completable
+    fun insertInspeccionPhoto(o: InspeccionPhoto): Completable
+    fun getInspeccionesPhotoTask(): Observable<List<InspeccionPhoto>>
+    fun sendInspeccionPhotos(body: RequestBody): Observable<String>
+    fun sendInspecciones(body: RequestBody): Observable<Mensaje>
+    fun updateInspeccion(m: Mensaje): Completable
 }

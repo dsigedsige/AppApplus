@@ -128,4 +128,24 @@ class DataBaseModule {
     internal fun provideInspeccioPosteDao(appDataBase: AppDataBase): InspeccionPosteDao {
         return appDataBase.inspeccionPosteDao()
     }
+
+    @Provides
+    internal fun provideInspeccioConductorDao(appDataBase: AppDataBase): InspeccionConductorDao {
+        return appDataBase.inspeccionConductorDao()
+    }
+
+    @Provides
+    internal fun provideInspeccioCableDao(appDataBase: AppDataBase): InspeccionCableDao {
+        return appDataBase.inspeccionCableDao()
+    }
+
+    @Provides
+    internal fun provideInspeccioEquipoDao(appDataBase: AppDataBase): InspeccionEquipoDao {
+        return appDataBase.inspeccionEquipoDao()
+    }
+
+    @Provides
+    internal fun provideInspeccioPhotoDao(appDataBase: AppDataBase): InspeccionPhotoDao {
+        return appDataBase.inspeccionPhotoDao()
+    }
 }

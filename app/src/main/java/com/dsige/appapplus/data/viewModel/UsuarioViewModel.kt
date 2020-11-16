@@ -19,7 +19,6 @@ import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -153,8 +152,8 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun logout() {
-        roomRepository.deleteUsuario()
+    fun logout(context:Context) {
+        roomRepository.deleteUsuario(context)
             .delay(3, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
@@ -202,8 +201,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
                 val body = b.build()
                 Observable.zip(
-                    Observable.just(a), roomRepository.saveTrabajo(body),
-                    BiFunction<OtCabecera, Mensaje, Mensaje> { _, mensaje ->
+                    Observable.just(a), roomRepository.saveTrabajo(body), { _, mensaje ->
                         mensaje
                     })
             }
@@ -269,8 +267,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 val body =
                     RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
                 Observable.zip(
-                    Observable.just(a), roomRepository.updateOt(body),
-                    BiFunction<Ot, Mensaje, Mensaje> { _, mensaje ->
+                    Observable.just(a), roomRepository.updateOt(body), { _, mensaje ->
                         mensaje
                     })
             }
@@ -339,7 +336,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
             Observable.zip(
                 Observable.just(a), roomRepository.updateOt(body),
-                BiFunction<Ot, Mensaje, Mensaje> { _, mensaje ->
+                { _, mensaje ->
                     mensaje
                 })
         }.subscribeOn(Schedulers.io())
@@ -403,8 +400,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 val body =
                     RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
                 Observable.zip(
-                    Observable.just(a), roomRepository.sendParteDiario(body),
-                    BiFunction<ParteDiario, Mensaje, Mensaje> { _, mensaje ->
+                    Observable.just(a), roomRepository.sendParteDiario(body), { _, mensaje ->
                         mensaje
                     })
             }
@@ -454,6 +450,123 @@ internal constructor(private val roomRepository: AppRepository, private val retr
 
                 }
 
+                override fun onError(e: Throwable) {
+                    mensajeError.value = e.message
+                }
+            })
+    }
+
+
+    fun sendInspeccion(context: Context) {
+        val ot: Observable<List<InspeccionPhoto>> = roomRepository.getInspeccionesPhotoTask()
+        ot.flatMap { observable ->
+            Observable.fromIterable(observable).flatMap { a ->
+                val b = MultipartBody.Builder()
+                if (a.fotoUrl.isNotEmpty()) {
+                    val file = File(Util.getFolder(context), a.fotoUrl)
+                    if (file.exists()) {
+                        b.addFormDataPart(
+                            "files", file.name,
+                            RequestBody.create(
+                                MediaType.parse("multipart/form-data"), file
+                            )
+                        )
+                    }
+                }
+                b.setType(MultipartBody.FORM)
+                val body = b.build()
+                Observable.zip(
+                    Observable.just(a), roomRepository.sendInspeccionPhotos(body), { _, mensaje ->
+                        mensaje
+                    })
+            }
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<String> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.i("TAG", d.toString())
+                }
+
+                override fun onNext(m: String) {
+                    Log.i("TAG", m)
+//                    updateParteDiario(m)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (e is HttpException) {
+                        val body = e.response().errorBody()
+                        try {
+                            val error = retrofit.errorConverter.convert(body!!)
+                            mensajeError.postValue(error.Message)
+                        } catch (e1: IOException) {
+                            e1.printStackTrace()
+                            Log.i("TAG", e1.toString())
+                        }
+                    } else {
+                        mensajeError.postValue(e.message)
+                    }
+                }
+
+                override fun onComplete() {
+                    sendInspeccionesTask()
+                }
+            })
+    }
+
+    private fun sendInspeccionesTask() {
+        val ot: Observable<List<InspeccionPoste>> = roomRepository.getInspeccionesTask()
+        ot.flatMap { observable ->
+            Observable.fromIterable(observable).flatMap { a ->
+                val json = Gson().toJson(a)
+                Log.i("TAG", json)
+                val body =
+                    RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+                Observable.zip(
+                    Observable.just(a), roomRepository.sendInspecciones(body), { _, mensaje ->
+                        mensaje
+                    })
+            }
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Mensaje> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.i("TAG", d.toString())
+                }
+
+                override fun onNext(m: Mensaje) {
+                    Log.i("TAG", "RECIBIENDO LOS DATOS")
+                    updateInspeccion(m)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (e is HttpException) {
+                        val body = e.response().errorBody()
+                        try {
+                            val error = retrofit.errorConverter.convert(body!!)
+                            mensajeError.postValue(error.Message)
+                        } catch (e1: IOException) {
+                            e1.printStackTrace()
+                            Log.i("TAG", e1.toString())
+                        }
+                    } else {
+                        mensajeError.postValue(e.message)
+                    }
+                }
+
+                override fun onComplete() {
+                }
+            })
+    }
+
+    private fun updateInspeccion(m: Mensaje) {
+        roomRepository.updateInspeccion(m)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {}
+                override fun onSubscribe(d: Disposable) {}
                 override fun onError(e: Throwable) {
                     mensajeError.value = e.message
                 }
