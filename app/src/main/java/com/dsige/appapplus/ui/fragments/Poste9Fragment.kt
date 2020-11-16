@@ -137,27 +137,27 @@ class Poste9Fragment : DaggerFragment(), View.OnClickListener {
                 when (tipo) {
                     1 -> {
                         p.obsC_Cumplimiento = g.grupoId
-                        editText1.setText(g.nombre)
+                        editText1.setText(g.descripcion)
                     }
                     2 -> {
                         p.obsC_PosteInclinado = g.grupoId
-                        editText2.setText(g.nombre)
+                        editText2.setText(g.descripcion)
                     }
                     3 -> {
                         p.obsC_PosteSubida = g.grupoId
-                        editText3.setText(g.nombre)
+                        editText3.setText(g.descripcion)
                     }
                     4 -> {
                         p.obsC_PosteSaturado = g.grupoId
-                        editText4.setText(g.nombre)
+                        editText4.setText(g.descripcion)
                     }
                     7 -> {
                         p.resFac_Factible = g.grupoId
-                        editText7.setText(g.nombre)
+                        editText7.setText(g.descripcion)
                     }
                     8 -> {
                         p.id_resFac_ObsPrincipal = g.grupoId
-                        editText8.setText(g.nombre)
+                        editText8.setText(g.descripcion)
                     }
                 }
                 dialog.dismiss()

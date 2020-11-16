@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -91,15 +90,13 @@ class PhotoActivity : DaggerAppCompatActivity(), View.OnClickListener {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = photoAdapter
 
-        registroViewModel.getPhotoById(id).observe(this, Observer { f ->
-            if (f != null) {
-                photoAdapter.addItems(f)
-            }
+        registroViewModel.getPhotoById(id).observe(this, {
+            photoAdapter.addItems(it)
         })
         fabCamara.setOnClickListener(this)
         fabGaleria.setOnClickListener(this)
 
-        registroViewModel.success.observe(this, Observer { s ->
+        registroViewModel.success.observe(this, { s ->
             if (s != null) {
                 startActivity(
                     Intent(this, PreviewCameraActivity::class.java)
@@ -110,10 +107,8 @@ class PhotoActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 )
             }
         })
-        registroViewModel.error.observe(this, Observer {s->
-            if (s != null){
-             Util.toastMensaje(this,s)
-            }
+        registroViewModel.error.observe(this, {
+            Util.toastMensaje(this, it)
         })
     }
 

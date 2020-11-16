@@ -11,7 +11,7 @@ import com.dsige.appapplus.data.local.model.Ot
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
 import kotlinx.android.synthetic.main.cardview_ot.view.*
 
-class OtAdapter(private var listener: OnItemClickListener.OTListener) :
+class OtAdapter(private var perfilId: Int, private var listener: OnItemClickListener.OTListener) :
     RecyclerView.Adapter<OtAdapter.ViewHolder>() {
 
     private var ots = emptyList<Ot>()
@@ -23,7 +23,7 @@ class OtAdapter(private var listener: OnItemClickListener.OTListener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-        holder.bind(ots[position], listener)
+        holder.bind(ots[position], perfilId, listener)
     }
 
     override fun getItemCount(): Int {
@@ -37,20 +37,22 @@ class OtAdapter(private var listener: OnItemClickListener.OTListener) :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal fun bind(o: Ot, listener: OnItemClickListener.OTListener) =
+        internal fun bind(o: Ot, perfilId: Int, listener: OnItemClickListener.OTListener) =
             with(itemView) {
                 if (o.estadoId != 7) {
-                    if (o.estadoId == 9) {
-                        if (o.estadoParteDiario == 1) {
-                            layoutFondo.setBackgroundColor(
-                                ContextCompat.getColor(itemView.context, R.color.colorGrey)
-                            )
-                            checkboxAdd.visibility = View.GONE
+                    if (perfilId != 11) {
+                        if (o.estadoId == 9) {
+                            if (o.estadoParteDiario == 1) {
+                                layoutFondo.setBackgroundColor(
+                                    ContextCompat.getColor(itemView.context, R.color.colorGrey)
+                                )
+                                checkboxAdd.visibility = View.GONE
+                            } else {
+                                checkboxAdd.visibility = View.VISIBLE
+                            }
                         } else {
                             checkboxAdd.visibility = View.VISIBLE
                         }
-                    } else {
-                        checkboxAdd.visibility = View.VISIBLE
                     }
                     checkboxAdd.setOnClickListener { v ->
                         listener.onItemClick(

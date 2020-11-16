@@ -34,7 +34,7 @@ import com.dsige.appapplus.data.local.model.*
         InspeccionEquipo::class,
         InspeccionPhoto::class
     ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {

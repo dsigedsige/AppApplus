@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -75,7 +74,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
 
         textViewCodigo.text = codigo
 
-        registroViewModel.getHojaById(id).observe(this, Observer { ot ->
+        registroViewModel.getHojaById(id).observe(this, { ot ->
             if (ot != null) {
                 o = ot
                 editTextNroSed.setText(ot.sed)
@@ -114,7 +113,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
             }
         }
 
-        registroViewModel.success.observe(this, Observer { s ->
+        registroViewModel.success.observe(this, { s ->
             if (s != null) {
                 startActivity(
                     Intent(this@LevantamientoMainActivity, PhotoActivity::class.java)
@@ -130,7 +129,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
             }
         })
 
-        registroViewModel.error.observe(this, Observer { s ->
+        registroViewModel.error.observe(this, { s ->
             if (s != null) {
                 Util.toastMensaje(this, s)
             }
@@ -169,7 +168,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
                     }
                 })
                 recyclerView.adapter = cadistaAdapter
-                registroViewModel.getCadistas().observe(this, Observer { g ->
+                registroViewModel.getCadistas().observe(this, { g ->
                     if (g != null) {
                         cadistaAdapter.addItems(g)
                     }
@@ -185,7 +184,7 @@ class LevantamientoMainActivity : DaggerAppCompatActivity(), View.OnClickListene
                         }
                     })
                 recyclerView.adapter = supervisorAdapter
-                registroViewModel.getSupervisor().observe(this, Observer { g ->
+                registroViewModel.getSupervisor().observe(this, { g ->
                     if (g != null) {
                         supervisorAdapter.addItems(g)
                     }

@@ -134,4 +134,7 @@ interface AppRepository {
     fun sendInspeccionPhotos(body: RequestBody): Observable<String>
     fun sendInspecciones(body: RequestBody): Observable<Mensaje>
     fun updateInspeccion(m: Mensaje): Completable
+
+    //nuevo cambio en ot perfil 11
+    fun insertCabecera(o: OtCabecera): Observable<Int>
 }

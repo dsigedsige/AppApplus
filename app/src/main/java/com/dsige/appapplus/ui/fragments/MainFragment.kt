@@ -18,11 +18,14 @@ import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.EstadoTrabajo
 import com.dsige.appapplus.data.local.model.Filtro
 import com.dsige.appapplus.data.local.model.Ot
+import com.dsige.appapplus.data.local.model.OtCabecera
 import com.dsige.appapplus.data.viewModel.RegistroViewModel
 import com.dsige.appapplus.data.viewModel.ViewModelFactory
+import com.dsige.appapplus.helper.Gps
 import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.activities.FormatoActivity
 import com.dsige.appapplus.ui.activities.ParteDiarioActivity
+import com.dsige.appapplus.ui.activities.PhotoActivity
 import com.dsige.appapplus.ui.adapters.EstadoAdapter
 import com.dsige.appapplus.ui.adapters.OtAdapter
 import com.dsige.appapplus.ui.listeners.OnItemClickListener
@@ -30,7 +33,9 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.activity_levantamiento_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.*
 import javax.inject.Inject
 
 private const val ARG_PARAM1 = "param1"
@@ -60,7 +65,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
     lateinit var builder: AlertDialog.Builder
     var dialog: AlertDialog? = null
 
-    private var tipo: Int = 0
+    private var perfil: Int = 0
     private var usuarioId: Int = 0
     lateinit var f: Filtro
 
@@ -68,7 +73,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         super.onCreate(savedInstanceState)
         f = Filtro()
         arguments?.let {
-            tipo = it.getInt(ARG_PARAM1)
+            perfil = it.getInt(ARG_PARAM1)
             usuarioId = it.getInt(ARG_PARAM2)
         }
         setHasOptionsMenu(true)
@@ -89,8 +94,12 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         registroViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistroViewModel::class.java)
         editTextEstado.setOnClickListener(this)
-        val oTAdapter = OtAdapter(object : OnItemClickListener.OTListener {
+        val oTAdapter = OtAdapter(perfil, object : OnItemClickListener.OTListener {
             override fun onItemClick(o: Ot, view: View, position: Int) {
+                if (perfil == 11) {
+                    generateCabeceraOt(o)
+                    return
+                }
                 if (view is MaterialCheckBox) {
                     val checked: Boolean = view.isChecked
                     if (checked) {
@@ -153,12 +162,16 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                     oTAdapter.addItems(s)
                 }
             })
+        if (perfil == 11) {
+            f.pageSize = 1
+            editTextEstado.setText(String.format("Asignado"))
+        } else {
+            f.pageSize = 6
+            editTextEstado.setText(String.format("Asignado al Proyectista"))
+        }
 
-        f.pageSize = 6
         val json = Gson().toJson(f)
         registroViewModel.search.value = json
-
-        editTextEstado.setText(String.format("Asignado al Proyectista"))
         editTextSearch.setOnEditorActionListener(this)
         fabEnvio.setOnClickListener(this)
 
@@ -172,8 +185,10 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                         .putExtra("id", 0)
                         .putExtra("usuarioId", usuarioId)
                 )
-            } else
-                Util.toastMensaje(context!!, it)
+                return@observe
+            }
+
+            Util.toastMensaje(context!!, it)
         })
 
         registroViewModel.otsData.observe(viewLifecycleOwner, {
@@ -184,6 +199,42 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 fabEnvio.visibility = View.GONE
             }
         })
+
+        registroViewModel.mensaje.observe(viewLifecycleOwner, {
+            if (it != null) {
+                startActivity(
+                    Intent(context!!, PhotoActivity::class.java)
+                        .putExtra("id", it.codigo)
+                        .putExtra("otId", it.codigoBase)
+                        .putExtra("title", "Levantamiento de Campo")
+                        .putExtra("tipo", 1)
+                        .putExtra("codigo", "")
+                        .putExtra("estado", 1)
+                        .putExtra("usuarioId", usuarioId)
+                )
+            }
+        })
+    }
+
+    private fun generateCabeceraOt(ot: Ot) {
+        val gps = Gps(context!!)
+        if (gps.isLocationEnabled()) {
+            if (gps.latitude.toString() != "0.0" || gps.longitude.toString() != "0.0") {
+                val o = OtCabecera()
+                o.coordenadaX = gps.latitude.toString()
+                o.coordenadaY = gps.longitude.toString()
+                o.tipoFormatoId = 1
+                o.nombreTipoFormato = "Levantamiento de campo"
+                o.otId = ot.otId
+                o.active = 2
+                o.usuario = usuarioId
+                o.estadoPerfil = 1
+                o.fechaRegistro = Util.getFecha()
+                registroViewModel.validateCabeceraPerfil(o)
+            }
+        } else {
+            gps.showSettingsAlert(context!!)
+        }
     }
 
     private fun gOTActivity(estado: Int, o: Ot, t: Boolean) {

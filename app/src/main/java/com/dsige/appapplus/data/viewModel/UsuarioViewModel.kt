@@ -152,7 +152,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             })
     }
 
-    fun logout(context:Context) {
+    fun logout(context: Context) {
         roomRepository.deleteUsuario(context)
             .delay(3, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.computation())
@@ -235,6 +235,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onComplete() {
+                    mensajeSuccess.value = "Datos enviados"
                 }
             })
     }
@@ -244,13 +245,8 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
-                override fun onComplete() {
-                    mensajeSuccess.value = messages.mensaje
-                }
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
+                override fun onComplete() {}
+                override fun onSubscribe(d: Disposable) {}
 
                 override fun onError(e: Throwable) {
                     Log.i("TAG", e.toString())
@@ -301,6 +297,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onComplete() {
+                    mensajeSuccess.value = "Reasignación Completa"
                 }
             })
     }
@@ -377,17 +374,9 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
-                override fun onComplete() {
-                    mensajeSuccess.value = "Reasignación Completa"
-                }
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onError(e: Throwable) {
-                    mensajeError.value = e.message
-                }
+                override fun onComplete() {}
+                override fun onSubscribe(d: Disposable) {}
+                override fun onError(e: Throwable) {}
             })
     }
 
@@ -433,6 +422,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onComplete() {
+                    mensajeSuccess.value = "Datos enviados"
                 }
             })
     }
@@ -442,14 +432,8 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
-                override fun onComplete() {
-                    mensajeSuccess.value = "Envio Completo"
-                }
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
+                override fun onComplete() {}
+                override fun onSubscribe(d: Disposable) {}
                 override fun onError(e: Throwable) {
                     mensajeError.value = e.message
                 }
@@ -556,6 +540,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 }
 
                 override fun onComplete() {
+                    mensajeSuccess.value = "Datos enviados"
                 }
             })
     }

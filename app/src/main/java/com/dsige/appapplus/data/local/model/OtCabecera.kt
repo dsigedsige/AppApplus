@@ -57,6 +57,7 @@ open class OtCabecera {
 
     var supervisorId: Int = 0
     var nombreSupervisor: String = ""
+    var estadoPerfil : Int= 0 // cuando esta en 11 se validara para que no se repita segun la ot
 
     @Ignore
     var details: List<OtDetalle> = ArrayList()

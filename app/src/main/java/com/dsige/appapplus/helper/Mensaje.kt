@@ -15,4 +15,10 @@ open class Mensaje {
         this.codigo = codigo
         this.mensaje = mensaje
     }
+
+    //codigo = el identity de cabecera , codigoBase = otId
+    constructor(codigo: Int, codigoBase: Int) {
+        this.codigo = codigo
+        this.codigoBase = codigoBase
+    }
 }

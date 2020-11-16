@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -24,7 +23,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.Usuario
@@ -55,6 +53,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     lateinit var builder: AlertDialog.Builder
     var dialog: AlertDialog? = null
     var usuarioId: Int = 0
+    var perfilId : Int =0
     var logout: String = "off"
     var link: String = ""
     var name: String = ""
@@ -131,11 +130,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         when (item.itemId) {
             R.id.sync -> sendTrabajos(4)
             R.id.orden -> changeFragment(
-                MainFragment.newInstance(1, usuarioId),
+                MainFragment.newInstance(perfilId, usuarioId),
                 "Ordenes de Trabajo"
             )
             R.id.poste -> changeFragment(
-                InspeccionPosteFragment.newInstance(1, usuarioId),
+                InspeccionPosteFragment.newInstance(perfilId, usuarioId),
                 "Postes Asignado al Trabajador"
             )
             R.id.logout -> dialogLogout()
@@ -184,7 +183,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     private fun fragmentByDefault() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.content_frame, MainFragment.newInstance(1, usuarioId))
+            .replace(R.id.content_frame, MainFragment.newInstance(perfilId, usuarioId))
             .commit()
         supportActionBar!!.title = "Ordenes de Trabajo"
         navigationView.menu.getItem(1).isChecked = true
@@ -196,6 +195,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         header.textViewEmail.text = String.format("Cod : %s", u.email)
         header.textViewVersion.text = String.format("Version : %s", Util.getVersion(this))
         usuarioId = u.usuarioId
+        perfilId = u.perfilId
     }
 
     private fun goLogin() {
@@ -220,7 +220,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 }
             }
         })
-        usuarioViewModel.error.observe(this@MainActivity, Observer { s ->
+        usuarioViewModel.error.observe(this@MainActivity, { s ->
             if (s != null) {
                 closeLoad()
                 Util.snackBarMensaje(window.decorView, s)

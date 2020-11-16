@@ -434,6 +434,12 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 dataBase.otPhotoDao().insertOtPhotoTask(o)
             else
                 dataBase.otPhotoDao().updateOtPhotoTask(o)
+
+            val a = dataBase.otCabeceraDao().getOtCabeceraByIdTask(o.formatoId)
+            if (a.estadoPerfil == 11) {
+                a.active = 1
+                dataBase.otCabeceraDao().updateRegistroTask(a)
+            }
         }
     }
 
@@ -716,6 +722,27 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
                 .updateEnabledConductor(m.codigoBase, m.codigoRetornoConductor)
             dataBase.inspeccionEquipoDao().updateEnabledEquipo(m.codigoBase, m.codigoRetornoEquipo)
             dataBase.inspeccionPhotoDao().updateEnabledPhoto(m.codigoBase)
+        }
+    }
+
+    override fun insertCabecera(o: OtCabecera): Observable<Int> {
+        return Observable.create {
+            val c: OtCabecera? =
+                dataBase.otCabeceraDao().getOtCabeceraPerfil(o.otId, o.estadoPerfil)
+            if (c == null) {
+                val cabecera = dataBase.otCabeceraDao().getMaxIdOtTask()
+                o.formatoId = if (cabecera != 0) {
+                    cabecera + 1
+                } else
+                    1
+
+                dataBase.otCabeceraDao().insertRegistroTask(o)
+                it.onNext(o.formatoId)
+                it.onComplete()
+            } else {
+                it.onNext(c.formatoId)
+                it.onComplete()
+            }
         }
     }
 }

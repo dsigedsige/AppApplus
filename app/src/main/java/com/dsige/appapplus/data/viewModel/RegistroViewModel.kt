@@ -392,20 +392,31 @@ internal constructor(private val roomRepository: AppRepository, private val retr
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    if (tipo == 1) {
-                        mensaje.value = Mensaje(o.formatoId, o.tipoFormatoId.toString())
-                    } else {
-                        mensajeSuccess.value = o.tipoFormatoId.toString()
+                    when (tipo) {
+                        1 -> mensaje.value = Mensaje(o.formatoId, o.tipoFormatoId.toString())
+                        else -> mensajeSuccess.value = o.tipoFormatoId.toString()
                     }
                 }
 
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
+                override fun onSubscribe(d: Disposable) {}
                 override fun onError(e: Throwable) {
                     mensajeError.value = e.message
                 }
+            })
+    }
+
+    fun validateCabeceraPerfil(o: OtCabecera) {
+        roomRepository.insertCabecera(o)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Int> {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(t: Int) {
+                    mensaje.value = Mensaje(t, o.otId)
+                }
+
+                override fun onError(e: Throwable) {}
+                override fun onComplete() {}
             })
     }
 

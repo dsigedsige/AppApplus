@@ -24,10 +24,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText1"
                 android:layout_width="match_parent"
-                android:hint="Tipo retenidas"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_down"
+                android:ellipsize="end"
                 android:focusable="false"
-                android:drawableEnd="@drawable/ic_down" />
+                android:hint="Tipo retenidas"
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,9 +85,11 @@
                 android:id="@+id/editText4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado Retenidas"
+                android:drawableEnd="@drawable/ic_down"
+                android:ellipsize="end"
                 android:focusable="false"
-                android:drawableEnd="@drawable/ic_down" />
+                android:hint="Estado Retenidas"
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -103,9 +107,11 @@
                 android:id="@+id/editText5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tipo retenidas"
+                android:drawableEnd="@drawable/ic_down"
+                android:ellipsize="end"
                 android:focusable="false"
-                android:drawableEnd="@drawable/ic_down" />
+                android:hint="Tipo retenidas"
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -161,9 +167,11 @@
                 android:id="@+id/editText8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado Retenidas"
+                android:drawableEnd="@drawable/ic_down"
+                android:ellipsize="end"
                 android:focusable="false"
-                android:drawableEnd="@drawable/ic_down" />
+                android:hint="Estado Retenidas"
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
