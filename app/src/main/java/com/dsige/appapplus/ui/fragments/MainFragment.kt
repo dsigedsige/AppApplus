@@ -97,7 +97,9 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         val oTAdapter = OtAdapter(perfil, object : OnItemClickListener.OTListener {
             override fun onItemClick(o: Ot, view: View, position: Int) {
                 if (perfil == 11) {
-                    generateCabeceraOt(o)
+                    if (o.estadoId == 1) {
+                        generateCabeceraOt(o)
+                    }
                     return
                 }
                 if (view is MaterialCheckBox) {
@@ -178,7 +180,6 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
         registroViewModel.success.observe(viewLifecycleOwner, {
             registroViewModel.removeAll()
             closeLoad()
-
             if (it == "PD") {
                 startActivity(
                     Intent(context, ParteDiarioActivity::class.java)
@@ -228,7 +229,7 @@ class MainFragment : DaggerFragment(), View.OnClickListener, TextView.OnEditorAc
                 o.otId = ot.otId
                 o.active = 2
                 o.usuario = usuarioId
-                o.estadoPerfil = 1
+                o.estadoPerfil = 11
                 o.fechaRegistro = Util.getFecha()
                 registroViewModel.validateCabeceraPerfil(o)
             }

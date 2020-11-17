@@ -354,6 +354,11 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun updateRegistro(messages: Mensaje): Completable {
         return Completable.fromAction {
+            val a: OtCabecera? =
+                dataBase.otCabeceraDao().getOtCabeceraPerfil(messages.codigoBase, 11)
+            if (a != null) {
+                dataBase.otDao().changeEstado(a.otId, 3)
+            }
             dataBase.otCabeceraDao().updateCabecera(messages.codigoBase, messages.codigoRetorno)
         }
     }
@@ -430,15 +435,14 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
 
     override fun insertOrUpdatePhoto(o: OtPhoto): Completable {
         return Completable.fromAction {
-            if (o.formatoFotoId == 0)
+            if (o.formatoFotoId == 0) {
                 dataBase.otPhotoDao().insertOtPhotoTask(o)
-            else
+            } else {
                 dataBase.otPhotoDao().updateOtPhotoTask(o)
-
+            }
             val a = dataBase.otCabeceraDao().getOtCabeceraByIdTask(o.formatoId)
             if (a.estadoPerfil == 11) {
-                a.active = 1
-                dataBase.otCabeceraDao().updateRegistroTask(a)
+                dataBase.otCabeceraDao().updateActiveSendPerfil(a.formatoId)
             }
         }
     }

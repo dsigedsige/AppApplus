@@ -44,7 +44,7 @@ interface OtCabeceraDao {
     @Query("SELECT formatoId FROM OtCabecera ORDER BY formatoId DESC LIMIT 1")
     fun getMaxIdOtTask(): Int
 
-    @Query("SELECT * FROM OtCabecera WHERE formatoId =:id ")
+    @Query("SELECT * FROM OtCabecera WHERE formatoId =:id")
     fun getOtCabeceraByIdTask(id: Int): OtCabecera
 
     @Query("SELECT * FROM OtCabecera WHERE active =:i ")
@@ -53,7 +53,10 @@ interface OtCabeceraDao {
     @Query("UPDATE OtCabecera SET identity =:codigoRetorno , active = 0 WHERE formatoId =:codigoBase ")
     fun updateCabecera(codigoBase: Int, codigoRetorno: Int)
 
-    @Query("SELECT * FROM OtCabecera WHERE otId=:id AND estadoPerfil=:e ")
+    @Query("SELECT * FROM OtCabecera WHERE formatoId=:id AND estadoPerfil=:e ")
     fun getOtCabeceraPerfil(id: Int, e: Int): OtCabecera
+
+    @Query("UPDATE OtCabecera SET active = 1 WHERE formatoId =:id ")
+    fun updateActiveSendPerfil(id: Int)
 
 }
