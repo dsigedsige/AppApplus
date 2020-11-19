@@ -230,6 +230,32 @@ class Poste2Fragment : DaggerFragment(), View.OnClickListener {
             editText26.text.toString().isEmpty() -> p.retAtras_3 = 0.0
             else -> p.retAtras_3 = editText26.text.toString().toDouble()
         }
+
+        //------------------------------------------------------------
+        when {
+            editText29.text.toString().isEmpty() -> p.retDer_1 = 0.0
+            else -> p.retDer_1 = editText29.text.toString().toDouble()
+        }
+        when {
+            editText30.text.toString().isEmpty() -> p.retAde_1 = 0.0
+            else -> p.retAde_1 = editText30.text.toString().toDouble()
+        }
+        when {
+            editText31.text.toString().isEmpty() -> p.retDer_2 = 0.0
+            else -> p.retDer_2 = editText31.text.toString().toDouble()
+        }
+        when {
+            editText32.text.toString().isEmpty() -> p.retAde_2 = 0.0
+            else -> p.retAde_2 = editText32.text.toString().toDouble()
+        }
+        when {
+            editText33.text.toString().isEmpty() -> p.retDer_3 = 0.0
+            else -> p.retDer_3 = editText33.text.toString().toDouble()
+        }
+        when {
+            editText34.text.toString().isEmpty() -> p.retAde_3 = 0.0
+            else -> p.retAde_3 = editText34.text.toString().toDouble()
+        }
         p.comentario = editText37.text.toString()
         inspeccionViewModel.validatePoste2(p)
     }

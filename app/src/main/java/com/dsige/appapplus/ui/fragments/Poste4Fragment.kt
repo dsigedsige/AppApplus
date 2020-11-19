@@ -141,12 +141,12 @@ class Poste4Fragment : DaggerFragment(), View.OnClickListener {
             else -> p.condIzqAltura2_BT = editText5.text.toString().toDouble()
         }
         when {
-            editText1.text.toString().isEmpty() -> p.cableBT = 0.0
-            else -> p.cableBT = editText1.text.toString().toDouble()
+            editText6.text.toString().isEmpty() -> p.cableBT = 0.0
+            else -> p.cableBT = editText6.text.toString().toDouble()
         }
         when {
-            editText8.text.toString().isEmpty() -> p.circuitoBT = 0.0
-            else -> p.circuitoBT = editText8.text.toString().toDouble()
+            editText8.text.toString().isEmpty() -> p.condDerAltura1_BT = 0.0
+            else -> p.condDerAltura1_BT = editText8.text.toString().toDouble()
         }
         when {
             editText10.text.toString().isEmpty() -> p.condDerAltura2_BT = 0.0
@@ -162,7 +162,7 @@ class Poste4Fragment : DaggerFragment(), View.OnClickListener {
         }
         when {
             editText15.text.toString().isEmpty() -> p.condAdeAltura2_BT = 0.0
-            else -> p.condAdeAltura2_BT = editText1.text.toString().toDouble()
+            else -> p.condAdeAltura2_BT = editText15.text.toString().toDouble()
         }
         when {
             editText17.text.toString().isEmpty() -> p.condAtrasAltura1_BT = 0.0
