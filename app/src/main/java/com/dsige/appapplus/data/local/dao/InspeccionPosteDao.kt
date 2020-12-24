@@ -37,6 +37,6 @@ interface InspeccionPosteDao {
     @Query("SELECT * FROM InspeccionPoste WHERE active =:i")
     fun getInspeccionesTask(i: Int): List<InspeccionPoste>
 
-    @Query("UPDATE InspeccionPoste SET active = 2 WHERE inspeccionCampoId =:codigoBase")
+    @Query("UPDATE InspeccionPoste SET active = 2 , estadoId = 55 WHERE inspeccionCampoId =:codigoBase")
     fun updateEnabledInspeccion(codigoBase: Int)
 }
