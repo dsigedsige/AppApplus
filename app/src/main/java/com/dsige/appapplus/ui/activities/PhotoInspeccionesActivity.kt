@@ -25,7 +25,7 @@ import javax.inject.Inject
 class PhotoInspeccionesActivity : DaggerAppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
-        inspeccionViewModel.setError("Maximo ${(10 - limit)} Fotos")
+        inspeccionViewModel.setError("Maximo ${(maxPhotos - limit)} Fotos")
         when (v.id) {
             R.id.fabCamara -> startActivity(
                 Intent(this, CameraActivity::class.java)
@@ -43,6 +43,7 @@ class PhotoInspeccionesActivity : DaggerAppCompatActivity(), View.OnClickListene
     private var inspeccionId: Int = 0
     private var usuarioId: Int = 0
     private var limit: Int = 0
+    private var maxPhotos: Int = 20
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +92,7 @@ class PhotoInspeccionesActivity : DaggerAppCompatActivity(), View.OnClickListene
 
         inspeccionViewModel.getInspeccionPhotoById(id).observe(this, {
             limit = it.size
-            if (it.size == 10) {
+            if (it.size == maxPhotos) {
                 fabMenu.visibility = View.GONE
             } else {
                 fabMenu.visibility = View.VISIBLE
