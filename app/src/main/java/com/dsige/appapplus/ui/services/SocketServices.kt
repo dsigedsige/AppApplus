@@ -21,6 +21,7 @@ import androidx.core.app.NotificationCompat
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.Notificacion
 import com.dsige.appapplus.data.local.repository.AppRepository
+import com.dsige.appapplus.helper.Util
 import com.dsige.appapplus.ui.activities.MainActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
@@ -50,7 +51,7 @@ class SocketServices : Service() {
         handler.post(Runnable {
             try {
                 mSocket =
-                    IO.socket("http://173.248.174.62:5000/")
+                    IO.socket(Util.urlSocket)
 //                val n = Notificacion(action)
 //                mSocket.emit("saveUser_CAM", n.toString())
                 mSocket.on("Alertas_movil_OT") { s ->

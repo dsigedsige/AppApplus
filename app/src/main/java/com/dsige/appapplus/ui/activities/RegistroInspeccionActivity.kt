@@ -80,7 +80,6 @@ class RegistroInspeccionActivity : DaggerAppCompatActivity(), View.OnClickListen
         val b = intent.extras
         if (b != null) {
             bindUI(b.getInt("id"), b.getInt("usuarioId"))
-
         }
     }
 

@@ -699,10 +699,18 @@ class AppRepoImp(private val apiService: ApiService, private val dataBase: AppDa
             for (p: InspeccionPoste in ot) {
                 val photos: List<InspeccionPhoto>? =
                     dataBase.inspeccionPhotoDao().getInspeccionPhotoByIdTask(p.inspeccionCampoId)
-                if (photos != null) {
-                    for (f: InspeccionPhoto in photos) {
-                        data.add(f)
-                    }
+                if (photos == null) {
+                    e.onError(Throwable("Cada inspeccion debe tener 7 fotos como minimo para enviarse."))
+                    e.onComplete()
+                    return@create
+                }
+                if (photos.size <=6){
+                    e.onError(Throwable("Cada inspeccion debe tener 7 fotos como minimo para enviarse."))
+                    e.onComplete()
+                    return@create
+                }
+                for (f: InspeccionPhoto in photos) {
+                    data.add(f)
                 }
             }
             e.onNext(data)

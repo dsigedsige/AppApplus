@@ -19,7 +19,7 @@
             app:showAsAction="never" />
         <item
             android:id="@+id/fab4"
-            android:title="@string/valu4"
+            android:title="@string/value4"
             android:orderInCategory="4"
             app:showAsAction="never" />
         <item

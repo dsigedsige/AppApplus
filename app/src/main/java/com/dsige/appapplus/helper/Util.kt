@@ -36,14 +36,11 @@ import java.util.*
 
 object Util {
 
-    val Folder = "Dsige/Applus"
-    val UrlFoto = "http://www.dsige.com/webApiDemo/image/"
-    val UrlMovie = "http://www.dsige.com/webApiDemo/movie/"
-
     var KEY_UPDATE_ENABLE = "isUpdate"
     val KEY_UPDATE_VERSION = "version"
     val KEY_UPDATE_URL = "url"
     val KEY_UPDATE_NAME = "name"
+    val urlSocket = "http://70.37.52.217:5000/"
 
     private var FechaActual: String? = ""
     private var date: Date? = null

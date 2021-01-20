@@ -3,6 +3,7 @@ package com.dsige.appapplus.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dsige.appapplus.R
 import com.dsige.appapplus.data.local.model.InspeccionPoste
@@ -39,7 +40,14 @@ class InspeccionPosteAdapter(private var listener: OnItemClickListener.Inspeccio
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal fun bind(o: InspeccionPoste, listener: OnItemClickListener.InspeccionListener) =
             with(itemView) {
-                textView1.text = String.format("Item General :%s", o.itemGeneral)
+
+                if (o.active != 0) {
+                    layoutFondo.setBackgroundColor(
+                        ContextCompat.getColor(itemView.context, R.color.divider)
+                    )
+                }
+
+                textView1.text = String.format("Item General : %s", o.itemGeneral)
                 textView2.text = o.direccion
                 textView3.text = o.distritoCod
                 textView4.text = o.codPoste

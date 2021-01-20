@@ -294,6 +294,7 @@
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 app:backgroundTint="@color/colorAccent"
+                app:icon="@drawable/ic_save"
                 app:iconGravity="end"
                 app:iconTint="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -302,98 +303,98 @@
                 app:layout_constraintTop_toBottomOf="@+id/layout13" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        <com.getbase.floatingactionbutton.FloatingActionsMenu-->
-<!--            android:id="@+id/fab"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="end|bottom"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            fab:fab_addButtonColorNormal="@color/colorWhite"-->
-<!--            fab:fab_addButtonColorPressed="@color/white_pressed"-->
-<!--            fab:fab_addButtonPlusIconColor="@color/half_black"-->
-<!--            fab:fab_labelStyle="@style/menu_labels_style">-->
+        <!--        <com.getbase.floatingactionbutton.FloatingActionsMenu-->
+        <!--            android:id="@+id/fab"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_gravity="end|bottom"-->
+        <!--            android:layout_marginEnd="16dp"-->
+        <!--            android:layout_marginBottom="16dp"-->
+        <!--            fab:fab_addButtonColorNormal="@color/colorWhite"-->
+        <!--            fab:fab_addButtonColorPressed="@color/white_pressed"-->
+        <!--            fab:fab_addButtonPlusIconColor="@color/half_black"-->
+        <!--            fab:fab_labelStyle="@style/menu_labels_style">-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/colorWhite"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Información de vano MT" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab1"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/colorWhite"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Información de vano MT" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Información Conductor MT" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab2"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Información Conductor MT" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab3"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Información de vano BT" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab3"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Información de vano BT" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab4"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Información de cables Telecomur" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab4"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Información de cables Telecomur" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab5"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Información de cables BT existentes" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab5"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Información de cables BT existentes" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab6"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Información de retenida BT" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab6"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Información de retenida BT" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab7"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Equipos existentes" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab7"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Equipos existentes" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab8"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Informacion adicional y de Cable" />-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab8"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Informacion adicional y de Cable" />-->
 
-<!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab9"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                fab:fab_colorNormal="@color/white"-->
-<!--                fab:fab_colorPressed="@color/white_pressed"-->
-<!--                fab:fab_icon="@drawable/ic_check_black"-->
-<!--                fab:fab_title="Observaciones y Resultado de Factibilidad" />-->
-<!--        </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
+        <!--            <com.getbase.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/fab9"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                fab:fab_colorNormal="@color/white"-->
+        <!--                fab:fab_colorPressed="@color/white_pressed"-->
+        <!--                fab:fab_icon="@drawable/ic_check_black"-->
+        <!--                fab:fab_title="Observaciones y Resultado de Factibilidad" />-->
+        <!--        </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -19,10 +19,11 @@ interface InspeccionPosteDao {
     @Delete
     fun deleteInspeccionPosteTask(c: InspeccionPoste)
 
-    @Query("SELECT * FROM InspeccionPoste WHERE active != 2")
+    //    WHERE active != 2
+    @Query("SELECT * FROM InspeccionPoste")
     fun getInspeccionPoste(): LiveData<List<InspeccionPoste>>
 
-    @Query("SELECT * FROM InspeccionPoste WHERE estadoId =:e AND active != 2")
+    @Query("SELECT * FROM InspeccionPoste WHERE estadoId =:e")
     fun getInspeccionPoste(e: Int): LiveData<List<InspeccionPoste>>
 
     @Query("DELETE FROM InspeccionPoste")
@@ -37,6 +38,6 @@ interface InspeccionPosteDao {
     @Query("SELECT * FROM InspeccionPoste WHERE active =:i")
     fun getInspeccionesTask(i: Int): List<InspeccionPoste>
 
-    @Query("UPDATE InspeccionPoste SET active = 2 , estadoId = 55 WHERE inspeccionCampoId =:codigoBase")
+    @Query("UPDATE InspeccionPoste SET active = 2 , estadoId = 55,nombreEstado = 'Terminado' WHERE inspeccionCampoId =:codigoBase")
     fun updateEnabledInspeccion(codigoBase: Int)
 }

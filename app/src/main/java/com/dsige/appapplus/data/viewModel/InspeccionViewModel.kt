@@ -204,7 +204,7 @@ internal constructor(private val roomRepository: AppRepository, private val retr
                 override fun onSubscribe(d: Disposable) {}
                 override fun onError(e: Throwable) {}
                 override fun onComplete() {
-                    mensajeSuccess.value = "Eliminado"
+                    mensajeError.value = "Eliminado"
                 }
             })
     }

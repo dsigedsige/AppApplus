@@ -139,10 +139,37 @@
     <string name="value1">Información de vano MT</string>
     <string name="value2">Información Conductor MT</string>
     <string name="value3">Información de vano BT</string>
-    <string name="valu4">Información de cables Telecomur</string>
-    <string name="value5">Información de cables BT existentes</string>
+    <string name="value5">Información de cables Telecomur</string>
+    <string name="value4">Información de cables BT existentes</string>
     <string name="value6">"Información de retenida BT"</string>
     <string name="value7">"Equipos existentes"</string>
     <string name="value8">"Informacion adicional y de Cable"</string>
     <string name="value9">"Observaciones y Resultado de Factibilidad"</string>
+
+
+    <string name="hint_izq_c1">Izq (C1) Cantidad</string>
+    <string name="hint_izq_c2">Izq (C2) Cantidad"</string>
+    <string name="hint_izq_a1">Izq (C1) Altura</string>
+    <string name="hint_izq_a2">Izq (C2) Altura</string>
+
+    <string name="hint_der_c1">Der (C1) Cantidad</string>
+    <string name="hint_der_c2">Der (C2) Cantidad"</string>
+    <string name="hint_der_a1">Der (C1) Altura</string>
+    <string name="hint_der_a2">Der (C2) Altura</string>
+
+    <string name="hint_adel_c1">Adel (C1) Cantidad</string>
+    <string name="hint_adel_c2">Adel (C2) Cantidad"</string>
+    <string name="hint_adel_a1">Adel (C1) Altura</string>
+    <string name="hint_adel_a2">Adel (C2) Altura</string>
+
+    <string name="hint_atras_c1">Atras (C1) Cantidad</string>
+    <string name="hint_atras_c2">Atras (C2) Cantidad"</string>
+    <string name="hint_atras_a1">Atras (C1) Altura</string>
+    <string name="hint_atras_a2">Atras (C2) Altura</string>
+
+    <string name="hint_brazo_c1">Brazo (C1) Cantidad</string>
+    <string name="hint_brazo_c2">Brazo (C2) Cantidad"</string>
+    <string name="hint_brazo_a1">Brazo (C1) Altura</string>
+    <string name="hint_brazo_a2">Brazo (C2) Altura</string>
+
 </resources>

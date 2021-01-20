@@ -30,6 +30,82 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout6"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tipo de cable 2"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout11"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="N° Cables de ADSS"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout16"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout11">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="N° Cables Coaxiales"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout21"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout16">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="N° Otros cables"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout2"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
@@ -38,13 +114,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/layout3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout1">
+            app:layout_constraintTop_toBottomOf="@+id/layout21">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_izq_c1"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,71 +133,14 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout2"
-            app:layout_constraintTop_toBottomOf="@+id/layout1">
+            app:layout_constraintTop_toBottomOf="@+id/layout21">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_izq_a1"
                 android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout4"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/layout5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout5"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/layout4"
-            app:layout_constraintTop_toBottomOf="@+id/layout3">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout6"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout4">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Tipo de cable 2"
-                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -133,13 +152,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/layout8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout6">
+            app:layout_constraintTop_toBottomOf="@+id/layout2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_der_c1"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,71 +171,14 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout7"
-            app:layout_constraintTop_toBottomOf="@+id/layout6">
+            app:layout_constraintTop_toBottomOf="@+id/layout2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_der_a1"
                 android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout9"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/layout10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout7">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout10"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/layout9"
-            app:layout_constraintTop_toBottomOf="@+id/layout8">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout11"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout10">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="N° Cables de ADSS"
-                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -228,13 +190,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/layout13"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout11">
+            app:layout_constraintTop_toBottomOf="@+id/layout7">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_adel_c1"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -247,71 +209,14 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout12"
-            app:layout_constraintTop_toBottomOf="@+id/layout11">
+            app:layout_constraintTop_toBottomOf="@+id/layout7">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_adel_a1"
                 android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout14"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/layout15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout12">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout15"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/layout14"
-            app:layout_constraintTop_toBottomOf="@+id/layout13">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout16"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout15">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="N° Cables Coaxiales"
-                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -323,13 +228,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/layout18"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout16">
+            app:layout_constraintTop_toBottomOf="@+id/layout12">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_atras_c1"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -342,71 +247,14 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout17"
-            app:layout_constraintTop_toBottomOf="@+id/layout16">
+            app:layout_constraintTop_toBottomOf="@+id/layout12">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_atras_a1"
                 android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout19"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/layout20"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout17">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout20"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/layout19"
-            app:layout_constraintTop_toBottomOf="@+id/layout18">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint=""
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout21"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout20">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="N° Otros cables"
-                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -418,13 +266,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/layout23"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout21">
+            app:layout_constraintTop_toBottomOf="@+id/layout17">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_brazo_c1"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -437,13 +285,165 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout22"
-            app:layout_constraintTop_toBottomOf="@+id/layout21">
+            app:layout_constraintTop_toBottomOf="@+id/layout17">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_brazo_a1"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/layout5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout22">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_izq_c2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/layout4"
+            app:layout_constraintTop_toBottomOf="@+id/layout22">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_izq_a2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout9"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/layout10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout4">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_der_c2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout10"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/layout9"
+            app:layout_constraintTop_toBottomOf="@+id/layout4">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_der_a2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout14"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/layout15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout9">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_adel_c2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout15"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/layout14"
+            app:layout_constraintTop_toBottomOf="@+id/layout9">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_adel_a2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout19"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/layout20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout14">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_atras_c2"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout20"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/layout19"
+            app:layout_constraintTop_toBottomOf="@+id/layout14">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_atras_a2"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -456,13 +456,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/layout25"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout22">
+            app:layout_constraintTop_toBottomOf="@+id/layout19">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_brazo_c2"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -475,13 +475,13 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout24"
-            app:layout_constraintTop_toBottomOf="@+id/layout23">
+            app:layout_constraintTop_toBottomOf="@+id/layout19">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
+                android:hint="@string/hint_brazo_a2"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -494,7 +494,7 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout25">
+            app:layout_constraintTop_toBottomOf="@+id/layout24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText26"
