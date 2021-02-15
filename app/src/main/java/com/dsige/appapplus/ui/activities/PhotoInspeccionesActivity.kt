@@ -43,7 +43,7 @@ class PhotoInspeccionesActivity : DaggerAppCompatActivity(), View.OnClickListene
     private var inspeccionId: Int = 0
     private var usuarioId: Int = 0
     private var limit: Int = 0
-    private var maxPhotos: Int = 20
+    private var maxPhotos: Int = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

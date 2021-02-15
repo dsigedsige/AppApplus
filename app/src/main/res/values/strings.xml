@@ -167,8 +167,8 @@
     <string name="hint_atras_a1">Atras (C1) Altura</string>
     <string name="hint_atras_a2">Atras (C2) Altura</string>
 
-    <string name="hint_brazo_c1">Brazo (C1) Cantidad</string>
-    <string name="hint_brazo_c2">Brazo (C2) Cantidad"</string>
+    <string name="hint_brazo_c1">Brazo (C1) Longitud</string>
+    <string name="hint_brazo_c2">Brazo (C2) Longitud"</string>
     <string name="hint_brazo_a1">Brazo (C1) Altura</string>
     <string name="hint_brazo_a2">Brazo (C2) Altura</string>
 

@@ -33,6 +33,7 @@ import java.nio.channels.FileChannel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 
 object Util {
 
@@ -43,10 +44,9 @@ object Util {
     val urlSocket = "http://70.37.52.217:5000/"
 
     private var FechaActual: String? = ""
-    private var date: Date? = null
 
-    private const val img_height_default = 800
-    private const val img_width_default = 600
+    private const val img_height_default = 1200
+    private const val img_width_default = 800
 
 
     @SuppressLint("SimpleDateFormat")
@@ -95,7 +95,7 @@ object Util {
     }
 
     fun getFechaDiaMas(): String {
-        date = Date()
+        val date = Date()
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("dd/MM/yyyy")
         val c = Calendar.getInstance()
         c.time = format.parse(format.format(date))!!
@@ -104,25 +104,25 @@ object Util {
     }
 
     fun getFecha(): String {
-        date = Date()
+        val date = Date()
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("dd/MM/yyyy")
         return format.format(date)
     }
 
     fun getFechaActual(): String {
-        date = Date()
+        val date = Date()
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss a")
         return format.format(date)
     }
 
     fun getHoraActual(): String {
-        date = Date()
+        val date = Date()
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("HH:mm:ss aaa")
         return format.format(date)
     }
 
     fun getFechaEditar(): String? {
-        date = Date()
+        val date = Date()
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("ddMMyyyy_HHmmssSSSS")
         FechaActual = format.format(date)
         return FechaActual
@@ -165,7 +165,7 @@ object Util {
     }
 
     private fun getRealPathFromURI(context: Context, contentUri: Uri): String {
-        var result: String = ""
+        var result = ""
         val proj = arrayOf(MediaStore.Video.Media.DATA)
         @SuppressLint("Recycle") val cursor =
             context.contentResolver.query(contentUri, proj, null, null, null)
@@ -217,7 +217,7 @@ object Util {
             val result = getRightAngleImage(PathFile)
             result == PathFile
         } catch (ex: Exception) {
-            Log.i("exception", ex.message)
+            Log.i("exception", ex.message!!)
             false
         }
     }
@@ -312,19 +312,15 @@ object Util {
     }
 
 
-    private fun ShrinkBitmapOnlyReduce(
-        file: String,
-        width: Int,
-        height: Int,
-        captionString: String?
-    ) {
+    private fun shrinkBitmapOnlyReduce(file: String, captionString: String?) {
 
         val options = BitmapFactory.Options()
         options.inSampleSize = 4
         options.inJustDecodeBounds = true
 
-        val heightRatio = Math.ceil((options.outHeight / height.toFloat()).toDouble()).toInt()
-        val widthRatio = Math.ceil((options.outWidth / width.toFloat()).toDouble()).toInt()
+        val heightRatio =
+            ceil((options.outHeight / img_height_default.toFloat()).toDouble()).toInt()
+        val widthRatio = ceil((options.outWidth / img_width_default.toFloat()).toDouble()).toInt()
 
         if (heightRatio > 1 || widthRatio > 1) {
             if (heightRatio > widthRatio) {
@@ -337,27 +333,20 @@ object Util {
         options.inJustDecodeBounds = false
 
         try {
-
-
             val b = BitmapFactory.decodeFile(file, options)
-
             var config: Bitmap.Config? = b.config
             if (config == null) {
                 config = Bitmap.Config.ARGB_8888
             }
             val newBitmap = Bitmap.createBitmap(b.width, b.height, config)
-
             val newCanvas = Canvas(newBitmap)
             newCanvas.drawBitmap(b, 0f, 0f, null)
-
             if (captionString != null) {
-
                 val paintText = Paint(Paint.ANTI_ALIAS_FLAG)
                 paintText.color = Color.RED
                 paintText.textSize = 22f
                 paintText.style = Paint.Style.FILL
                 paintText.setShadowLayer(0.7f, 0.7f, 0.7f, Color.YELLOW)
-
                 val rectText = Rect()
                 paintText.getTextBounds(captionString, 0, captionString.length, rectText)
                 newCanvas.drawText(captionString, 0f, rectText.height().toFloat(), paintText)
@@ -369,13 +358,13 @@ object Util {
 
             val out = FileOutputStream(file)
             if (imageType.equals("png", ignoreCase = true)) {
-                newBitmap.compress(Bitmap.CompressFormat.PNG, 70, out)
+                newBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
             } else if (imageType.equals("jpeg", ignoreCase = true) || imageType.equals(
                     "jpg",
                     ignoreCase = true
                 )
             ) {
-                newBitmap.compress(Bitmap.CompressFormat.JPEG, 70, out)
+                newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
             }
             fOut.flush()
             fOut.close()
@@ -418,11 +407,8 @@ object Util {
     private fun rotateImage(degree: Int, imagePath: String): String {
 
         if (degree <= 0) {
-            ShrinkBitmapOnlyReduce(
-                imagePath,
-                img_width_default,
-                img_height_default,
-                getDateTimeFormatString(Date(File(imagePath).lastModified()))
+            shrinkBitmapOnlyReduce(
+                imagePath, getDateTimeFormatString(Date(File(imagePath).lastModified()))
             )
             return imagePath
         }
@@ -583,7 +569,7 @@ object Util {
         val mHour = c.get(Calendar.HOUR_OF_DAY)
         val mMinute = c.get(Calendar.MINUTE)
         val timePickerDialog =
-            TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            TimePickerDialog(context, { _, hourOfDay, minute ->
                 val hour = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
                 val minutes = if (minute < 10) "0$minute" else minute.toString()
                 val day = if (hourOfDay < 12) "a.m." else "p.m."
@@ -597,14 +583,14 @@ object Util {
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat("dd/MM/yyyy")
         var date1 = Date()
         try {
-            date1 = format.parse(fechaFinal)
+            date1 = format.parse(fechaFinal)!!
         } catch (e: ParseException) {
             e.printStackTrace()
         }
 
         var date2 = Date()
         try {
-            date2 = format.parse(fechaInicial)
+            date2 = format.parse(fechaInicial)!!
         } catch (e: ParseException) {
             e.printStackTrace()
         }
